@@ -1,0 +1,17 @@
+package com.school.scheduling.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.school.scheduling.entity.Student;
+import com.school.scheduling.service.Services;
+
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+	
+	private Services<Student> studentservice;
+	
+	
+	
+}

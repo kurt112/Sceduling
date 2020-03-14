@@ -1,0 +1,92 @@
+package com.school.scheduling.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.school.scheduling.entity.Subject;
+import com.school.scheduling.entity.Teacher;
+import com.school.scheduling.entity.Teacher_BreakTime;
+import com.school.scheduling.entity.Teacher_Schedule;
+import com.school.scheduling.service.Services;
+
+@Controller
+@RequestMapping("/teacher")
+public class TeacherController {
+	
+	private Services<Teacher> teacherService;
+	private Services<Teacher_BreakTime> teacherBreakService;
+	private Services<Teacher_Schedule> teacherSchedule;
+	
+	@Autowired
+	public TeacherController(Services<Teacher> teacherService, Services<Teacher_BreakTime> teacherBreakService,
+			Services<Teacher_Schedule> teacherSchedule) {
+		this.teacherService = teacherService;
+		this.teacherBreakService = teacherBreakService;
+		this.teacherSchedule = teacherSchedule;
+	}
+	
+	/**********************    ForTeacher     ******************************/
+	@GetMapping("/list")
+	public String Teacher_List() {
+		return "";
+	}
+	@PostMapping("/add")
+	public String Teacher_Add() {
+		return "";
+	}
+	@GetMapping("/update")
+	public String Teacher_Update() {
+		return "";
+	}
+	@GetMapping("/delete")
+	public String Teacher_Delete() {
+		return "";
+	}
+	
+	/**********************    ForTeacherBreak     ******************************/
+	
+	@GetMapping("/break/list")
+	public String TeacherBreak_List() {
+		return "";
+	}
+	@PostMapping("/break/add")
+	public String TeacherBreak_Add() {
+		return "";
+	}
+	@GetMapping("/break/update")
+	public String TeacherBreak_Update() {
+		return "";
+	}
+	@GetMapping("/break/delete")
+	public String TeacherBreak_Delete() {
+		return "";
+	}
+	
+	
+	
+	
+	/**********************    ForTeacherSchedule     ******************************/
+	@GetMapping("/schedule/list")
+	public String TeacherSchedule_List() {
+		Subject subject = new Subjer();
+		subject.getTeacherList().get(0).getTeacher_scheduleList().get(0).get
+		return "";
+	}
+	@PostMapping("/schedule/add")
+	public String TeacherSchedule_Add() {
+		return "";
+	}
+	@GetMapping("/schedule/update")
+	public String TeacherSchedule_Update() {
+		return "";
+	}
+	@GetMapping("/schedule/delete")
+	public String TeacherSchedule_Delete() {
+		return "";
+	}
+	
+}

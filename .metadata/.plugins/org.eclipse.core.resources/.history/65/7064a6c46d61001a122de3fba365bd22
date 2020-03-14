@@ -1,0 +1,61 @@
+package com.school.scheduling.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.school.scheduling.entity.Room;
+import com.school.scheduling.entity.Room_Shift;
+import com.school.scheduling.entity.Room_Shift_BreakTime;
+import com.school.scheduling.entity.Subject;
+import com.school.scheduling.service.Services;
+
+@Controller()
+@RequestMapping("/room")
+public class RoomController {
+	
+	/**********************    For Room list     ******************************/
+	
+	private Services<Room> roomService;
+	private Services<Room_Shift> roomShiftService;
+	private Services<Room_Shift_BreakTime> roomBreakTime;
+	
+	
+	@Autowired	
+	public RoomController(Services<Room> roomService, Services<Room_Shift> roomShiftService,
+			Services<Room_Shift_BreakTime> roomBreakTime) {
+		
+		this.roomService = roomService;
+		this.roomShiftService = roomShiftService;
+		this.roomBreakTime = roomBreakTime;
+	}
+
+
+	// request mapping for room list
+	@GetMapping("/list")
+	public String room_list() {
+		return "room/room-list";
+	}
+	
+	
+	// request mapping for room add
+	@PostMapping("/add")
+	public String room_form() {
+		return "room/room-form";
+	}
+	
+	@GetMapping("/update")
+	private String room_update() {
+		return "";
+	}
+	
+	@GetMapping("/delete")
+	private String room_delete() {
+		return "";
+	}
+	
+	
+	
+}

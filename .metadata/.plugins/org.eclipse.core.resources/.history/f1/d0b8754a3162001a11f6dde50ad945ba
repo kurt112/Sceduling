@@ -1,0 +1,13 @@
+function back() {
+	window.history.back();
+}
+
+if (window.performance) {
+	console.info("window.performance works fine on this browser");
+}
+if (performance.navigation.type == 1) {
+	alert("aw");
+//	console.info("This page is reloaded");
+} else {
+	alert("asdf");
+}

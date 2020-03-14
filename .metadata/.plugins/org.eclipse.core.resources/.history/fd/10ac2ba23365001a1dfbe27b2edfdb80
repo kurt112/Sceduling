@@ -1,0 +1,157 @@
+package com.school.scheduling.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.school.scheduling.entity.Room;
+import com.school.scheduling.entity.Room_Shift;
+import com.school.scheduling.entity.Room_Shift_BreakTime;
+import com.school.scheduling.entity.Subject;
+import com.school.scheduling.service.Services;
+
+@Controller()
+@RequestMapping("/room")
+public class RoomController {
+
+	/********************** For Room list ******************************/
+
+	private Services<Room> roomService;
+	private Services<Room_Shift> roomShiftService;
+	private Services<Room_Shift_BreakTime> roomBreakTime;
+
+	@Autowired
+	public RoomController(Services<Room> roomService, Services<Room_Shift> roomShiftService,
+			Services<Room_Shift_BreakTime> roomBreakTime) {
+
+		this.roomService = roomService;
+		this.roomShiftService = roomShiftService;
+		this.roomBreakTime = roomBreakTime;
+	}
+
+	/********************************* Mapping for Room ******************/
+
+	// request mapping for room list
+	@GetMapping("/list")
+	public String RoomList() {
+		return "room/room list/room-list";
+	}
+
+	// request mapping for room add
+	@GetMapping("/form")
+	public String Room_Form() {
+		return "room/room list/room-form";
+	}
+
+	@PostMapping("/save")
+	public String Room_Save() {
+		return "redirect:/room/form";
+	}
+
+	@GetMapping("/update")
+	private String Room_Update() {
+		return "redirect:/room/form";
+	}
+
+	@GetMapping("/delete")
+	private String Room_Delete() {
+		return "redirect:/room/form";
+	}
+
+	/********************************* Mapping for roomBreak ******************/
+
+	// request mapping for room list
+	@GetMapping("/break/list")
+	public String RoomBreak_List() {
+		return "room/room breaktime/room-break";
+	}
+
+	@GetMapping("/break/form")
+	public String RoomBreak_Form() {
+		return "room/room breaktime/room-break-form";
+	}
+
+	// request mapping for room add
+	@PostMapping("/break/add")
+	public String RoomBreak_Add() {
+		return "redirect:/room/break/form";
+	}
+
+	@GetMapping("/break/update")
+	private String RoomBreak_Update() {
+		return "redirect:/room/break/form";
+	}
+
+	@GetMapping("/break/delete")
+	private String RoomBreak_Delete() {
+		return "redirect:/room/break/form";
+	}
+
+	/********************************* Mapping for roomShift ******************/
+
+	// request mapping for room list
+	@GetMapping("/shift/list")
+	public String RoomShift_List() {
+		return "room/room shift/room-shift";
+	}
+
+	@GetMapping("/shift/form")
+	public String RoomShift_Form() {
+		Room_Shift room = new Room_Shift();
+
+		return "room/room shift/room-shift-form";
+	}
+
+	// request mapping for room add
+	@PostMapping("/shift/add")
+	public String RoomShift_Add() {
+
+		return "redirect:/room/shift/form";
+	}
+
+	@GetMapping("/shift/update")
+	private String RoomShift_Update() {
+		return "redirect:/room/shift/form";
+	}
+
+	@GetMapping("/shift/delete")
+	private String RoomShift_Delete(int theId) {
+		roomShiftService.deleteById(theId);
+		return "redirect:/room/shift/form";
+	}
+
+	/********************************* Mapping for Room Schedule ******************/
+
+	@GetMapping("/schedule/list")
+	public String RoomSchedule_List() {
+		return "room/room shift schedule/room-schedule";
+	}
+
+	@GetMapping("/schedule/form")
+	public String RoomSchedule_Form() {
+
+		return "room/room shift schedule/room-schedule-form";
+	}
+
+	// request mapping for room add
+	@PostMapping("/schedule/add")
+	public String RoomSchedule_Add() {
+		Room_Shift room = new Room_Shift();
+
+		return "redirect:/room/schedule/form";
+	}
+
+	@GetMapping("/schedule/update")
+	private String RoomSchedule_Update() {
+		return "redirect:/room/schedule/form";
+	}
+
+	@GetMapping("/schedule/delete")
+	private String RoomSchedule_Delete(int theId) {
+		roomShiftService.deleteById(theId);
+		return "redirect:/room/schedule/form";
+	}
+
+}

@@ -1,0 +1,4 @@
+function back() {
+	alert("imclick");
+	window.history.back();
+}

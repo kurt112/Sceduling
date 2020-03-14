@@ -1,0 +1,48 @@
+package com.school.scheduling.serviceimplementation;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.school.scheduling.entity.Teacher_Schedule;
+import com.school.scheduling.repository.TeacherSchedule_Repository;
+import com.school.scheduling.service.Services;
+
+public class TeacherScheduleService_Impl implements Services<Teacher_Schedule> {
+	
+	private TeacherSchedule_Repository repo;
+	
+	@Autowired
+	public TeacherScheduleService_Impl(TeacherSchedule_Repository repo) {
+		
+		this.repo = repo;
+	}
+
+	
+	
+	@Override
+	public List<Teacher_Schedule> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Teacher_Schedule findbyId(int theId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void save(Teacher_Schedule t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteById(int theId) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+}

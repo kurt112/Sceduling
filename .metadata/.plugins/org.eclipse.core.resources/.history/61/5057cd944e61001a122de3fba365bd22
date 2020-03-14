@@ -1,0 +1,5 @@
+package com.school.scheduling.controller;
+
+public class MainView {
+
+}

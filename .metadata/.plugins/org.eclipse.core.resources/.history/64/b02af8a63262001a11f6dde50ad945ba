@@ -1,0 +1,14 @@
+function back() {
+	window.history.back();
+}
+
+var frame = document.getElementById("iFrame");
+alert(frame.src);
+//if(a >=1){
+//	if (performance.navigation.type == 1) {
+//		window.history.back();
+//	}
+//}else{
+//	a +=1;
+//}
+//alert(a);
