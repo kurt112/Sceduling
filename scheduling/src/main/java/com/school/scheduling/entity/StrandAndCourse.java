@@ -1,5 +1,7 @@
 package com.school.scheduling.entity;
 import javax.persistence.*;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,31 +25,24 @@ public class StrandAndCourse {
     @Column(name = "strand_name")
     private String strandName;
 
-    @ManyToMany(fetch = FetchType.LAZY
-//    		, cascade = {
-//            CascadeType.DETACH,
-//            CascadeType.PERSIST,
-//            CascadeType.REFRESH
-//    }
+    @ManyToMany(fetch = FetchType.LAZY , cascade = 
+    	{CascadeType.MERGE}
     )
     @JoinTable(
-            name = "strandandcourse_subject",
+            name = "strandandcourse_subject", 
             joinColumns = @JoinColumn(name = "strand_and_course_id"),
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private List<Subject> subjectList;
     
-    @OneToMany(mappedBy = "strandAndCourse"
+    @OneToMany(mappedBy = "strandAndCourse", orphanRemoval = true
 //    		,fetch = FetchType.LAZY
-//    		, cascade = {
-//            CascadeType.DETACH,
-//            CascadeType.PERSIST,
-//            CascadeType.REFRESH
-//    }
+    		, cascade = CascadeType.ALL
     )
     private List<Student> studentList;
 
-    @OneToMany(mappedBy = "strandAndCourse", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "strandAndCourse",
+    		fetch = FetchType.LAZY)
     private List<Room_Shift> room_shiftList;
     public StrandAndCourse() {
     }

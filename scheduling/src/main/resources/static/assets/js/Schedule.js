@@ -1,5 +1,6 @@
-function back() {
-	window.history.back();
+function back(number) {
+	alert(number)
+	window.history.go(number)
 }
 
 

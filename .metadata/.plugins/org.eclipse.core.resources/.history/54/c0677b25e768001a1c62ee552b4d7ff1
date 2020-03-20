@@ -1,0 +1,55 @@
+package com.school.scheduling.entity;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+@Entity
+@Table(name = "break_time")
+public class BreakTime {
+
+	private int id;
+
+	private String start_time;
+
+	private String end_time;
+
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(fetch = FetchType.LAZY,
+	cascade = { 
+			CascadeType.DETACH,
+			CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH 
+			})
+	@JoinTable(
+			name = "teacher_breaktime",
+			joinColumns = @JoinColumn(name = "break_time_id"),
+			inverseJoinColumns = @JoinColumn(name = "teacher_id")
+			)
+	private List<Teacher> teacher;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(fetch = FetchType.LAZY,
+	cascade = { 
+			CascadeType.DETACH,
+			CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH 
+			})
+	@JoinTable(
+			name = "room_shift_breaktime",
+			joinColumns = @JoinColumn(name = "break_time_id"),
+			inverseJoinColumns = @JoinColumn(name = "room_shift_id")
+			)
+	private List<Room_Shift> room_shift;
+	
+
+}

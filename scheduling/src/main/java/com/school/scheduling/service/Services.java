@@ -12,6 +12,6 @@ public interface Services<T> {
 	
 	public void deleteById(int theId);
 
-	
+	public void delete(T t);
 	
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.school.scheduling.entity.Student;
@@ -17,9 +18,8 @@ public class StudentService_Impl implements Services<Student> {
 	private Student_Repository repo;
 
 	
-	
+	@Autowired
 	public StudentService_Impl(Student_Repository repo) {
-		super();
 		this.repo = repo;
 	}
 
@@ -44,6 +44,12 @@ public class StudentService_Impl implements Services<Student> {
 	@Override
 	public void deleteById(int theId) {
 		repo.deleteById(theId);
+	}
+
+	@Override
+	public void delete(Student t) {
+		repo.delete(t);
+		
 	}
 	
 	

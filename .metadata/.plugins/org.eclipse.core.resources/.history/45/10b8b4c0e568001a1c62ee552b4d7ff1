@@ -1,0 +1,5 @@
+package com.school.scheduling.repository;
+
+public interface BreakTime_Repository extends JpaA{
+
+}

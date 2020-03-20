@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="Back"/>
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
-			<item value="add room"/>
-			<item value="add s"/>
-			<item value="add"/>
-			<item value="&#x09;&#x09;&lt;a"/>
-			<item value="rename"/>
-			<item value="add subjects"/>
-			<item value="add subh"/>
-			<item value="raname"/>
+			<item value="add brea`"/>
+			<item value="update"/>
+			<item value="add Break"/>
+			<item value="room information"/>
+			<item value="room infor"/>
+			<item value="Add Room shift"/>
+			<item value="delete"/>
+			<item value="submit"/>
 		</list>
 		<list key="replacehistory">
 		</list>

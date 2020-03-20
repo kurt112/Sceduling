@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.school.scheduling.entity.Subject;
 import com.school.scheduling.entity.Teacher;
-import com.school.scheduling.entity.Teacher_BreakTime;
 import com.school.scheduling.entity.Teacher_Schedule;
 import com.school.scheduling.service.Services;
 
@@ -18,14 +17,12 @@ import com.school.scheduling.service.Services;
 public class TeacherController {
 	
 	private Services<Teacher> teacherService;
-	private Services<Teacher_BreakTime> teacherBreakService;
 	private Services<Teacher_Schedule> teacherSchedule;
 	
 	@Autowired
-	public TeacherController(Services<Teacher> teacherService, Services<Teacher_BreakTime> teacherBreakService,
+	public TeacherController(Services<Teacher> teacherService,
 			Services<Teacher_Schedule> teacherSchedule) {
 		this.teacherService = teacherService;
-		this.teacherBreakService = teacherBreakService;
 		this.teacherSchedule = teacherSchedule;
 	}
 	

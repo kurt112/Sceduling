@@ -14,6 +14,7 @@
         "scrollY": "350px",
         "scrollX": true,
         dom: 'lBfrtip',
+        "paging": false,
         buttons: [
         	 'copy', 'csv', 'excel', 'pdf', 'print',
         ]

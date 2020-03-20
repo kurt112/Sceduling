@@ -1,5 +1,9 @@
 package com.school.scheduling.entity;
 import javax.persistence.*;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,14 +34,7 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     private List<Teacher_Schedule> teacher_scheduleList;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "teacher",cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH
-    })
-    private List<Teacher_BreakTime> breaktime_teacherList;
-
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
@@ -50,6 +47,21 @@ public class Teacher {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private List<Subject> subjectList;
+    
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(fetch = FetchType.LAZY,
+	cascade = { 
+			CascadeType.DETACH,
+			CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH 
+			})
+	@JoinTable(
+			name = "teacher_breaktime",
+			joinColumns = @JoinColumn(name = "teacher_id"),
+			inverseJoinColumns = @JoinColumn(name = "break_time_id")
+			)
+	private List<BreakTime> breaktime_teacherList;
+
 
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -67,12 +79,11 @@ public class Teacher {
         this.endTime = endTime;
     }
 
-    public void add_BreakTime(Teacher_BreakTime breaktime_teacher){
+    public void add_BreakTime(BreakTime breaktime_teacher){
 
         if(breaktime_teacherList == null) breaktime_teacherList = new ArrayList<>();
         breaktime_teacherList.add(breaktime_teacher);
 
-        breaktime_teacher.setTeacher(this);
 
     }
 
@@ -138,11 +149,11 @@ public class Teacher {
         this.subjectList = subjectList;
     }
 
-    public List<Teacher_BreakTime> getBreaktime_teacherList() {
+    public List<BreakTime> getBreaktime_teacherList() {
         return breaktime_teacherList;
     }
 
-    public void setBreaktime_teacherList(List<Teacher_BreakTime> breaktime_teacherList) {
+    public void setBreaktime_teacherList(List<BreakTime> breaktime_teacherList) {
         this.breaktime_teacherList = breaktime_teacherList;
     }
 

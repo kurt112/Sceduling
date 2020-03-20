@@ -46,6 +46,12 @@ public class SubjectService_Impl implements Services<Subject> {
 		subject_repo.deleteById(theId);
 	}
 
+	@Override
+	public void delete(Subject t) {
+		subject_repo.delete(t);
+	}
+	
+
 
 
 	

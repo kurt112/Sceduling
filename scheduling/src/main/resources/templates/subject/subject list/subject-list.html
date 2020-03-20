@@ -79,9 +79,11 @@ xmlns:th="http://www.thymeleaf.org"
                                               <td th:text="${subject.is_Major}"></td>
                                               <td> 
                                           	<a class="btn btn-info btn-sm"
+                                          	style="width:100%"
                                           	th:href="@{/subject/update(subject_id=${subject.Id})}"
                                           	onclick="if (!(confirm('Are you sure you want to update this subject?'))) return false">Update </a>
                                             <a class="btn btn-danger btn-sm"
+                                            style="width:100%"
                                             th:href="@{/subject/delete_main(subject_id=${subject.Id})}" 
 											onclick="if (!(confirm('Are you sure you want to delete this Subject?'))) return false"> Delete </a>
                     	                        </td>

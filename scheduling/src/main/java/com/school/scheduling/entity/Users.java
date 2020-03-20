@@ -25,7 +25,7 @@ public class Users {
     @Column(name = "enabled")
     private int enabled;
 
-    @OneToMany(mappedBy = "users" ,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "users" , orphanRemoval = true)
     private List<Authorities> authorities;
 
     public void add_Role(Authorities theauthorities){

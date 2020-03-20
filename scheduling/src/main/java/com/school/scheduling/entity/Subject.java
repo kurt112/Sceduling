@@ -18,7 +18,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.format.annotation.NumberFormat;
+
+import com.school.scheduling.validations.CheckTime_RoomShift;
 
 import javax.persistence.JoinColumn;
 /*
@@ -30,6 +31,7 @@ import javax.persistence.JoinColumn;
  * 12:31 PM
  */
 @Entity
+//@Check_Time(message = "BreakTime should be")
 @Table(name = "subject")
 public class Subject {
 	
@@ -58,9 +60,11 @@ public class Subject {
 
     @Column(name = "subject_unit")
     private String subjectUnit;
-
+    
+ 
     @NotNull(message = "( Choose first )")
     @Column(name = "is_major")
+   
     private String is_Major;
 
 
@@ -207,6 +211,8 @@ public class Subject {
 				+ ", teacherList=" +  ", strandAndCourseList="
 				+ strandAndCourseList + "]";
 	}
+	
+	
 	
 	
 	

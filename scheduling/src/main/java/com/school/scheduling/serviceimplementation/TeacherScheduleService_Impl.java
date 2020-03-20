@@ -51,6 +51,14 @@ public class TeacherScheduleService_Impl implements Services<Teacher_Schedule> {
 		repo.deleteById(theId);
 		
 	}
+
+
+
+	@Override
+	public void delete(Teacher_Schedule t) {
+		repo.delete(t);
+		
+	}
 	
 	
 }

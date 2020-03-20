@@ -44,5 +44,13 @@ public class TeacherService_Impl implements Services<Teacher> {
 	public void deleteById(int theId) {
 		repo.deleteById(theId);
 	}
+
+	@Override
+	public void delete(Teacher t) {
+		
+		repo.delete(t);
+		
+	}
+	
 	
 }

@@ -34,6 +34,14 @@ public class RoomService_Impl implements Services<Room> {
 		
 		return result.isPresent()?result.get(): null;
 	}
+	
+	
+	
+	@Override
+	public void delete(Room t) {
+		repo.delete(t);
+		
+	}
 
 	@Override
 	public void save(Room t) {

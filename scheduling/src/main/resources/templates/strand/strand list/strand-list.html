@@ -134,12 +134,13 @@
 												<tr th:each="strand: ${strand}">
 													<td th:text="${strand.strandName}"></td>
 													<td><a
-														style="width: 47%;"
+														style="width: 100%;"
 														th:href="@{/strand/update(strand_id=${strand.Id})}"
 														class="btn btn-info btn-sm"
 														onclick="if (!(confirm('Are you sure you want to update this Strand?'))) return false"
 													> Update </a> <a
-														style="width: 47%;"
+														th:if="${strand.room_shiftList.size() ==0}"
+														style="width: 100%;"
 														th:href="@{/strand/delete_list(strand_id=${strand.Id})}"
 														class="btn btn-danger btn-sm"
 														onclick="if (!(confirm('Are you sure you want to delete this Strand?'))) return false"

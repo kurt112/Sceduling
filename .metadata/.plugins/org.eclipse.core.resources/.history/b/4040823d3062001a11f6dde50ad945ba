@@ -1,4 +1,0 @@
-function back() {
-	alert("im back");
-	window.history.back();
-}

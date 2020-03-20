@@ -1,9 +1,0 @@
-function back() {
-	window.history.back();
-}
-
-var frame = document.getElementById("iFrame");
-alert(frame.src);
-	if (performance.navigation.type == 1) {
-		window.history.back();
-	}

@@ -42,6 +42,12 @@ public class StrandAndCourseService_Impl implements Services<StrandAndCourse>{
 	public void deleteById(int theId) {
 		repo.deleteById(theId);
 	}
+
+	@Override
+	public void delete(StrandAndCourse t) {
+		repo.delete(t);
+		
+	}
 	
 	
 	

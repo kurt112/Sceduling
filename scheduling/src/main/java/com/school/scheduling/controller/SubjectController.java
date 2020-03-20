@@ -23,7 +23,7 @@ import com.school.scheduling.service.Services;
 public class SubjectController {
 
 	private Services<Subject> subjectService;
-
+	private int back =0;
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
@@ -37,17 +37,26 @@ public class SubjectController {
 	@GetMapping("/form")
 	public String SubjectList(Model theModel) {
 		Subject subject = new Subject();
-		// for the list in the table
+
+		// for the list of subjects
 		theModel.addAttribute("subjects", subjectService.findAll());
 		
-		
+		// for the model attribute
 		theModel.addAttribute("subject", subject);
+		
+		// for the back button
+		theModel.addAttribute("back", back);
+		
+		// if not show the delete button
+		theModel.addAttribute("action","Save Subject");
+		
 		return "subject/subject list/subject-list-form";
 	}
 
 	@GetMapping("/list")
 	public String SubjectContent(Model theModel) {
 		theModel.addAttribute("subjects", subjectService.findAll());
+		back = -1;
 		return "subject/subject list/subject-list";
 	}
 
@@ -59,10 +68,12 @@ public class SubjectController {
 		theModel.addAttribute("subjects", subjectService.findAll());
 		
 		if (binding.hasErrors()) {
-			System.out.println("i have Error");
-			return "subject/subject-add-form";
+			System.out.println(binding.getFieldError());
+			System.out.println(binding.toString());
+			return "subject/subject list/subject-list-form";
 		}
-
+		// back -2 because this save will redirect twice in the form
+		back = -2;
 		subjectService.save(subject);
 		return "redirect:/subject/form";
 	}
@@ -81,12 +92,15 @@ public class SubjectController {
 		
 		Subject subject = subjectService.findbyId(theiD);
 		System.out.println(subject);
-		
 		// Model for the table in update subject in the model property
 		theModel.addAttribute("subjects", subjectService.findAll());
 		if (subject == null) subject = new Subject();
 		
 		theModel.addAttribute("subject", subject);
+		theModel.addAttribute("back", back);
+		
+
+		theModel.addAttribute("action","Update Subject");
 		return "subject/subject list/subject-list-form";
 	}
 
