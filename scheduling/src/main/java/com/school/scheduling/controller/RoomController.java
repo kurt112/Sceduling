@@ -275,7 +275,7 @@ public class RoomController {
 
 	/********************************* Mapping for roomShift ******************/
 
-	// request mapping for room list
+	// request mapping for room Shift ksut list
 	@GetMapping("/shift/list")
 	public ModelAndView RoomShift_List() {
 		back = -1;
@@ -284,6 +284,7 @@ public class RoomController {
 			roomShiftService.delete(this.delete_shift);
 			delete_shift = null;
 		}
+		// getting all of the room shift
 		model.addObject("room_shifts", roomShiftService.findAll());
 		return model;
 	}
@@ -291,22 +292,31 @@ public class RoomController {
 	@GetMapping("/shift/form")
 	public String RoomShift_Form(Model model) {
 		Room_Shift room_shift = new Room_Shift();
-
+		
+		// this is the model that will insert to the db 
 		model.addAttribute("roomShift_object", room_shift);
 
+	   // the dropdown item
+		// dropdown of list room lsit
 		model.addAttribute("room_list", roomService.findAll());
+		// dropdown of list of strand list
 		model.addAttribute("strand_list", strandService.findAll());
+		
+		// state of the button if it is update or Save
 		model.addAttribute("action", "Save Shift");
+		
+		// alert in java scipt
 		model.addAttribute("back", back);
 		this.roomShift = room_shift;
 		return "room/room shift/room-shift-form";
 	}
 
-	// request mapping for room add
+	// request mapping of the shift save
 	@PostMapping("/shift/save")
 	public String RoomShift_Add(@Valid @ModelAttribute("roomShift_object") Room_Shift rooms_shift,
 			BindingResult binding, Model model) {
 
+		// chceck if the saving of shift has error
 		if (binding.hasErrors()) {
 			back += -1;
 
@@ -321,33 +331,48 @@ public class RoomController {
 
 		return "redirect:/room/shift/form";
 	}
-
+	
+	
+	// request mapping for shift update
 	@GetMapping("/shift/update")
 	private String RoomShift_Update(@ModelAttribute("roomShift_id") int theId, Model model) {
 
+		// finding the param id got in url
 		Room_Shift room_shift = roomShiftService.findbyId(theId);
+		
+		// the object in the form
 		model.addAttribute("roomShift_object", room_shift);
+		
+		
+		// the dropdown in the form
 		model.addAttribute("room_list", roomService.findAll());
-
 		model.addAttribute("strand_list", strandService.findAll());
 
+		// state of the button
 		model.addAttribute("back", back);
 		model.addAttribute("action", "Update Shift");
 		this.roomShift = room_shift;
-		System.out.println(this.roomShift);
+
 		return "room/room shift/room-shift-form";
 	}
-
+	// in this delete if the user delete in the acutal form
 	@GetMapping("/shift/delete")
 	private String RoomShift_Delete(@ModelAttribute("roomShift_id") int theId) {
+		// deleting of the roomShift
 		roomShiftService.deleteById(theId);
 		return "redirect:/room/shift/form";
 	}
 
+	// in this delete if the user is delete in the main view
 	@GetMapping("/shift/delete_Main")
 	private String RoomShift_DeleteMain(@ModelAttribute("roomShift_id") int theId) {
+		//  finding the  object of the list
 		Room_Shift room = roomShiftService.findbyId(theId);
+		
+		// removing all of the student
 		room.getStudentList().forEach(e -> studnetService.delete(e));
+		
+		// removing all of the breaktime of the sutdent
 		room.getRoom_shift_breakTimeList().removeAll(room.getRoom_shift_breakTimeList());
 		roomShiftService.save(room);
 		this.delete_shift = room;

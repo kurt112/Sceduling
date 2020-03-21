@@ -1,0 +1,26 @@
+.blocks .btn{
+    margin: 0 5px;
+    border-radius: 0;
+}
+
+table button{
+  width: 40%;
+}
+input[type=checkbox] {
+    transform: scale(5);
+}
+.dataTables_filter{
+	float:right;
+}
+
+@media only screen and (max-width: 1222px) {
+  .dataTables_filter{
+    float:left;
+    margin-top:10px;
+  } 
+}
+
+ul li{
+	cursor: pointer;
+}
+

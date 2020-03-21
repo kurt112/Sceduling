@@ -94,7 +94,7 @@
 	th:href="@{/assets/css/main.css}"
 >
 </head>
-<body>
+<body style="margin-bottom:10px;">
 
 	<div class="container-fluid rounded">
 		<div
@@ -243,7 +243,7 @@
 							>
 						</div>
 					</div>
-					<div class="form-group col-md-12">
+					<div class="form-group col-md-12" th:if="${!action.equals('Save Shift')}">
 						<div class="input-group mb-3">
 							<a
 								style="color: white;"
