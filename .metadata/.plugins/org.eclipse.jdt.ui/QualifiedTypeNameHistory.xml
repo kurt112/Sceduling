@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="com.school.scheduling.validations.Check_Time"/>
-    <fullyQualifiedTypeName name="com.school.scheduling.entity.Room"/>
     <fullyQualifiedTypeName name="java.util.Calendar"/>
     <fullyQualifiedTypeName name="java.text.DateFormat"/>
     <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
@@ -41,23 +40,24 @@
     <fullyQualifiedTypeName name="javax.persistence.EntityManager"/>
     <fullyQualifiedTypeName name="javax.persistence.Query"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.query.QueryUtils"/>
-    <fullyQualifiedTypeName name="com.school.scheduling.service.RoomShiftService"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
     <fullyQualifiedTypeName name="java.lang.Override"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
-    <fullyQualifiedTypeName name="com.school.scheduling.entity.StrandAndCourse"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
     <fullyQualifiedTypeName name="java.text.ParseException"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="sun.tools.tree.ShiftLeftExpression"/>
     <fullyQualifiedTypeName name="java.util.stream.Collector"/>
-    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
     <fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
     <fullyQualifiedTypeName name="com.school.scheduling.EntityCombine.RoomBreak"/>
-    <fullyQualifiedTypeName name="com.school.scheduling.entity.BreakTime"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.school.scheduling.entity.StrandAndCourse"/>
+    <fullyQualifiedTypeName name="com.school.scheduling.entity.BreakTime"/>
+    <fullyQualifiedTypeName name="com.school.scheduling.entity.Room"/>
     <fullyQualifiedTypeName name="com.school.scheduling.entity.Room_Shift"/>
+    <fullyQualifiedTypeName name="com.school.scheduling.service.RoomShiftService"/>
 </qualifiedTypeNameHistroy>

@@ -29,13 +29,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.school.scheduling.EntityCombine.RoomBreak;
 import com.school.scheduling.entity.BreakTime;
 import com.school.scheduling.entity.Room;
 import com.school.scheduling.entity.Room_Shift;
 import com.school.scheduling.entity.StrandAndCourse;
 import com.school.scheduling.entity.Student;
+import com.school.scheduling.service.RoomShiftService;
 import com.school.scheduling.service.Services;
 import com.school.scheduling.serviceimplementation.RoomShiftService_Impl;
 
@@ -151,15 +150,9 @@ public class RoomController {
 	// request mapping for room list
 	@GetMapping("/break/list")
 	public String RoomBreak_List(Model model) {
-
-		Set<RoomBreak> breaks = new HashSet<RoomBreak>();
-		roomShiftService.findAll().forEach(e -> {
-			
-			e.getRoom_shift_breakTimeList().forEach(f ->
-			breaks.add(new RoomBreak(e.getId(), e.getRoom().getRoomName(), e.getShiftName(),f)));
-		});
-
-		model.addAttribute("room_breaks", breaks);
+		
+		
+		model.addAttribute("room_shift", roomShiftService.findAll());
 		return "room/room breaktime/room-break";
 	}
 

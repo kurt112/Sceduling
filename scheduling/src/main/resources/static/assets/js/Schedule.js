@@ -7,3 +7,5 @@ function back(number) {
 if (performance.navigation.type == 1) {
 	var frame = document.getElementById("iFrame");
 }
+
+

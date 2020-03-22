@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
+		<item key="selection" value="Save Shift"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
-			<item value="add brea"/>
-			<item value="add "/>
-			<item value="The Shift"/>
-			<item value="-"/>
-			<item value="add Brea"/>
-			<item value="add brea`"/>
-			<item value="update"/>
-			<item value="add Break"/>
+			<item value="add breaktime"/>
+			<item value="teacher breaktime"/>
+			<item value="add subject"/>
+			<item value="dash"/>
+			<item value="dashbo"/>
+			<item value="save shift"/>
+			<item value="back"/>
+			<item value="delete"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -2,6 +2,7 @@ package com.school.scheduling.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.school.scheduling.EntityCombine.StrandSubject;
 import com.school.scheduling.entity.StrandAndCourse;
 import com.school.scheduling.entity.Subject;
 import com.school.scheduling.service.Services;
@@ -52,7 +52,7 @@ public class StrandController {
 		ModelAndView model = new ModelAndView("strand/strand list/strand-form");
 		model.addObject("strand_object", strandandCourse);
 		this.strand = strandandCourse;
-		model.addObject("action","Save Strand");
+		model.addObject("action", "Save Strand");
 		return model;
 	}
 
@@ -85,7 +85,7 @@ public class StrandController {
 		this.strand = strand_model;
 		model.addObject("strand_object", strand_model);
 		model.addObject("strand_subject", strand_model.getSubjectList());
-		model.addObject("action","Update Strand");
+		model.addObject("action", "Update Strand");
 		return model;
 	}
 
@@ -93,12 +93,12 @@ public class StrandController {
 	private String Strand_Delete(@RequestParam("strand_id") int theId, Model model) {
 
 		StrandAndCourse strand = strandService.findbyId(theId);
-		model.addAttribute("action","Save Strand");
-		
-		if(strand.getRoom_shiftList().size() >0) {
+		model.addAttribute("action", "Save Strand");
+
+		if (strand.getRoom_shiftList().size() > 0) {
 			model.addAttribute("strandRoomShift", strand.getRoom_shiftList().size());
 		}
-		
+
 		strandService.deleteById(theId);
 		return "redirect:/strand/form";
 	}
@@ -114,13 +114,16 @@ public class StrandController {
 	@GetMapping("/subjects")
 	public String Strand_Subjects(Model model) {
 
-		List<StrandSubject> strand_subject = new ArrayList<>();
-		strandService.findAll().forEach(e -> {
-			e.getSubjectList().forEach(f -> {
-				strand_subject.add(new StrandSubject(e.getId(), e.getStrandName(), f));
-			});
-		});
-		model.addAttribute("strand", strand_subject);
+		List<StrandAndCourse> list = strandService.findAll();
+		
+		list.forEach(e -> 
+			e.getSubjectList().forEach(f->{
+				if(f.getSubjectUnit() == null || f.getSubjectUnit().isEmpty()) f.setSubjectUnit("N/A");
+			})
+		);
+		
+		
+		model.addAttribute("strand", list);
 		return "strand/strand subjects/strand-subjects";
 	}
 
@@ -170,7 +173,7 @@ public class StrandController {
 		theModel.addAttribute("strand_object", this.strand);
 
 		theModel.addAttribute("strand_subject", this.strand.getSubjectList());
-		theModel.addAttribute("action","Update Strand");
+		theModel.addAttribute("action", "Update Strand");
 		// strandService.save(this.strand);
 		return "strand/strand list/strand-form";
 	}
@@ -181,7 +184,7 @@ public class StrandController {
 		model.addAttribute("strand_object", this.strand);
 		model.addAttribute("strand_subject", this.strand.getSubjectList());
 		strandService.save(this.strand);
-		model.addAttribute("action","Update Strand");
+		model.addAttribute("action", "Update Strand");
 		return "strand/strand list/strand-form";
 	}
 }

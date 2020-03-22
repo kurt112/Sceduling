@@ -1,0 +1,24 @@
+function back(number) {
+	alert(number)
+	window.history.go(number)
+}
+
+
+if (performance.navigation.type == 1) {
+	var frame = document.getElementById("iFrame");
+}
+
+
+// for the tables
+function ChangeTableRoomShift(name_button){
+	
+	// The first showing table is the student list
+	var student_list = document.getElementById("bootstrap-data-table");
+	
+	// The second table is the room break
+	var roombreak = document.getElementById("room_break");
+	
+	alert(student_list.id);
+	
+	
+}
