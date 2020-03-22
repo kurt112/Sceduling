@@ -160,7 +160,7 @@
 								class="form-control"
 							>
 								<!-- selected -->
-								<option th:each="roomShift: ${roomshift_list}" th:value="${roomShift.Id}" th:text="${roomShift.room.roomName} + ' (' +${roomShift.shiftName}+')'">Room Shift</option>
+								<option th:each="roomShift: ${roomshift_list}" th:value="${roomShift.Id}" th:text="${roomShift.room.roomName} + ' -> ' +${roomShift.shiftName}+')'">Room Shift</option>
 
 							</select> 
 						</div>

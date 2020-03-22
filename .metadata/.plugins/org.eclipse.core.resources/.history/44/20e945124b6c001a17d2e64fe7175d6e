@@ -9,7 +9,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import com.school.scheduling.validations.CheckTime_RoomShift;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /*
@@ -23,7 +22,7 @@ import java.util.List;
 @CheckTime_RoomShift
 @Entity
 @Table(name = "room_shift")
-public class Room_Shift implements Comparable<Room_Shift>{
+public class Room_Shift {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -164,11 +163,4 @@ public class Room_Shift implements Comparable<Room_Shift>{
 		this.strandAndCourse = strandAndCourse;
 	}
 
-	@Override
-	public int compareTo(Room_Shift o) {
-		
-		return 0;
-	}
-	
-	
 }

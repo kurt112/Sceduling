@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.school.scheduling.entity.Room;
 import com.school.scheduling.entity.Room_Shift;
 import com.school.scheduling.entity.StrandAndCourse;
 import com.school.scheduling.entity.Student;
@@ -46,15 +45,26 @@ public class StudentController {
 		
 		List<StrandAndCourse> strand_list = strand_service.findAll();
 		
-		List<Room_Shift> room_shift =  roomshift_service.findAll();
+		strand_list.stream()
+		.sorted(Comparator.comparing(StrandAndCourse::getStrandName))
+		.collect(Collectors.toList());
 		
-		strand_list.sort(((o1, o2) -> o1.getStrandName().compareToIgnoreCase(o2.getStrandName())));
-		room_shift.sort((o1, o2) -> o1.getRoom().getRoomName().compareToIgnoreCase(o2.getRoom().getRoomName()));
-		
+//		Collections.sort(strand_list, new Comparator<StrandAndCourse>() {
+//			@Override
+//			public int compare(StrandAndCourse o1, StrandAndCourse o2) {
+//				
+//				return o1.getStrandName().compareToIgnoreCase(o2.getStrandName());
+//			}
+//		});
+//		
 		
 		// for the dropdown
 		model.addAttribute("strand_list", strand_list);
-		model.addAttribute("roomshift_list",room_shift);
+		
+		
+		
+		Collections.sort(roomshift_service.findAll());
+		model.addAttribute("roomshift_list", roomshift_service.findAll());
 	
 		// the object in the form 
 		model.addAttribute("student_object", new Student());

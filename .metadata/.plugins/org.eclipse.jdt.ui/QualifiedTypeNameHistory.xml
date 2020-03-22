@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.school.scheduling.validations.Check_Time"/>
-    <fullyQualifiedTypeName name="java.util.Calendar"/>
-    <fullyQualifiedTypeName name="java.text.DateFormat"/>
-    <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
-    <fullyQualifiedTypeName name="com.fasterxml.jackson.core.format.DataFormatDetector"/>
-    <fullyQualifiedTypeName name="java.util.concurrent.atomic.AtomicBoolean"/>
     <fullyQualifiedTypeName name="java.util.Optional"/>
     <fullyQualifiedTypeName name="com.school.scheduling.repository.RoomShift_Repository"/>
     <fullyQualifiedTypeName name="com.school.scheduling.entity.Subject"/>
@@ -25,14 +19,12 @@
     <fullyQualifiedTypeName name="javax.persistence.JoinTable"/>
     <fullyQualifiedTypeName name="javax.persistence.JoinColumn"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.JpaRepository"/>
-    <fullyQualifiedTypeName name="com.school.scheduling.service.Services"/>
     <fullyQualifiedTypeName name="com.school.scheduling.repository.BreakTime_Repository"/>
     <fullyQualifiedTypeName name="sun.text.normalizer.NormalizerImpl.ReorderingBuffer"/>
     <fullyQualifiedTypeName name="java.util.Set"/>
     <fullyQualifiedTypeName name="java.util.HashSet"/>
     <fullyQualifiedTypeName name="javax.persistence.Column"/>
     <fullyQualifiedTypeName name="org.hibernate.annotations.CascadeType"/>
-    <fullyQualifiedTypeName name="com.school.scheduling.entity.Student"/>
     <fullyQualifiedTypeName name="com.zaxxer.hikari.util.SuspendResumeLock"/>
     <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
     <fullyQualifiedTypeName name="com.school.scheduling.serviceimplementation.RoomShiftService_Impl"/>
@@ -45,7 +37,6 @@
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
     <fullyQualifiedTypeName name="java.lang.Override"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
     <fullyQualifiedTypeName name="java.text.ParseException"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="sun.tools.tree.ShiftLeftExpression"/>
@@ -53,11 +44,20 @@
     <fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
     <fullyQualifiedTypeName name="com.school.scheduling.EntityCombine.RoomBreak"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
-    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="com.school.scheduling.entity.StrandAndCourse"/>
     <fullyQualifiedTypeName name="com.school.scheduling.entity.BreakTime"/>
+    <fullyQualifiedTypeName name="com.school.scheduling.service.Services"/>
+    <fullyQualifiedTypeName name="com.school.scheduling.controller.StrandController"/>
+    <fullyQualifiedTypeName name="org.springframework.ui.Model"/>
+    <fullyQualifiedTypeName name="com.school.scheduling.service.RoomShiftService"/>
+    <fullyQualifiedTypeName name="com.school.scheduling.entity.Student"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
+    <fullyQualifiedTypeName name="java.lang.Comparable"/>
+    <fullyQualifiedTypeName name="antlr.collections.List"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="com.school.scheduling.entity.StrandAndCourse"/>
+    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
     <fullyQualifiedTypeName name="com.school.scheduling.entity.Room"/>
     <fullyQualifiedTypeName name="com.school.scheduling.entity.Room_Shift"/>
-    <fullyQualifiedTypeName name="com.school.scheduling.service.RoomShiftService"/>
+    <fullyQualifiedTypeName name="java.util.Comparator"/>
 </qualifiedTypeNameHistroy>
