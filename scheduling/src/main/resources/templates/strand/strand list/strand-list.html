@@ -144,8 +144,8 @@
 													<a
 														th:if="${strand.room_shiftList.size() ==0}"
 														style="width: 100%;"
-														th:href="@{/strand/delete_list(strand_id=${strand.Id})}"
 														class="btn btn-danger btn-sm"
+														th:href="@{/strand/delete_list(strand_id=${strand.Id})}"
 														onclick="if (!(confirm('Are you sure you want to delete this Strand?'))) return false"
 													> <i class="fa fa-trash" aria-hidden="true"></i> </a>
 													</td>

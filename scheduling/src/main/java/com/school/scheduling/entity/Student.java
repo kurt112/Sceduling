@@ -44,6 +44,7 @@ public class Student {
     }
 
     public Student(String firstName, String lastName, String sex) {
+        System.out.println("asdasd");
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
@@ -97,4 +98,14 @@ public class Student {
     public void setRoom_shift(Room_Shift room_shift) {
         this.room_shift = room_shift;
     }
+
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
+    
+    
 }

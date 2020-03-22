@@ -107,95 +107,127 @@
 
 				<form
 					action="#"
-					th:action="@{/subject/save}"
+					th:action="@{/student/save}"
 					th:object="${student_object}"
 					method="POST"
 				>
 
-					<div class="form-group col-md-12">
-						<label for="subject_id">Studnet Id ( Remain zero if you
-							will add) </label>
-						<div class="input-group mb-3">
-							<input
-								type="number"
-								class="form-control"
-								id="subject_id"
-								placeholder="Subject Id"
-							>
-						</div>
-					</div>
+
+
+					<input
+						type="hidden"
+						class="form-control"
+						th:field="*{id}"
+						placeholder="Subject Id"
+					>
+
 
 					<div class="form-group col-md-12">
-						<label for="subject_id">Student Name </label>
+						<label>Student Name </label>
 						<div class="input-group mb-3">
 							<input
 								type="text"
+								th:field="*{firstName}"
 								class="form-control"
-								id="subject_id"
 								placeholder="First Name"
 								style="margin-right: 10px;"
 							> <input
+								th:field="*{lastName}"
 								type="text"
 								class="form-control"
-								id="subject_id"
 								placeholder="Last Name"
 							>
 						</div>
 					</div>
-					
+
 					<div class="form-group col-md-12">
-						<label for="subject_id">Strand And Room </label>
+						<label>Strand And Room </label>
 						<div class="input-group mb-3">
 							<select
-								style="margin-right: 10px;"
-								class="form-control"
-								
-							>
-								<!-- selected -->
-								<option th:each="strand: ${strand_list}" th:value="${strand.id}" th:text="${strand.strandName}">Strand</option>
-							</select> 
-							
-							<select
+								th:field="*{strandAndCourse}"
 								style="margin-right: 10px;"
 								class="form-control"
 							>
 								<!-- selected -->
-								<option th:each="roomShift: ${roomshift_list}" th:value="${roomShift.Id}" th:text="${roomShift.room.roomName} + ' (' +${roomShift.shiftName}+')'">Room Shift</option>
+								<option
+									th:each="strand: ${strand_list}"
+									th:value="${strand.id}"
+									th:text="${strand.strandName}"
+								>Strand</option>
+							</select> <select
+								style="margin-right: 10px;"
+								class="form-control"
+								th:field="*{room_shift}"
+							>
+								<!-- selected -->
+								<option
+									th:each="roomShift: ${roomshift_list}"
+									th:value="${roomShift.Id}"
+									th:text="${roomShift.room.roomName} + ' (' +${roomShift.shiftName}+')'"
+								>Room Shift</option>
 
-							</select> 
+							</select>
 						</div>
 					</div>
-					
+
 					<div class="form-group col-md-12">
-						<label for="subject_id">Student UserName</label>
+						<label>Student UserName</label>
 						<div class="input-group mb-3">
 							<input
 								type="text"
 								class="form-control"
-								id="subject_id"
 								placeholder="Username"
+								th:field="*{users.username}"
 							>
 						</div>
 					</div>
-					
+
 					<div class="form-group col-md-12">
-						<label for="subject_id">Password </label>
+						<label>Password </label>
 						<div class="input-group mb-3">
 							<input
 								type="password"
 								class="form-control"
-								id="subject_id"
 								placeholder="Password"
 								style="margin-right: 10px;"
+								th:field="*{users.password}"
 							> <input
 								type="password"
 								class="form-control"
-								id="subject_id"
 								placeholder="Confirm Password"
 							>
 						</div>
 					</div>
-					
+
+					<div class="form-group col-md-6">
+
+						<label>Sex </label>
+						<div class="input-group mb-3">
+
+							<div class="form-check-inline">
+								<label class="form-check-label"> <input
+									type="radio"
+									class="form-check-input"
+									value="Male"
+									name="optradio"
+									th:field="*{sex}"
+								/> Male
+								</label>
+							</div>
+							<div class="form-check-inline">
+								<label class="form-check-label"> <input
+									type="radio"
+									class="form-check-input"
+									value="Female"
+									name="optradio"
+									th:field="*{sex}"
+								/> Female
+								</label>
+							</div>
+
+						</div>
+					</div>
+
 
 					<div class="form-group col-md-12">
 						<div class="input-group mb-3">
@@ -215,8 +247,8 @@
 							> Delete </a>
 						</div>
 					</div>
-					
-					
+
+
 				</form>
 			</div>
 
