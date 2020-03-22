@@ -31,4 +31,4 @@ build/
 .vscode/
 
 ### eclipse ###
-.metadata/
+.metadata
