@@ -16,23 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `teacher_breaktime`
+-- Dumping data for table `strandandcourse_subject`
 --
 
-DROP TABLE IF EXISTS `teacher_breaktime`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `teacher_breaktime` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `teacher_id` int DEFAULT NULL,
-  `break_time_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Teacher_IDFK_idx` (`teacher_id`),
-  KEY `BreakTime_ID_idx` (`break_time_id`),
-  CONSTRAINT `BreakTime_ID` FOREIGN KEY (`break_time_id`) REFERENCES `break_time` (`id`),
-  CONSTRAINT `Teacher_IDFK` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `strandandcourse_subject` WRITE;
+/*!40000 ALTER TABLE `strandandcourse_subject` DISABLE KEYS */;
+INSERT INTO `strandandcourse_subject` VALUES (246,59,20),(247,59,9),(248,59,41),(249,59,43),(250,59,10),(251,59,65),(252,59,22),(253,60,20),(254,60,9),(255,60,41),(256,60,43),(257,60,10),(258,60,65);
+/*!40000 ALTER TABLE `strandandcourse_subject` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -43,4 +34,4 @@ CREATE TABLE `teacher_breaktime` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 18:23:17
+-- Dump completed on 2020-03-23 19:17:51

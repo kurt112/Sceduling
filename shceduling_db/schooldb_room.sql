@@ -16,25 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `teacher`
+-- Dumping data for table `room`
 --
 
-DROP TABLE IF EXISTS `teacher`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `teacher` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(45) DEFAULT NULL,
-  `first_name` varchar(45) DEFAULT NULL,
-  `last_name` varchar(45) DEFAULT NULL,
-  `sex` varchar(45) DEFAULT NULL,
-  `start_time` varchar(45) DEFAULT NULL,
-  `end_time` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_username_idx` (`user_name`),
-  CONSTRAINT `fk_username` FOREIGN KEY (`user_name`) REFERENCES `users` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='	';
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `room` WRITE;
+/*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` VALUES (19,'Room 123'),(20,'Room 1234'),(21,'Room 102'),(22,'Room110');
+/*!40000 ALTER TABLE `room` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -45,4 +34,4 @@ CREATE TABLE `teacher` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-14 16:31:26
+-- Dump completed on 2020-03-23 19:17:50

@@ -16,25 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `teacher_subjects`
+-- Dumping data for table `teacher_breaktime`
 --
 
-DROP TABLE IF EXISTS `teacher_subjects`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `teacher_subjects` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `teacher_id` int DEFAULT NULL,
-  `subject_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `teacher_fk_idx` (`teacher_id`),
-  KEY `subject_fk_idx` (`subject_id`),
-  KEY `teacherteach_fk_idx` (`teacher_id`),
-  KEY `subjectteach_fk_idx` (`subject_id`),
-  CONSTRAINT `subjectteach_fk` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`),
-  CONSTRAINT `teacheteachr_fk` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `teacher_breaktime` WRITE;
+/*!40000 ALTER TABLE `teacher_breaktime` DISABLE KEYS */;
+/*!40000 ALTER TABLE `teacher_breaktime` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -45,4 +33,4 @@ CREATE TABLE `teacher_subjects` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 18:23:15
+-- Dump completed on 2020-03-23 19:17:51

@@ -16,23 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `strandandcourse_subject`
+-- Dumping data for table `users`
 --
 
-DROP TABLE IF EXISTS `strandandcourse_subject`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `strandandcourse_subject` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `strand_and_course_id` int DEFAULT NULL,
-  `subject_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `strandcourse_id_idx` (`strand_and_course_id`),
-  KEY `subject_fk_idx` (`subject_id`),
-  CONSTRAINT `strandcourse_fk` FOREIGN KEY (`strand_and_course_id`) REFERENCES `strandandcourse` (`id`),
-  CONSTRAINT `subject_fk` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('kurt123','{noop}kurt',1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -43,4 +34,4 @@ CREATE TABLE `strandandcourse_subject` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-14 16:31:25
+-- Dump completed on 2020-03-23 19:17:53

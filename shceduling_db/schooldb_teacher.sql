@@ -16,22 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `teacher_schedule`
+-- Dumping data for table `teacher`
 --
 
-DROP TABLE IF EXISTS `teacher_schedule`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `teacher_schedule` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `teacher_subjects_id` int DEFAULT NULL,
-  `start_time` varchar(45) DEFAULT NULL,
-  `end_time` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `teacher_subject_fk_idx` (`teacher_subjects_id`),
-  CONSTRAINT `teacher_subject_fk` FOREIGN KEY (`teacher_subjects_id`) REFERENCES `teacher_subjects` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `teacher` WRITE;
+/*!40000 ALTER TABLE `teacher` DISABLE KEYS */;
+INSERT INTO `teacher` VALUES (5,'kurt123','kurt','orioque','Male','6:00 Am','7:00 Pm');
+/*!40000 ALTER TABLE `teacher` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -42,4 +34,4 @@ CREATE TABLE `teacher_schedule` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 18:23:18
+-- Dump completed on 2020-03-23 19:17:52

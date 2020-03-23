@@ -16,22 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `room_shift_breaktime`
+-- Dumping data for table `student`
 --
 
-DROP TABLE IF EXISTS `room_shift_breaktime`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `room_shift_breaktime` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `room_shift_id` int DEFAULT NULL,
-  `start_time` varchar(45) DEFAULT NULL,
-  `end_time` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_roomshift_idx` (`room_shift_id`),
-  CONSTRAINT `fk_roomshift` FOREIGN KEY (`room_shift_id`) REFERENCES `room_shift` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `student` WRITE;
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -42,4 +33,4 @@ CREATE TABLE `room_shift_breaktime` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-14 16:31:25
+-- Dump completed on 2020-03-23 19:17:52
