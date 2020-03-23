@@ -16,13 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `student`
+-- Table structure for table `room_shift`
 --
 
-LOCK TABLES `student` WRITE;
-/*!40000 ALTER TABLE `student` DISABLE KEYS */;
-/*!40000 ALTER TABLE `student` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `room_shift`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `room_shift` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `room_id` int DEFAULT NULL,
+  `strand_and_course_id` int DEFAULT NULL,
+  `shift_name` varchar(45) DEFAULT NULL,
+  `grade` varchar(45) DEFAULT NULL,
+  `section` varchar(45) DEFAULT NULL,
+  `start_time` varchar(45) DEFAULT NULL,
+  `end_time` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `RoomId_FK_idx` (`room_id`),
+  KEY `StrandandCourse_FK_idx` (`strand_and_course_id`),
+  CONSTRAINT `RoomId_FK` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
+  CONSTRAINT `StrandandCourse_FK` FOREIGN KEY (`strand_and_course_id`) REFERENCES `strandandcourse` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -33,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 19:17:52
+-- Dump completed on 2020-03-23 23:06:17

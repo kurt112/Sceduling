@@ -16,13 +16,26 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `teacher_breaktime`
+-- Table structure for table `shift_schedule`
 --
 
-LOCK TABLES `teacher_breaktime` WRITE;
-/*!40000 ALTER TABLE `teacher_breaktime` DISABLE KEYS */;
-/*!40000 ALTER TABLE `teacher_breaktime` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `shift_schedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shift_schedule` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Room_Shift_Id` int DEFAULT NULL,
+  `Teacher_Schedule_Id` int DEFAULT NULL,
+  `strandandcourse_subject_Id` int DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `room_shift_fk_idx` (`Room_Shift_Id`),
+  KEY `Teacher_schedule_fk_idx` (`Teacher_Schedule_Id`),
+  KEY `strandandcoursesubject_fk_idx` (`strandandcourse_subject_Id`),
+  CONSTRAINT `room_shift_fk` FOREIGN KEY (`Room_Shift_Id`) REFERENCES `room_shift` (`id`),
+  CONSTRAINT `strandandcoursesubject_fk` FOREIGN KEY (`strandandcourse_subject_Id`) REFERENCES `strandandcourse_subject` (`id`),
+  CONSTRAINT `Teacher_schedule_fk` FOREIGN KEY (`Teacher_Schedule_Id`) REFERENCES `teacher_schedule` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -33,4 +46,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 19:17:51
+-- Dump completed on 2020-03-23 23:06:17

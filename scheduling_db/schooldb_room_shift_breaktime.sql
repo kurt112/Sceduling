@@ -16,14 +16,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `break_time`
+-- Table structure for table `room_shift_breaktime`
 --
 
-LOCK TABLES `break_time` WRITE;
-/*!40000 ALTER TABLE `break_time` DISABLE KEYS */;
-INSERT INTO `break_time` VALUES (3,'6:00','7:00'),(4,'6:00','7:00'),(5,'6:00','12:00'),(6,'5:00','10:00'),(7,'6:00','8:00'),(8,'07:00','07:30');
-/*!40000 ALTER TABLE `break_time` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `room_shift_breaktime`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `room_shift_breaktime` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `room_shift_id` int DEFAULT NULL,
+  `break_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_roomshift_idx` (`room_shift_id`),
+  KEY `break_id_idx` (`break_id`),
+  CONSTRAINT `break_id` FOREIGN KEY (`break_id`) REFERENCES `break_time` (`id`),
+  CONSTRAINT `fk_roomshift` FOREIGN KEY (`room_shift_id`) REFERENCES `room_shift` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -34,4 +43,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 19:17:52
+-- Dump completed on 2020-03-23 23:06:17

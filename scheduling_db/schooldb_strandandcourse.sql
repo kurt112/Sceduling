@@ -16,14 +16,18 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `room_shift`
+-- Table structure for table `strandandcourse`
 --
 
-LOCK TABLES `room_shift` WRITE;
-/*!40000 ALTER TABLE `room_shift` DISABLE KEYS */;
-INSERT INTO `room_shift` VALUES (69,20,60,'3rd Shift','12','Dekk','02:00','03:00'),(71,20,59,'3rd Shift','12','dfasdfasdfasdf','00:00','01:00'),(73,20,60,'zzzzzz','12',NULL,'03:00','04:00'),(80,19,59,'3rd Shift','1','Dell','03:59','05:01'),(81,20,59,NULL,'2',NULL,'04:00','05:01'),(82,19,60,'1st Shift','12','12','05:01','09:00'),(83,20,60,'2nd Shift','1','Dell','05:05','10:00'),(85,19,60,'2nd Shift',NULL,'Dell','01:00','02:00'),(86,19,59,'1st Shift','2','Xampp','12:00','14:00'),(87,22,59,'1st Shift','11','Dell','07:00','11:00');
-/*!40000 ALTER TABLE `room_shift` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `strandandcourse`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `strandandcourse` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `strand_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -34,4 +38,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 19:17:50
+-- Dump completed on 2020-03-23 23:06:17
