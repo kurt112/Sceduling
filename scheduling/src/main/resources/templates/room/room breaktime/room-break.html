@@ -128,6 +128,7 @@
 												<tr>
 													<th>Room Name</th>
 													<th>Room Shift</th>
+													<th>Room Strand</th>
 													<th>Start Time</th>
 													<th>End Time</th>
 													<th class="th_end">Delete</th>
@@ -138,6 +139,7 @@
 												<tr th:each="break: ${rooms.room_shift_breakTimeList}">
 													<td th:text="${rooms.room.roomName}"></td>
 													<td th:text="${rooms.shiftName}"></td>
+													<td th:text="${rooms.strandAndCourse.strandName}"></td>
 													<td th:text="${break.start_time}"></td>
 													<td th:text="${break.end_time}"></td>
 													<td><a

@@ -261,7 +261,7 @@ public class RoomController {
 
 		model.addAttribute("roomShift_object", this.roomShift);
 		model.addAttribute("room_list", roomService.findAll());
-
+		model.addAttribute("action", "Update Shift");
 		model.addAttribute("strand_list", strandService.findAll());
 		return "room/room shift/room-shift-form";
 	}

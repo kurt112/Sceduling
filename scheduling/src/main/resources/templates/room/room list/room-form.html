@@ -153,7 +153,10 @@
 							/>
 						</div>
 					</div>
-					<div class="form-group col-md-12" th:if="*{room_shiftList}  != null ">
+					<div
+						class="form-group col-md-12"
+						th:if="*{room_shiftList}  != null "
+					>
 						<div class="input-group mb-3">
 							<a
 								th:if="*{room_shiftList.size()} ==0"
@@ -169,6 +172,12 @@
 			</div>
 
 			<div class="col-md-7">
+				<a
+					th:if="${action.equals('Update Room')}"
+					th:href="@{/room//shift/form}"
+					class="btn btn-success"
+					style="margin-bottom: 10px;"
+				> Add RoomShift</a>
 				<div class="content">
 					<div class="animated fadeIn">
 						<div class="row">
@@ -216,10 +225,10 @@
 					</div>
 					<!-- .animated -->
 				</div>
-				
-					<!-- th:href="@{/strand/list}" -->
+
+				<!-- th:href="@{/strand/list}" -->
 				<!-- .content -->
-				<a 
+				<a
 					th:onclick="'back('+${back}+')'"
 					class="btn btn-info btn-block"
 					title="View"

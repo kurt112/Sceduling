@@ -93,6 +93,10 @@
 	rel="stylesheet"
 	th:href="@{/assets/css/main.css}"
 >
+<link
+	rel="stylesheet"
+	th:href="@{/assets/css/contents.css}"
+>
 </head>
 <body style="margin-bottom: 10px;">
 
@@ -265,6 +269,7 @@
 					style="margin-bottom: 10px;"
 					onclick="ChangeTableRoomShift(add_break)"
 				> Add BreakTime</a>
+
 				<div class="content">
 					<div class="animated fadeIn">
 						<div class="row">
@@ -275,31 +280,35 @@
 										<strong class="card-title">BreakTime List</strong>
 									</div>
 									<div class="card-body">
-										<table id="bootstrap-data-table"
+										<table
+											id="bootstrap-data-table"
 											class="table table-striped table-bordered"
 										>
 											<thead>
 												<tr>
 													<th>Start Time</th>
 													<th>End Time</th>
-													<th>Action</th>
+													<th class="th_end">Delete</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="shift: ${room_shifts}">
-													<td th:text="${subject.id}"></td>
-													<td th:text="${subject.subjectName}"></td>
-													<td th:text="${subject.subjectCode}"></td>
+												<tr
+													th:each="break: ${roomShift_object.room_shift_breakTimeList}"
+												>
+													<td th:text="${break.start_time}"></td>
+													<td th:text="${break.end_time}"></td>
 													<!-- 
                                               th:href="@{/subject/update(subject_id=${subject.Id})}"
                                           	onclick="if (!(confirm('Are you sure you want to update this subject?'))) return false" -->
 													<td><a
-														class="btn btn-info btn-sm"
-														style="width: 100%"
-													>Update </a> <a
+													th:href="@{/room/break/delete(break_id=${break.id},shift_id=${roomShift_object.Id})}"
 														class="btn btn-danger btn-sm"
-														style="width: 100%"
-													> Delete </a></td>
+														style="width: 100%; color: white;"
+													> <i
+															class="fa fa-trash"
+															aria-hidden="true"
+														></i>
+													</a></td>
 												</tr>
 											</tbody>
 										</table>
