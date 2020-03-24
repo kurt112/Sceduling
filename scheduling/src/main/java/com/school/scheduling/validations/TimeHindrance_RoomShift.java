@@ -39,12 +39,23 @@ public class TimeHindrance_RoomShift implements ConstraintValidator<CheckTime_Ro
 			if (value.getStartTime() == null || value.getEndTime() == null) {
 				return false;
 			}
+
+			if (value.getStartTime().equals(value.getEndTime())) {
+				System.out.println("Im in euqls");
+
+				message = "Can't sched the same time";
+				context.disableDefaultConstraintViolation();
+
+				context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
+				return false;
+			}
+
 			new_start_time.setTime(dateFormat.parse(value.getStartTime()));
 			new_end_time.setTime(dateFormat.parse(value.getEndTime()));
 
 			if (new_start_time.getTime().after(new_end_time.getTime())) {
 
-				message = "Time Should should not exceed to end time" + new_end_time.getTime();
+				message = "Time Should should not exceed to " + dateFormat.format(new_end_time.getTime());
 				context.disableDefaultConstraintViolation();
 
 				// build new violation message and add it
@@ -60,22 +71,67 @@ public class TimeHindrance_RoomShift implements ConstraintValidator<CheckTime_Ro
 							old_start_time.setTime(dateFormat.parse(roomshift.getStartTime()));
 							old_end_time.setTime(dateFormat.parse(roomshift.getEndTime()));
 
-							if(roomshift.getId() == value.getId()) {
+							System.out.println("Did i loop");
+							if (roomshift.getId() == value.getId()) {
+
+							} else {
+								// if the time is in the middle 
+								if (new_start_time.getTime().after(old_start_time.getTime())
+										&& new_start_time.getTime().before(old_end_time.getTime())) {
+
+									message = "Time Should start or higher than "
+											+ dateFormat.format(old_end_time.getTime());
+									context.disableDefaultConstraintViolation();
+
+									context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
+
+									
+									System.out.println("Something in the middle");
+									return false;
+									// this else if the time is uqual to old and new time
+								} else if (new_start_time.getTime().equals(old_start_time.getTime())
+										&& new_end_time.getTime().equals(old_end_time.getTime())) {
+
+									message = "Occupied Time";
+
+									context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
+									context.disableDefaultConstraintViolation();
+									
+									return false;
+									
+									// this else if the time if before the old_start time and should not exceed to the old start time
+								}else if(new_start_time.getTime().before(old_start_time.getTime())
+										&& new_end_time.getTime().after(old_start_time.getTime())) {
+									
+									
+									message = "Time Start suggestion " + dateFormat.format(old_end_time.getTime());
+
+									context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
+									context.disableDefaultConstraintViolation();
+									
+									
+									
+									return false;
+									// this else if the start time is equal to the old start time and before || and after the old end time
+								}else if(new_start_time.getTime().equals(old_start_time.getTime())
+										&& 
+										(new_end_time.getTime().before(old_end_time.getTime()) 
+												|| 
+										(new_end_time.getTime().after(old_end_time.getTime())) )) 
 								
-							}else {
-								if (new_start_time.getTime().after(old_start_time.getTime()) &&
-										new_start_time.getTime().before(old_end_time.getTime() )) {
-										
-										message = "Time Should start or higher than "
-												+ dateFormat.format(old_end_time.getTime());
-										context.disableDefaultConstraintViolation();
+								{
+									
+									message = "Time Start suggestion " + dateFormat.format(old_end_time.getTime());
 
-										context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
+									context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
+									context.disableDefaultConstraintViolation();
 
-										between = false;
-										System.out.println("Something in the middle");
-										break;
-									}
+									
+									
+									
+									return false;
+								}
+
 							}
 						} // a for loop
 						System.out.println("The Break " + between);
@@ -87,11 +143,9 @@ public class TimeHindrance_RoomShift implements ConstraintValidator<CheckTime_Ro
 				}
 			} // end else
 
-
 			return true;
 		} catch (ParseException e1) {
-			message = "Invalid Time Format"
-					+ dateFormat.format(old_end_time.getTime());
+			message = "Invalid Time Format" + dateFormat.format(old_end_time.getTime());
 			context.disableDefaultConstraintViolation();
 
 			context.buildConstraintViolationWithTemplate(message).addConstraintViolation();

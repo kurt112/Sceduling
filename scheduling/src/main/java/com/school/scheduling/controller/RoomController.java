@@ -150,8 +150,7 @@ public class RoomController {
 	// request mapping for room list
 	@GetMapping("/break/list")
 	public String RoomBreak_List(Model model) {
-		
-		
+
 		model.addAttribute("room_shift", roomShiftService.findAll());
 		return "room/room breaktime/room-break";
 	}
@@ -179,11 +178,11 @@ public class RoomController {
 	@GetMapping("/break/delete")
 	private String RoomBreak_Delete(@RequestParam("break_id") int breakId, @RequestParam("shift_id") int roomshiftId) {
 		Room_Shift shift = roomShiftService.findbyId(roomshiftId);
-		
-		shift.getRoom_shift_breakTimeList().removeIf(e -> e.getId()==breakId);
-		
+
+		shift.getRoom_shift_breakTimeList().removeIf(e -> e.getId() == breakId);
+
 		roomShiftService.save(shift);
-		
+
 		return "redirect:/room/break/form";
 	}
 
@@ -218,23 +217,11 @@ public class RoomController {
 				// end tiem of the break
 				shift_break_end.setTime(dateFormat.parse(shift_break.getEnd_time()));
 
-				System.out.println("the sfhit start -> " + shift_startTime.getTime() + "The shift end Time -> "
-						+ shift_endTime.getTime());
-				System.out.println(
-						"The break -> " + shift_break_start.getTime() + "The break -> " + shift_break_end.getTime());
-
 				// if the start time and end time of the break is in the middle then we will add
 				// it
-				System.out.println(shift_startTime.getTime().before(shift_break_start.getTime()));
 
 				if (shift_startTime.getTime().before(shift_break_start.getTime())
 						&& shift_endTime.getTime().after(shift_break_end.getTime())) {
-
-					System.out.println("the sfhit start -> " + shift_startTime.getTime() + "The shift end Time -> "
-							+ shift_endTime.getTime());
-					System.out.println("The break -> " + shift_break_start.getTime() + "The break -> "
-							+ shift_break_end.getTime());
-
 					break_list.add(shift_break);
 				}
 			}
@@ -242,7 +229,27 @@ public class RoomController {
 			// TODO: handle exception
 		}
 
-		model.addAttribute("room_breaks", break_list);
+		
+		if (room.getRoom_shift_breakTimeList() != null) {
+			List<BreakTime> breaks = new ArrayList<BreakTime>();
+		
+			for (BreakTime break_time : break_list) {
+				System.out.println(break_time);
+				boolean add = true;
+				for (BreakTime break_room : room.getRoom_shift_breakTimeList()) {
+					if (break_time.getId() == break_room.getId()) {
+						add =false;
+						break;
+					}
+
+				}
+				if(add)breaks.add(break_time);	
+	
+			}
+			model.addAttribute("room_breaks", breaks);
+		}else model.addAttribute("room_breaks", break_list);			
+		
+
 		model.addAttribute("shift_object", room);
 		return "room/room breaktime/room-break-check";
 	}
@@ -252,9 +259,9 @@ public class RoomController {
 
 //		this.roomShift.getRoom_shift_breakTimeList().addAll(roomShift.getRoom_shift_breakTimeList());
 		roomShift.getRoom_shift_breakTimeList().forEach(e -> this.roomShift.getRoom_shift_breakTimeList().add(e));
-		
+
 //		System.out.println(roomShift.toString());
-		
+
 		roomShiftService.save(this.roomShift);
 //		System.out.println("The name " + this.roomShift.getShiftName());
 		roomShift.getRoom_shift_breakTimeList().forEach(e -> System.out.println(e.getStart_time()));
@@ -279,25 +286,30 @@ public class RoomController {
 		}
 		// getting all of the room shift
 		model.addObject("room_shifts", roomShiftService.findAll());
+		this.room = null;
 		return model;
 	}
 
 	@GetMapping("/shift/form")
 	public String RoomShift_Form(Model model) {
 		Room_Shift room_shift = new Room_Shift();
-		
-		// this is the model that will insert to the db 
+
+		// this is the model that will insert to the db
 		model.addAttribute("roomShift_object", room_shift);
 
-	   // the dropdown item
-		// dropdown of list room lsit
-		model.addAttribute("room_list", roomService.findAll());
+		// the dropdown item
+		// dropdown of list room lsit'
+		if (this.room != null) {
+			model.addAttribute("room_list", this.room);
+		} else {
+			model.addAttribute("room_list", roomService.findAll());
+		}
 		// dropdown of list of strand list
 		model.addAttribute("strand_list", strandService.findAll());
-		
+
 		// state of the button if it is update or Save
 		model.addAttribute("action", "Save Shift");
-		
+
 		// alert in java scipt
 		model.addAttribute("back", back);
 		this.roomShift = room_shift;
@@ -310,10 +322,15 @@ public class RoomController {
 			BindingResult binding, Model model) {
 
 		// chceck if the saving of shift has error
+		System.out.println("the room " + this.room);
 		if (binding.hasErrors()) {
 			back += -1;
 
-			model.addAttribute("room_list", roomService.findAll());
+			if (this.room != null) {
+				model.addAttribute("room_list", this.room);
+			} else {
+				model.addAttribute("room_list", roomService.findAll());
+			}
 
 			model.addAttribute("strand_list", strandService.findAll());
 			model.addAttribute("action", "Update Shift");
@@ -324,19 +341,17 @@ public class RoomController {
 
 		return "redirect:/room/shift/form";
 	}
-	
-	
+
 	// request mapping for shift update
 	@GetMapping("/shift/update")
 	private String RoomShift_Update(@ModelAttribute("roomShift_id") int theId, Model model) {
 
 		// finding the param id got in url
 		Room_Shift room_shift = roomShiftService.findbyId(theId);
-		
+
 		// the object in the form
 		model.addAttribute("roomShift_object", room_shift);
-		
-		
+
 		// the dropdown in the form
 		model.addAttribute("room_list", roomService.findAll());
 		model.addAttribute("strand_list", strandService.findAll());
@@ -348,6 +363,7 @@ public class RoomController {
 
 		return "room/room shift/room-shift-form";
 	}
+
 	// in this delete if the user delete in the acutal form
 	@GetMapping("/shift/delete")
 	private String RoomShift_Delete(@ModelAttribute("roomShift_id") int theId) {
@@ -359,12 +375,12 @@ public class RoomController {
 	// in this delete if the user is delete in the main view
 	@GetMapping("/shift/delete_Main")
 	private String RoomShift_DeleteMain(@ModelAttribute("roomShift_id") int theId) {
-		//  finding the  object of the list
+		// finding the object of the list
 		Room_Shift room = roomShiftService.findbyId(theId);
-		
+
 		// removing all of the student
 		room.getStudentList().forEach(e -> studnetService.delete(e));
-		
+
 		// removing all of the breaktime of the sutdent
 		room.getRoom_shift_breakTimeList().removeAll(room.getRoom_shift_breakTimeList());
 		roomShiftService.save(room);
