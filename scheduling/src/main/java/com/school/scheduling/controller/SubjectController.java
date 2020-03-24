@@ -1,5 +1,8 @@
 package com.school.scheduling.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.school.scheduling.entity.StrandAndCourse;
 import com.school.scheduling.entity.Subject;
 import com.school.scheduling.service.Services;
 
@@ -23,6 +27,7 @@ import com.school.scheduling.service.Services;
 public class SubjectController {
 
 	private Services<Subject> subjectService;
+	private Services<StrandAndCourse> strandService;
 	private int back =0;
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -30,16 +35,14 @@ public class SubjectController {
 	}
 
 	@Autowired
-	public SubjectController(Services<Subject> subjectService) {
+	public SubjectController(Services<Subject> subjectService,Services<StrandAndCourse> strandService ) {
 		this.subjectService = subjectService;
+		this.strandService = strandService;
 	}
 
 	@GetMapping("/form")
 	public String SubjectList(Model theModel) {
 		Subject subject = new Subject();
-
-		// for the list of subjects
-		theModel.addAttribute("subjects", subjectService.findAll());
 		
 		// for the model attribute
 		theModel.addAttribute("subject", subject);
@@ -75,7 +78,7 @@ public class SubjectController {
 		// back -2 because this save will redirect twice in the form
 		back = -2;
 		subjectService.save(subject);
-		return "redirect:/subject/form";
+		return "redirect:/subject/f	orm";
 	}
 
 	// to delete an entity
@@ -93,7 +96,22 @@ public class SubjectController {
 		Subject subject = subjectService.findbyId(theiD);
 		System.out.println(subject);
 		// Model for the table in update subject in the model property
-		theModel.addAttribute("subjects", subjectService.findAll());
+		
+		List<StrandAndCourse> strandAndCourses = new ArrayList<>();
+		
+		
+		for(StrandAndCourse strand: strandService.findAll()) {
+			for(Subject sbj: strand.getSubjectList()) {
+				if(sbj.getId() == subject.getId()){
+					strandAndCourses.add(strand);
+					break;
+				}
+			}
+		}
+
+		theModel.addAttribute("strand_list", strandAndCourses);
+		
+		
 		if (subject == null) subject = new Subject();
 		
 		theModel.addAttribute("subject", subject);

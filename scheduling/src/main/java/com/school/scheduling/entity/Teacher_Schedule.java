@@ -32,7 +32,10 @@ public class Teacher_Schedule {
 
     @Column(name = "end_time")
     private String EndTime;
-
+ 
+    @Column(name = "lecture_day")
+    private String lecture_day;
+    
     public Teacher_Schedule() {
     }
 
@@ -73,4 +76,14 @@ public class Teacher_Schedule {
     public void setEndTime(String endTime) {
         EndTime = endTime;
     }
+
+	public String getLecture_day() {
+		return lecture_day;
+	}
+
+	public void setLecture_day(String lecture_day) {
+		this.lecture_day = lecture_day;
+	}
+    
+    
 }

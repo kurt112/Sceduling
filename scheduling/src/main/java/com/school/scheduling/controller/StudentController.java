@@ -46,6 +46,17 @@ public class StudentController {
 	public String Student_List(Model model) {
 		List<Student> student_list = studentservice.findAll();
 
+		student_list.forEach(e-> {
+			if(e.getRoom_shift()==null) {
+				Room_Shift room_Shift = new Room_Shift();
+				
+				room_Shift.setRoom(new Room("N/A"));
+				room_Shift.setShiftName("N/A");
+				room_Shift.setGrade("N/A");
+				room_Shift.setSection("N/A");
+				e.setRoom_shift(room_Shift);
+			}
+		});
 		student_list.sort(
 				(o1, o2) -> o1.getRoom_shift().getShiftName().compareToIgnoreCase(o2.getRoom_shift().getShiftName()));
 		model.addAttribute("student_list", student_list);
@@ -69,6 +80,8 @@ public class StudentController {
 		// the object in the form
 		model.addAttribute("student_object", new Student());
 
+		model.addAttribute("action", "Save Student");
+		
 		return "student/student list/student-form";
 	}
 
@@ -105,7 +118,7 @@ public class StudentController {
 		// for the dropdown
 		model.addAttribute("strand_list", strand_list);
 		model.addAttribute("roomshift_list", room_shift);
-
+		model.addAttribute("action", "Update Student");
 		return "student/student list/student-form";
 	}
 

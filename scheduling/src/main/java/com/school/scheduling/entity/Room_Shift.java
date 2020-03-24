@@ -59,7 +59,7 @@ public class Room_Shift implements Comparable<Room_Shift>{
 	@JoinColumn(name = "strand_and_course_id")
 	private StrandAndCourse strandAndCourse;
 
-	@OneToMany(mappedBy = "room_shift", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "room_shift", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 	private List<Student> studentList;
 
 	public Room_Shift() {

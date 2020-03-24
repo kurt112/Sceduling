@@ -87,7 +87,7 @@ public class Subject {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST,
-            CascadeType.REFRESH
+            CascadeType.REFRESH,
     })
     @JoinTable(
             name = "strandandcourse_subject",

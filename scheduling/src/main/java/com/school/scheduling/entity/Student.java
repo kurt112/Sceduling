@@ -28,7 +28,12 @@ public class Student {
     private String sex;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+    		CascadeType.DETACH,
+    		CascadeType.MERGE,
+    		CascadeType.REFRESH,
+    		CascadeType.PERSIST
+    })
     @JoinColumn(name = "strand_and_course_id")
     private StrandAndCourse strandAndCourse;
 

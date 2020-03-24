@@ -102,176 +102,112 @@
 			style=""
 		>
 
-			<div class="col-md-5" >
-				<h1>Subject Information</h1>
+			<div class="col-md-5">
+				<h1>Teacher Information</h1>
 
 				<form
 					action="#"
-					th:action="@{/subject/save}"
-					th:object="${subject}"
+					th:action="@{/student/save}"
 					method="POST"
 				>
 
-					<div class="form-group col-md-12">
-						<label for="subject_id">Subject Id ( Remain zero if you will add)
-						<span class="error" th:if="${#fields.hasErrors('Id')}" th:errors="*{Id}"></span>
-					
-						</label>
-						<div class="input-group mb-3">
-							<input
-								type="number"
-								class="form-control"
-								id="subject_id"
-								th:field="*{Id}"
-								placeholder="Subject Id"
-							>
-						</div>
-					</div>
+					<input
+						type="hidden"
+						class="form-control"
+						placeholder="Subject Id"
+					>
+
 
 					<div class="form-group col-md-12">
-						<label for="subject_name">Subject Name 
-						<span class="error" th:if="${#fields.hasErrors('subjectName')}" th:errors="*{subjectName}"></span></label>
+						<label>First Name And Last Name </label>
 						<div class="input-group mb-3">
 							<input
 								type="text"
 								class="form-control"
-								id="subject_name"
-								th:field="*{subjectName}"
-								placeholder="Subject Name"
+								placeholder="First Name"
+								style="margin-right: 10px;"
+							> <input
+								type="text"
+								class="form-control"
+								placeholder="Last Name"
 							>
 						</div>
-
 					</div>
 
 					<div class="form-group col-md-12">
-
+						<label>Sex And Lecture Day </label>
 						<div class="input-group mb-3">
-							<div class="col-md-6">
-								<label for="subject_code">Subject Code (Optional)</label> <input
-									type="text"
-									class="form-control"
-									id="subject_code"
-									th:field="*{subjectCode}"
-									placeholder="Subject Code"
-								>
+							<select
+								style="margin-right: 10px;"
+								class="form-control"
+							>
+								<!-- selected -->
+								<option value="MALE">Male</option>
+								<option value="FEMALE">Female</option>
+							</select> <select
+								style="margin-right: 10px;"
+								class="form-control"
+							>
+								<!-- selected -->
+								<option>FULLTIME</option>
+								<option>MWF</option>
+								<option>TTH</option>
 
-							</div>
-							<div class="col-md-6">
-								<label for="subject_units">Subject Units (Optional)</label> <input
-									type="text"
-									class="form-control"
-									id="subject_units"
-									th:field="*{subjectUnit}"
-									placeholder="Subject Units"
-								>
-							</div>
+							</select>
 						</div>
 					</div>
 
 					<div class="form-group col-md-12">
-
+						<label>Teacher UserName</label>
 						<div class="input-group mb-3">
-							<div class="col-md-6">
-								<label for="subject_hour">Subject Hour
-								<span class="error" th:if="${#fields.hasErrors('hourCost')}" th:errors="*{hourCost}"></span></label>
-								</label> <input
-									type="number"
-									class="form-control"
-									id="subject_hour"
-									th:field="*{hourCost}"
-									placeholder="Subject Hour"
-								>
-							</div>
-							<div class="col-md-6">
-								<label for="subject_hour">Subject Minute
-								<span class="error" th:if="${#fields.hasErrors('minuteCost')}" th:errors="*{minuteCost}"></span></label>
-								</label> <input
-									type="number"
-									class="form-control"
-									id="subject_minute"
-									th:field="*{minuteCost}"
-									placeholder="Subject Minute"
-								>
-							</div>
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Username"
+							>
+						</div>
+					</div>
+					<div class="form-group col-md-12">
+						<label>Start Time and End time </label>
+						<div class="input-group mb-3">
+							<input
+								type="time"
+								class="form-control"
+								placeholder="Password"
+								style="margin-right: 10px;"
+							> <input
+								type="time"
+								class="form-control"
+								
+							>
 						</div>
 					</div>
 
 					<div class="form-group col-md-12">
-
+						<label>Password </label>
 						<div class="input-group mb-3">
-
-
-							<div class="col-md-6">
-
-								<label for="subject_name">Subject Category
-								<span class="error" th:if="${#fields.hasErrors('is_Major')}" th:errors="*{is_Major}"></span>
-								</label>
-								<div class="input-group mb-3">
-									<div class="form-check-inline">
-										<label class="form-check-label"> <input
-											type="radio"
-											class="form-check-input"
-											value="Major"
-											name="optradio"
-											th:field="*{is_Major}"
-										> Major
-
-										</label>
-									</div>
-									<div class="form-check-inline">
-										<label class="form-check-label"> <input
-											type="radio"
-											class="form-check-input"
-											value="Minor"
-											name="optradio"
-											th:field="*{is_Major}"
-										> Minor
-										</label>
-									</div>
-								</div>
-
-							</div>
-
-							<div class="col-md-6">
-
-								<label for="subject_name">Subject Status
-								<span class="error" th:if="${#fields.hasErrors('is_Active')}" th:errors="*{is_Active}"></span>
-								</label>
-
-								<div class="input-group mb-3">
-									<div class="form-check-inline">
-										<label class="form-check-label"> <input
-											type="radio"
-											class="form-check-input"
-											value="Active"
-											name="optradio"
-											th:field="*{is_Active}"
-										> Active
-
-										</label>
-									</div>
-									<div class="form-check-inline">
-										<label class="form-check-label"> <input
-											type="radio"
-											class="form-check-input"
-											value="In Active"
-											name="optradio"
-											th:field="*{is_Active}"
-										> In Active
-										</label>
-									</div>
-								</div>
-
-							</div>
+							<input
+								type="password"
+								class="form-control"
+								placeholder="Password"
+								style="margin-right: 10px;"
+							> <input
+								type="password"
+								class="form-control"
+								placeholder="Confirm Password"
+							>
 						</div>
 					</div>
+
+
+
 
 					<div class="form-group col-md-12">
 						<div class="input-group mb-3">
 							<input
 								type="submit"
 								class="btn btn-success form-control"
-								value="Add or Update"
+								value="Save Student"
 							>
 						</div>
 					</div>
@@ -284,51 +220,79 @@
 							> Delete </a>
 						</div>
 					</div>
+
+
 				</form>
 			</div>
 
 			<div class="col-md-7">
-				<div class="content">
+				<a
+					class="btn btn-success"
+					style="margin-bottom: 10px; color: white;"
+					onclick="ChageTable_RoomShift('break_table')"
+				> <span></span>View Breaktime
+				</a> <a
+					class="btn btn-success"
+					style="margin-bottom: 10px; color: white;"
+					onclick="ChageTable_RoomShift('student_table')"
+				> View Student</a> <a
+					class="btn btn-success"
+					style="margin-bottom: 10px; color: white;"
+					onclick="ChageTable_RoomShift('schedule_table')"
+				> View Schedule</a> <a
+					class="btn btn-success"
+					style="margin-bottom: 10px; color: white;"
+					onclick="ChageTable_RoomShift('schedule_table')"
+				> View Subject</a>
+				<div
+					class="content"
+					id="break_content"
+					style="display: none;"
+				>
 					<div class="animated fadeIn">
 						<div class="row">
 
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<strong class="card-title">Subject List</strong>
+										<strong class="card-title">BreakTime List</strong> <a
+											th:href="@{/room/break/list/add}"
+											class="btn btn-success"
+											style="float: right;"
+										> Add BreakTime</a>
 									</div>
 									<div class="card-body">
 										<table
-											id="bootstrap-data-table"
+											style="width: 100%;"
+											id="break_table"
 											class="table table-striped table-bordered"
 										>
 											<thead>
 												<tr>
-													<th>Id</th>
-													<th>Name</th>
-													<th>Code</th>
-													<th>Hour</th>
-													<th>Minute</th>
-													<th>Units</th>
-													<th>Category</th>
-													<th>Status</th>
-
+													<th>Start Time</th>
+													<th>End Time</th>
+													<th class="th_end">Delete</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="subject: ${subjects}">
-													<td th:text="${subject.Id}"></td>
-													<td th:text="${subject.subjectName}"></td>
-													<td th:text="${subject.subjectCode}"></td>
-													<td th:text="${subject.hourCost}"></td>
-													<td th:text="${subject.minuteCost}"></td>
-													<td th:text="${subject.subjectUnit}"></td>
-													<td th:text="${subject.is_Major}"></td>
-													<td th:text="${subject.is_Active}"></td>
+												<tr>
+													<td></td>
+													<td></td>
+													<td><a
+														class="btn btn-danger btn-sm"
+														style="width: 100%; color: white;"
+													> <i
+															class="fa fa-trash"
+															aria-hidden="true"
+														></i>
+													</a></td>
 												</tr>
 											</tbody>
 										</table>
+
+
 									</div>
+
 								</div>
 							</div>
 
@@ -337,6 +301,138 @@
 					</div>
 					<!-- .animated -->
 				</div>
+				<!-- .content -->
+
+				<div
+					class="content"
+					id="student_content"
+					style="display: block;"
+				>
+					<div class="animated fadeIn">
+						<div class="row">
+
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<strong class="card-title">Student List</strong> <a
+											class="btn btn-success"
+											style="float: right; color: white;"
+										> Add Student</a>
+									</div>
+									<div class="card-body">
+										<table
+											style="width: 100%;"
+											id="student_table"
+											class="table table-striped table-bordered"
+										>
+											<thead>
+												<tr>
+													<th>First Name</th>
+													<th>Last Name</th>
+													<th>Sex</th>
+													<th>Room</th>
+													<th>Shift Name</th>
+													<th>Strand</th>
+													<th>Grade</th>
+													<th>Section</th>
+													<th class="th_end">Delete</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td><a
+														style="width: 100%; color: white;"
+														class="btn btn-danger btn-sm"
+														onclick="if (!(confirm('Are you sure you want to delete this Strand?'))) return false"
+													> <i
+															class="fa fa-trash"
+															aria-hidden="true"
+														></i>
+													</a></td>
+												</tr>
+											</tbody>
+										</table>
+
+
+									</div>
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<!-- .animated -->
+				</div>
+				<!-- .content -->
+
+				<div
+					class="content"
+					id="schedule_content"
+					style="display: none;"
+				>
+					<div class="animated fadeIn">
+						<div class="row">
+
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<strong class="card-title">Schedule List</strong> <a
+											th:href="@{/room/break/list/add}"
+											class="btn btn-success"
+											style="float: right;"
+										> Add Schedule</a>
+									</div>
+									<div class="card-body">
+										<table
+											style="width: 100%;"
+											id="schedule_table"
+											class="table table-striped table-bordered"
+										>
+											<thead>
+												<tr>
+													<th>Start Time</th>
+													<th>End Time</th>
+													<th class="th_end">Delete</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td></td>
+													<td></td>
+													<td><a
+														class="btn btn-danger btn-sm"
+														style="width: 100%; color: white;"
+													> <i
+															class="fa fa-trash"
+															aria-hidden="true"
+														></i>
+													</a></td>
+												</tr>
+											</tbody>
+										</table>
+
+
+									</div>
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<!-- .animated -->
+				</div>
+				<!-- .content -->
 				<!-- .content -->
 				<a
 					th:href="@{/subject/list}"
@@ -351,23 +447,35 @@
 	<!-- Scripts -->
 	<!--  <script th:src="@{/assets/js/sample.js}"></script> -->
 
-	<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-	
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"
+	></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"
+	></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+	></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"
+	></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"
+	></script>
+
 	<script th:src="@{/assets/js/lib/data-table/datatables.min.js}"></script>
-    <script th:src="@{/assets/js/lib/data-table/dataTables.bootstrap.min.js}"></script>
-    <script th:src="@{/assets/js/lib/data-table/dataTables.buttons.min.js}"></script>
-    <script th:src="@{/assets/js/lib/data-table/buttons.bootstrap.min.js}"></script>
-    <script th:src="@{/assets/js/lib/data-table/jszip.min.js}"></script>
-    <script th:src="@{/assets/js/lib/data-table/vfs_fonts.js}"></script>
-    <script th:src="@{/assets/js/lib/data-table/buttons.html5.min.js}"></script>
-    <script th:src="@{/assets/js/lib/data-table/buttons.print.min.js}"></script>
-    <script th:src="@{/assets/js/lib/data-table/buttons.colVis.min.js}"></script>
-    <script th:src="@{/assets/js/init/datatables-init.js}"></script>
-	
+	<script
+		th:src="@{/assets/js/lib/data-table/dataTables.bootstrap.min.js}"
+	></script>
+	<script th:src="@{/assets/js/lib/data-table/dataTables.buttons.min.js}"></script>
+	<script th:src="@{/assets/js/lib/data-table/buttons.bootstrap.min.js}"></script>
+	<script th:src="@{/assets/js/lib/data-table/jszip.min.js}"></script>
+	<script th:src="@{/assets/js/lib/data-table/vfs_fonts.js}"></script>
+	<script th:src="@{/assets/js/lib/data-table/buttons.html5.min.js}"></script>
+	<script th:src="@{/assets/js/lib/data-table/buttons.print.min.js}"></script>
+	<script th:src="@{/assets/js/lib/data-table/buttons.colVis.min.js}"></script>
+	<script th:src="@{/assets/js/init/datatables-init.js}"></script>
+	<script th:src="@{/assets/js/Schedule.js}"></script>
 
 	<script type="text/javascript">
 		function button_delete() {

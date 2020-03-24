@@ -55,7 +55,7 @@ public class RoomController {
 	private Services<Room> roomService;
 	private Services<Room_Shift> roomShiftService;
 	private Services<StrandAndCourse> strandService;
-	private Services<Student> studnetService;
+	private Services<Student> studentService;
 	private Room room;
 	private Room_Shift roomShift;
 	private Room_Shift delete_shift;
@@ -63,12 +63,12 @@ public class RoomController {
 	@Autowired
 	public RoomController(Services<Room> roomService, Services<Room_Shift> roomShiftService,
 			Services<StrandAndCourse> strandService, Services<BreakTime> breakService,
-			Services<Student> studnetService) {
+			Services<Student> studentService) {
 		this.roomService = roomService;
 		this.roomShiftService = roomShiftService;
 		this.strandService = strandService;
 		this.breakService = breakService;
-		this.studnetService = studnetService;
+		this.studentService = studentService;
 	}
 
 	/********************************* Mapping for Room ******************/
@@ -289,7 +289,19 @@ public class RoomController {
 		this.room = null;
 		return model;
 	}
+	
+	@GetMapping("/shift/student_form")
+	public String RoomShift_StudentForm(Model model) {
+		
+		// for the dropdown
+		model.addAttribute("strand_list", this.roomShift.getStrandAndCourse());
+		model.addAttribute("roomshift_list", this.roomShift);
 
+		// the object in the form
+		model.addAttribute("student_object", new Student());
+
+		return "student/student list/student-form";
+	}
 	@GetMapping("/shift/form")
 	public String RoomShift_Form(Model model) {
 		Room_Shift room_shift = new Room_Shift();
@@ -359,6 +371,9 @@ public class RoomController {
 		// state of the button
 		model.addAttribute("back", back);
 		model.addAttribute("action", "Update Shift");
+		
+		System.out.println(room_shift.getStudentList());
+		model.addAttribute("student_list",room_shift.getStudentList());
 		this.roomShift = room_shift;
 
 		return "room/room shift/room-shift-form";
@@ -379,8 +394,10 @@ public class RoomController {
 		Room_Shift room = roomShiftService.findbyId(theId);
 
 		// removing all of the student
-		room.getStudentList().forEach(e -> studnetService.delete(e));
-
+		room.getStudentList().forEach(e -> {
+			e.setRoom_shift(null);
+		});
+	
 		// removing all of the breaktime of the sutdent
 		room.getRoom_shift_breakTimeList().removeAll(room.getRoom_shift_breakTimeList());
 		roomShiftService.save(room);
