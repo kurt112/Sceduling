@@ -25,14 +25,28 @@ padding-top:10px;
 	width:5px;
 }
 
+.modal{
+  text-align: center;
+}
+.modal-content{
+  margin-top: 200px;
+}
+.modal-footer{
+  display: inline-block;
+ text-align: center;
+ vertical-align: middle;
+}
+body { padding-right: 0 !important;}
 
-
-
-
-
-
-
-
+.aButton{
+	width: 100%; 
+}
+.fa-pencil{
+	color:white;
+}
+.fa-trash{
+	color:white;
+}
 .buttons-csv{
 
 }

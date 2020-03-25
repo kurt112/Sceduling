@@ -12,9 +12,6 @@ input[type=checkbox] {
 .dataTables_filter{
 	float:right;
 }
-
-
-
 ul li{
 	cursor: pointer;
 }

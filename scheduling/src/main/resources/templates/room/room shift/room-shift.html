@@ -97,6 +97,55 @@
 >
 </head>
 <body>
+	<div
+		class="modal fade right"
+		id="modal"
+		tabindex="-1"
+		role="dialog"
+		aria-labelledby="myModalLabel"
+		aria-hidden="true"
+		data-backdrop="true"
+	>
+		<div
+			class="modal-dialog modal-side modal-bottom-right modal-notify modal-info"
+			role="document"
+		>
+
+			<div class="modal-content">
+				<!--Header-->
+
+				<!--Body-->
+				<div class="modal-body ">
+					<div class="col-12">
+						<i
+							class="fa fa-exclamation-circle"
+							style="margin-top: 20px; margin-bottom: 20px; font-size: 100px; color: #C32828;"
+						></i>
+						<h1>Are you sure?</h1>
+						<p>You won't be able to revert this</p>
+					</div>
+
+				</div>
+
+				<!--Footer-->
+				<div
+					class="modal-footer flex-right"
+					style="border-top: none;"
+				>
+					<a
+						id="message_button"
+						class="btn btn-success"
+						style="color: white; margin-right: 10px;"
+					> </a> <a
+						class="btn btn-info"
+						data-dismiss="modal"
+					>Cancel </a>
+
+				</div>
+			</div>
+			<!--/.Content Delete-->
+		</div>
+	</div>
 
 	<div class="container-fluid rounded">
 		<div
@@ -147,20 +196,24 @@
 													<td th:text="${shift.section}"></td>
 													<td th:text="${shift.strandAndCourse.strandName}"></td>
 													<td><a
-														style="width: 100%;"
-														class="btn btn-info btn-sm"
-														th:href="@{/room/shift/update(roomShift_id=${shift.Id})}"
-														onclick="if (!(confirm('Are you sure you want to update this subject?'))) return false"
-													> <i class="fa fa-pencil" aria-hidden="true"></i></a>
-													</td>
-													<td>
-													 <a
-														style="width: 100%;"
-														class="btn btn-danger btn-sm"
-														th:href="@{/room/shift/delete_Main(roomShift_id=${shift.Id})}"
-														onclick="if (!(confirm('Are you sure you want to delete this Subject?'))) return false"
-													> <i class="fa fa-trash" aria-hidden="true"></i> </a>
-													</td>
+														th:onclick="'UpdateRoomShift_id('+${shift.id}+')'"
+														class="btn btn-info btn-sm aButton"
+														data-target="#modal"
+														data-toggle="modal"
+													> <i
+															class="fa fa-pencil"
+															aria-hidden="true"
+														></i></a></td>
+													<td><a
+														th:onclick="'DeleteRoomShift_id('+${shift.id}+')'"
+														class="btn btn-danger btn-sm aButton"
+														data-target="#modal"
+														data-toggle="modal"
+													> <i
+															class="fa fa-trash"
+															aria-hidden="true"
+														></i>
+													</a></td>
 												</tr>
 										</table>
 									</div>
