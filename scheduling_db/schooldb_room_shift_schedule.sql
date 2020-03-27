@@ -16,24 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `shift_schedule`
+-- Table structure for table `room_shift_schedule`
 --
 
-DROP TABLE IF EXISTS `shift_schedule`;
+DROP TABLE IF EXISTS `room_shift_schedule`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `shift_schedule` (
-  `Id` int NOT NULL AUTO_INCREMENT,
-  `Room_Shift_Id` int DEFAULT NULL,
-  `Teacher_Schedule_Id` int DEFAULT NULL,
-  `strandandcourse_subject_Id` int DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  KEY `room_shift_fk_idx` (`Room_Shift_Id`),
-  KEY `Teacher_schedule_fk_idx` (`Teacher_Schedule_Id`),
-  KEY `strandandcoursesubject_fk_idx` (`strandandcourse_subject_Id`),
-  CONSTRAINT `room_shift_fk` FOREIGN KEY (`Room_Shift_Id`) REFERENCES `room_shift` (`id`),
-  CONSTRAINT `strandandcoursesubject_fk` FOREIGN KEY (`strandandcourse_subject_Id`) REFERENCES `strandandcourse_subject` (`id`),
-  CONSTRAINT `Teacher_schedule_fk` FOREIGN KEY (`Teacher_Schedule_Id`) REFERENCES `teacher_schedule` (`id`)
+CREATE TABLE `room_shift_schedule` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `room_shift` int DEFAULT NULL,
+  `teacher_id` int DEFAULT NULL,
+  `subject_id` int DEFAULT NULL,
+  `start_time` varchar(45) DEFAULT NULL,
+  `end_time` varchar(45) DEFAULT NULL,
+  `lecture_day` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `subject_id_idx` (`subject_id`),
+  KEY `teacher_id_idx` (`teacher_id`),
+  KEY `room_shift_id_idx` (`room_shift`),
+  CONSTRAINT `room_shift_id` FOREIGN KEY (`room_shift`) REFERENCES `room_shift` (`id`),
+  CONSTRAINT `subject_id` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`),
+  CONSTRAINT `teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -46,4 +49,4 @@ CREATE TABLE `shift_schedule` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 23:06:17
+-- Dump completed on 2020-03-28  3:17:43

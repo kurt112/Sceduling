@@ -30,10 +30,12 @@ CREATE TABLE `teacher` (
   `sex` varchar(45) DEFAULT NULL,
   `start_time` varchar(45) DEFAULT NULL,
   `end_time` varchar(45) DEFAULT NULL,
+  `remaining_time` varchar(45) DEFAULT NULL,
+  `lecture_day` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_username_idx` (`user_name`),
   CONSTRAINT `fk_username` FOREIGN KEY (`user_name`) REFERENCES `users` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='	';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='	';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -45,4 +47,4 @@ CREATE TABLE `teacher` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-23 23:06:18
+-- Dump completed on 2020-03-28  3:17:43
