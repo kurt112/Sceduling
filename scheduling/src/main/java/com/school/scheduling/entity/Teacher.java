@@ -14,25 +14,29 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int Id;
+    private int id;
 
     @Column(name = "first_name")
-    private String FirstName;
+    private String firstName;
 
     @Column(name = "last_name")
-    private String LastName;
+    private String lastName;
 
     @Column(name = "sex")
-    private String Sex;
+    private String sex;
 
     @Column(name = "start_time")
     private String startTime;
 
     @Column(name = "end_time")
     private String endTime;
+    
+    @Column(name = "remaining_time")
+    private String remainingTime;
+    
+    @Column(name = "lecture_day")
+    private String lecture_day;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    private List<Teacher_Schedule> teacher_scheduleList;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
@@ -47,13 +51,13 @@ public class Teacher {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private List<Subject> subjectList;
-    
+
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(fetch = FetchType.LAZY,
-	cascade = { 
+	cascade = {
 			CascadeType.DETACH,
 			CascadeType.MERGE, CascadeType.PERSIST,
-			CascadeType.REFRESH 
+			CascadeType.REFRESH
 			})
 	@JoinTable(
 			name = "teacher_breaktime",
@@ -62,6 +66,7 @@ public class Teacher {
 			)
 	private List<BreakTime> breaktime_teacherList;
 
+	
 
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -71,12 +76,13 @@ public class Teacher {
 
     }
 
-    public Teacher(String firstName, String lastName, String sex, String startTime, String endTime) {
-        FirstName = firstName;
-        LastName = lastName;
-        Sex = sex;
+    public Teacher(String firstName, String lastName, String sex, String startTime, String endTime, String lecture_day) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.sex = sex;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.lecture_day = lecture_day;
     }
 
     public void add_BreakTime(BreakTime breaktime_teacher){
@@ -87,13 +93,6 @@ public class Teacher {
 
     }
 
-    public List<Teacher_Schedule> getTeacher_scheduleList() {
-        return teacher_scheduleList;
-    }
-
-    public void setTeacher_scheduleList(List<Teacher_Schedule> teacher_scheduleList) {
-        this.teacher_scheduleList = teacher_scheduleList;
-    }
 
     public Users getUsers() {
         return users;
@@ -110,35 +109,35 @@ public class Teacher {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+    	this.id = id;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public String getSex() {
-        return Sex;
+        return sex;
     }
 
     public void setSex(String sex) {
-        Sex = sex;
+        this.sex = sex;
     }
 
     public List<Subject> getSubjectList() {
@@ -173,15 +172,29 @@ public class Teacher {
         this.endTime = endTime;
     }
 
-  
+    public String getLecture_day() {
+		return lecture_day;
+	}
 
-    @Override
+	public void setLecture_day(String lecture_day) {
+		this.lecture_day = lecture_day;
+	}
+
+	public String getRemainingTime() {
+		return remainingTime;
+	}
+
+	public void setRemainingTime(String remainingTime) {
+		this.remainingTime = remainingTime;
+	}
+
+	@Override
     public String toString() {
         return "Teacher{" +
-                "Id=" + Id +
-                ", FirstName='" + FirstName + '\'' +
-                ", LastName='" + LastName + '\'' +
-                ", Sex='" + Sex + '\'' +
+                "Id=" + id +
+                ", FirstName='" + firstName + '\'' +
+                ", LastName='" + lastName + '\'' +
+                ", Sex='" + sex + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", breaktime_teacherList=" + breaktime_teacherList +

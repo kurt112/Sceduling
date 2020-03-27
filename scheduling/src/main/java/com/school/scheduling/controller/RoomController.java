@@ -163,27 +163,47 @@ public class RoomController {
 		return "room/room breaktime/room-break-form";
 	}
 
-	// request mapping for room break save
-	@PostMapping("/break/save")
-	public String RoomBreak_Add(@ModelAttribute("break_object") BreakTime breaks, Model model) {
-		breakService.save(breaks);
-		return "redirect:/room/break/form";
-	}
-
 	@GetMapping("/break/update")
 	private String RoomBreak_Update() {
 		return "redirect:/room/break/form";
 	}
 
 	@GetMapping("/break/delete")
-	private String RoomBreak_Delete(@RequestParam("break_id") int breakId, @RequestParam("shift_id") int roomshiftId) {
+	private String RoomBreak_DeleteMain(@RequestParam("break_id") int breakId,
+			@RequestParam("shift_id") int roomshiftId) {
 		Room_Shift shift = roomShiftService.findbyId(roomshiftId);
 
 		shift.getRoom_shift_breakTimeList().removeIf(e -> e.getId() == breakId);
 
 		roomShiftService.save(shift);
 
-		return "redirect:/room/break/form";
+		return "redirect:/room/break/list";
+	}
+
+	@GetMapping("/break/deleteShiftForm")
+	private String RoomBreakShift_Delete(@RequestParam("break_id") int breakId,
+			@RequestParam("shift_id") int roomshiftId, Model model) {
+		Room_Shift shift = roomShiftService.findbyId(roomshiftId);
+
+		shift.getRoom_shift_breakTimeList().removeIf(e -> e.getId() == breakId);
+
+		roomShiftService.save(shift);
+		// the object in the form
+		model.addAttribute("roomShift_object", shift);
+
+		// the dropdown in the form
+		model.addAttribute("room_list", roomService.findAll());
+		model.addAttribute("strand_list", strandService.findAll());
+
+		// state of the button
+		model.addAttribute("back", back);
+		model.addAttribute("action", "Update Shift");
+
+		System.out.println(shift.getStudentList());
+		model.addAttribute("student_list", shift.getStudentList());
+		this.roomShift = shift;
+
+		return "room/room shift/room-shift-form";
 	}
 
 	@GetMapping("/break/list/add")
@@ -229,26 +249,26 @@ public class RoomController {
 			// TODO: handle exception
 		}
 
-		
 		if (room.getRoom_shift_breakTimeList() != null) {
 			List<BreakTime> breaks = new ArrayList<BreakTime>();
-		
+
 			for (BreakTime break_time : break_list) {
 				System.out.println(break_time);
 				boolean add = true;
 				for (BreakTime break_room : room.getRoom_shift_breakTimeList()) {
 					if (break_time.getId() == break_room.getId()) {
-						add =false;
+						add = false;
 						break;
 					}
 
 				}
-				if(add)breaks.add(break_time);	
-	
+				if (add)
+					breaks.add(break_time);
+
 			}
 			model.addAttribute("room_breaks", breaks);
-		}else model.addAttribute("room_breaks", break_list);			
-		
+		} else
+			model.addAttribute("room_breaks", break_list);
 
 		model.addAttribute("shift_object", room);
 		return "room/room breaktime/room-break-check";
@@ -289,10 +309,10 @@ public class RoomController {
 		this.room = null;
 		return model;
 	}
-	
+
 	@GetMapping("/shift/student_form")
 	public String RoomShift_StudentForm(Model model) {
-		
+
 		// for the dropdown
 		model.addAttribute("strand_list", this.roomShift.getStrandAndCourse());
 		model.addAttribute("roomshift_list", this.roomShift);
@@ -302,6 +322,7 @@ public class RoomController {
 
 		return "student/student list/student-form";
 	}
+
 	@GetMapping("/shift/form")
 	public String RoomShift_Form(Model model) {
 		Room_Shift room_shift = new Room_Shift();
@@ -371,9 +392,9 @@ public class RoomController {
 		// state of the button
 		model.addAttribute("back", back);
 		model.addAttribute("action", "Update Shift");
-		
+
 		System.out.println(room_shift.getStudentList());
-		model.addAttribute("student_list",room_shift.getStudentList());
+		model.addAttribute("student_list", room_shift.getStudentList());
 		this.roomShift = room_shift;
 
 		return "room/room shift/room-shift-form";
@@ -397,7 +418,7 @@ public class RoomController {
 		room.getStudentList().forEach(e -> {
 			e.setRoom_shift(null);
 		});
-	
+
 		// removing all of the breaktime of the sutdent
 		room.getRoom_shift_breakTimeList().removeAll(room.getRoom_shift_breakTimeList());
 		roomShiftService.save(room);

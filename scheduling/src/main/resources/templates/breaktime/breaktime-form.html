@@ -7,7 +7,7 @@
 >
 <head>
 
-<title>Student List</title>
+<title>Subject List</title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta
@@ -103,125 +103,48 @@
 		>
 
 			<div class="col-md-5">
-				<h1>Student Information</h1>
+				<h1>BreakTimeForm</h1>
 
 				<form
 					action="#"
-					th:action="@{/student/save}"
-					th:object="${student_object}"
+					th:object="${break_object}"
+					th:action="@{/breaktime/save}"
 					method="POST"
 				>
-					<input
-						type="hidden"
-						class="form-control"
-						th:field="*{id}"
-						placeholder="Subject Id"
-					>
-
 
 					<div class="form-group col-md-12">
-						<label>Student Name </label>
+						<input
+							th:field="*{id}"
+							type="hidden"
+							class="form-control"
+							id="subject_id"
+							placeholder="Room BreakId"
+						>
+					</div>
+
+					<div class="form-group col-md-12">
+
+						<label for="subject_code">Start Time</label>
 						<div class="input-group mb-3">
 							<input
-								type="text"
-								th:field="*{firstName}"
+								th:field="*{start_time}"
+								type="time"
 								class="form-control"
-								placeholder="First Name"
-								style="margin-right: 10px;"
-							> <input
-								th:field="*{lastName}"
-								type="text"
-								class="form-control"
-								placeholder="Last Name"
+								id="subject_code"
+								placeholder="Start Time"
 							>
 						</div>
 					</div>
-
 					<div class="form-group col-md-12">
-						<label>Strand And Room </label>
-						<div class="input-group mb-3">
-							<select
-								th:field="*{strandAndCourse}"
-								style="margin-right: 10px;"
-								class="form-control"
-							>
-								<!-- selected -->
-								<option
-									th:each="strand: ${strand_list}"
-									th:value="${strand.id}"
-									th:text="${strand.strandName}"
-								>Strand</option>
-							</select> <select
-								style="margin-right: 10px;"
-								class="form-control"
-								th:field="*{room_shift}"
-							>
-								<!-- selected -->
-								<option
-									th:each="roomShift: ${roomshift_list}"
-									th:value="${roomShift.Id}"
-									th:text="${roomShift.room.roomName} + ' (' +${roomShift.shiftName}+')'"
-								>Room Shift</option>
-
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group col-md-12">
-						<label>Student UserName</label>
+						<label for="subject_units">End Time</label>
 						<div class="input-group mb-3">
 							<input
-								type="text"
+								th:field="*{end_time}"
+								type="time"
 								class="form-control"
-								placeholder="Username"
-								th:field="*{users.username}"
+								id="subject_units"
+								placeholder="End Time"
 							>
-						</div>
-					</div>
-
-					<div class="form-group col-md-12">
-						<label>Password </label>
-						<div class="input-group mb-3">
-							<input
-								type="password"
-								class="form-control"
-								placeholder="Password"
-								style="margin-right: 10px;"
-								th:field="*{users.password}"
-							> <input
-								type="password"
-								class="form-control"
-								placeholder="Confirm Password"
-							>
-						</div>
-					</div>
-
-					<div class="form-group col-md-6">
-
-						<label>Sex </label>
-						<div class="input-group mb-3">
-
-							<div class="form-check-inline">
-								<label class="form-check-label"> <input
-									type="radio"
-									class="form-check-input"
-									value="Male"
-									name="optradio"
-									th:field="*{sex}"
-								/> Male
-								</label>
-							</div>
-							<div class="form-check-inline">
-								<label class="form-check-label"> <input
-									type="radio"
-									class="form-check-input"
-									value="Female"
-									name="optradio"
-									th:field="*{sex}"
-								/> Female
-								</label>
-							</div>
-
 						</div>
 					</div>
 
@@ -234,60 +157,121 @@
 							>
 						</div>
 					</div>
-					<div class="form-group col-md-12">
+					<div
+						class="form-group col-md-12"
+						th:if="${action != 'Save'}"
+					>
 						<div class="input-group mb-3">
 							<a
-								onclick="button_delete()"
 								style="color: white;"
 								class="btn btn-danger form-control"
-								th:if="${action.equals('Update Student')}"
 							> Delete </a>
 						</div>
 					</div>
-
-
 				</form>
 			</div>
 
 			<div class="col-md-7">
-			
-				<div class="content">
+				<a
+					class="btn btn-success"
+					style="margin-bottom: 10px; color: white;"
+					onclick="ChageTable_RoomShift('RoomShiftBreaktime_content')"
+				> View RoomShiftBreak</a> <a
+					class="btn btn-success"
+					style="margin-bottom: 10px; color: white;"
+					onclick="ChageTable_RoomShift('TeacherBreaktime_content')"
+				> View TeacherBreak</a>
+				<div
+					class="content"
+					id="TeacherBreaktime_content"
+				>
 					<div class="animated fadeIn">
 						<div class="row">
 
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<strong class="card-title">Subject List</strong>
+										<strong class="card-title">Teacher Breaktime</strong>
 									</div>
 									<div class="card-body">
 										<table
-											id="bootstrap-data-table"
+											id="teacher_breaktime"
 											class="table table-striped table-bordered"
 										>
 											<thead>
 												<tr>
-													<th>Id</th>
-													<th>Name</th>
-													<th>Code</th>
-													<th>Hour</th>
-													<th>Minute</th>
-													<th>Units</th>
-													<th>Category</th>
-													<th>Status</th>
+													<th>First Name</th>
+													<th>Last Name</th>
+													<th>Sex</th>
+													<th>Username</th>
+													<th>Lecture Day</th>
+													<th>Start Time</th>
+													<th>End Time</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="teacher: ${teacher_list}">
+													<td th:text="${teacher.firstName}">Kurt</td>
+													<td th:text="${teacher.lastName}">Oriqoue</td>
+													<td th:text="${teacher.sex}">Male</td>
+													<td th:text="${teacher.users.username}">Kurt123</td>
+													<td th:text="${teacher.lecture_day}">MWF</td>
+													<td th:text="${teacher.startTime}">7:00</td>
+													<td th:text="${teacher.endTime}">15:00</td>
+
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<!-- .animated -->
+				</div>
+				<!-- .content -->
+
+				<div
+					class="content"
+					id="RoomShiftBreaktime_content"
+					style="display: none;"
+				>
+					<div class="animated fadeIn">
+						<div class="row">
+
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<strong class="card-title">Room Shift Breaktime</strong>
+									</div>
+									<div class="card-body">
+										<table
+											id="roomShift_Breaktime"
+											class="table table-striped table-bordered"
+										>
+											<thead>
+												<tr>
+													<th>Room Name</th>
+													<th>Room Shift</th>
+													<th>Start Time</th>
+													<th>End Time</th>
+													<th>Grade</th>
+													<th>Section</th>
+													<th>Strand</th>
 
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="subject: ${subjects}">
-													<td th:text="${subject.Id}"></td>
-													<td th:text="${subject.subjectName}"></td>
-													<td th:text="${subject.subjectCode}"></td>
-													<td th:text="${subject.hourCost}"></td>
-													<td th:text="${subject.minuteCost}"></td>
-													<td th:text="${subject.subjectUnit}"></td>
-													<td th:text="${subject.is_Major}"></td>
-													<td th:text="${subject.is_Active}"></td>
+												<tr th:each="shift: ${room_shifts}">
+													<td th:text="${shift.room.roomName}"></td>
+													<td th:text="${shift.shiftName}"></td>
+													<td th:text="${shift.startTime}"></td>
+													<td th:text="${shift.endTime}"></td>
+													<td th:text="${shift.grade}"></td>
+													<td th:text="${shift.section}"></td>
+													<td th:text="${shift.strandAndCourse.strandName}"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -329,7 +313,7 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"
 	></script>
-
+	<script th:src="@{/assets/js/Schedule.js}"></script>
 	<script th:src="@{/assets/js/lib/data-table/datatables.min.js}"></script>
 	<script
 		th:src="@{/assets/js/lib/data-table/dataTables.bootstrap.min.js}"
@@ -345,6 +329,16 @@
 	<script th:src="@{/assets/js/Schedule.js}"></script>
 
 	<script type="text/javascript">
+		$(function() {
+
+			$(".dropdown-menu li a").click(function() {
+
+				$(".btn:first-child").text($(this).text());
+				$(".btn:first-child").val($(this).text());
+
+			});
+
+		});
 		function button_delete() {
 			var subject_id = document.getElementById("subject_id").value;
 

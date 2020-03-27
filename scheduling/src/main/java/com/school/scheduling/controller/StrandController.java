@@ -170,8 +170,8 @@ public class StrandController {
 			this.strand.setSubjectList(strand.getSubjectList());
 		}
 
+		strandService.save(this.strand);
 		theModel.addAttribute("strand_object", this.strand);
-
 		theModel.addAttribute("strand_subject", this.strand.getSubjectList());
 		theModel.addAttribute("action", "Update Strand");
 		// strandService.save(this.strand);

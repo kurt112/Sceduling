@@ -90,7 +90,7 @@ public class StudentController {
 		BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
 		student.getUsers().add_Role(new Authorities(student.getUsers().getUsername(), "STUDENT"));
 		student.getUsers().setPassword(encrypt.encode(student.getUsers().getPassword()));
-
+		student.getUsers().setEnabled(1);
 		studentservice.save(student);
 		return "redirect:/student/form";
 	}

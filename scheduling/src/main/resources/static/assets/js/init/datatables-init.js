@@ -4,7 +4,30 @@
 	/*
 	 * Data Table -------------
 	 */
+	$('#teacher_breaktime').DataTable({
 
+		lengthMenu : [ [ 10, 20, 50, -1 ], [ 10, 20, 50, "All" ] ],
+		"scrollY" : "350px",
+		"scrollX" : true,
+		dom : 'lBfrtip',
+		"paging" : false,
+		buttons : [ 'excel', 'pdf', 'print', ]
+
+	});
+	
+	$('#roomShift_Breaktime').DataTable({
+
+		lengthMenu : [ [ 10, 20, 50, -1 ], [ 10, 20, 50, "All" ] ],
+		"scrollY" : "350px",
+		"scrollX" : true,
+		dom : 'lBfrtip',
+		"paging" : false,
+		buttons : [ 'excel', 'pdf', 'print', ]
+
+	});
+	
+	
+	
 	// Data table in room shift
 	$('#break_table').DataTable({
 
@@ -16,6 +39,18 @@
 		buttons : [ 'excel', 'pdf', 'print', ]
 
 	});
+	
+	$('#subject_table').DataTable({
+
+		lengthMenu : [ [ 10, 20, 50, -1 ], [ 10, 20, 50, "All" ] ],
+		"scrollY" : "350px",
+		"scrollX" : true,
+		dom : 'lBfrtip',
+		"paging" : false,
+		buttons : [ 'excel', 'pdf', 'print', ]
+
+	});
+
 
 	// schedule in room shift
 	$('#schedule_table').DataTable({

@@ -8,7 +8,7 @@
 >
 <head>
 
-<title>Student List</title>
+<title>Subject List</title>
 
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -109,68 +109,70 @@
 						<div class="row">
 
 							<div class="col-md-12">
-
-								<a
-									th:href="@{/student/form}"
-									class="btn btn-success"
-									style="margin-bottom: 10px;"
-								>Add Student</a>
-								<div class="card">
-									<div class="card-header">
-										<strong class="card-title">Subject List</strong>
-									</div>
-									<div class="card-body">
-										<table
-											id="bootstrap-data-table"
-											class="table table-striped table-bordered"
+								<form
+									th:action="@{/teacher/subject/add}"
+									th:object="${teacher_object}"
+									method="POST"
+								>
+									<input
+										type="submit"
+										class="btn btn-success"
+										style="margin-bottom: 10px;"
+										value="Add Subject"
+										onclick="alert('Subject add successfully')"
+									/>
+									
+									<a
+										class="btn btn-primary"
+										style="margin-bottom: 10px; color:white;"
 										>
-											<thead>
-												<tr>
-													<th>First Name</th>
-													<th>Last Name</th>
-													<th>Sex</th>
-													<th>Room</th>
-													<th>Shift Name</th>
-													<th>Strand</th>
-													<th>Grade</th>
-													<th>Section</th>
-													<th class="th_end">Update</th>
-													<th class="th_end">Delete</th>
+									back
+									</a>
 
-												</tr>
-											</thead>
-											<tbody>
-												<tr th:each="student:${student_list}">
-													<td th:text="${student.firstName}"></td>
-													<td th:text="${student.lastName}"></td>
-													<td th:text="${student.sex}"></td>
-													<td th:text="${student.room_shift.room.roomName}"></td>
-													<td th:text="${student.room_shift.shiftName}"></td>
-													<td th:text="${student.strandAndCourse.strandName}"></td>
-													<td th:text="${student.room_shift.grade}"></td>
-													<td th:text="${student.room_shift.section}"></td>
-													<td><a
-														class="btn btn-info btn-sm aButton"
-														th:href="@{/student/update(student_id=${student.id})}"
-														onclick="if (!(confirm('Are you sure you want to delete this Strand?'))) return false"
-													> <i
-															class="fa fa-pencil"
-															aria-hidden="true"
-														></i>
-													</a></td>
-													<td><a
-														class="btn btn-danger btn-sm aButton"
-														th:href="@{/student/delete(student_id=${student.id})}"
-														onclick="if (!(confirm('Are you sure you want to delete this Student?'))) return false"
-													> <i
-															class="fa fa-trash"
-															aria-hidden="true"
-														></i>
-													</a></td>
-												</tr>
-										</table>
+									<div class="card">
+										<div class="card-header">
+											<strong class="card-title">Subject List</strong>
+										</div>
+										<div class="card-body">
+
+											<table
+												id="bootstrap-data-table"
+												class="table table-striped table-bordered"
+											>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Code</th>
+														<th>Hour</th>
+														<th>Minute</th>
+														<th>Units</th>
+														<th>Category</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+
+												<tbody>
+
+													<tr th:each="subject: ${subjects}">
+														<td th:text="${subject.subjectName}"></td>
+														<td th:text="${subject.subjectCode}"></td>
+														<td th:text="${subject.hourCost}"></td>
+														<td th:text="${subject.subjectUnit}"></td>
+														<td th:text="${subject.minuteCost}"></td>
+														<td th:text="${subject.is_Major}"></td>
+														<td><input
+															type="checkbox"
+															name="active" 
+															th:field="*{subjectList}"
+															th:value="${subject.id}"
+														/></td>
+													</tr>
+												</tbody>
+											</table>
+
+										</div>
 									</div>
-								</div>
+								</form>
 							</div>
 
 
@@ -215,7 +217,7 @@
 	<script th:src="@{/assets/js/lib/data-table/buttons.print.min.js}"></script>
 	<script th:src="@{/assets/js/lib/data-table/buttons.colVis.min.js}"></script>
 	<script th:src="@{/assets/js/init/datatables-init.js}"></script>
-
+	<script th:src="@{/assets/js/Schedule.js}"></script>
 
 	<script type="text/javascript">
 		//    function button_delete(){

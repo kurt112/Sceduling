@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -95,7 +96,14 @@ public class Subject {
             inverseJoinColumns = @JoinColumn(name = "strand_and_course_id")
     )
     private List<StrandAndCourse> strandAndCourseList;
-
+  
+    @OneToOne(mappedBy = "subject",cascade = {
+    		CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+    })
+    private Room_ShiftSchedule room_ShiftSchedule;
 
     public Subject() {
     }
@@ -203,6 +211,20 @@ public class Subject {
 	public void setIs_Major(String is_Major) {
 		this.is_Major = is_Major;
 	}
+	
+	
+
+	public Room_ShiftSchedule getRoom_ShiftSchedule() {
+		return room_ShiftSchedule;
+	}
+
+
+
+	public void setRoom_ShiftSchedule(Room_ShiftSchedule room_ShiftSchedule) {
+		this.room_ShiftSchedule = room_ShiftSchedule;
+	}
+
+
 
 	@Override
 	public String toString() {

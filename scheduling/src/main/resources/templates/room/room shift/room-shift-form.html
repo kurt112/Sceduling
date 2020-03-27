@@ -126,13 +126,17 @@
 					<div class="form-group col-md-12">
 						<label for="shift_name">Shift Name </label>
 						<div class="input-group mb-3">
-							<input
+							<select
 								th:field="*{shiftName}"
-								type="text"
 								class="form-control"
 								id="shift_name"
-								placeholder="shift_name"
 							>
+								<!-- selected -->
+								<option th:value="'1st Shift'">1st Shift</option>
+								<option th:value="'2nd Shift'">2nd Shift</option>
+								<option th:value="'3rd Shift'">3rd Shift</option>
+
+							</select>
 						</div>
 
 					</div>
@@ -267,7 +271,7 @@
 					class="btn btn-success"
 					style="margin-bottom: 10px; color: white;"
 					onclick="ChageTable_RoomShift('break_table')"
-				> <span></span>View Breaktime
+				> View Breaktime
 				</a> <a
 					th:if="${roomShift_object.shiftName != null}"
 					class="btn btn-success"
@@ -319,7 +323,7 @@
 													<td th:text="${break.start_time}"></td>
 													<td th:text="${break.end_time}"></td>
 													<td><a
-														th:href="@{/room/break/delete(break_id=${break.id},shift_id=${roomShift_object.Id})}"
+														th:href="@{/room/break/deleteShiftForm(break_id=${break.id},shift_id=${roomShift_object.Id})}"
 														class="btn btn-danger btn-sm"
 														style="width: 100%; color: white;"
 													> <i
@@ -481,7 +485,8 @@
 						</div>
 					</div>
 					<!-- .animated -->
-				</div><!-- .content -->
+				</div>
+				<!-- .content -->
 
 
 				<a

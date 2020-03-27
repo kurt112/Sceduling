@@ -88,7 +88,7 @@ public class BreakTime {
 	}
 
 	public void setRoom_shift(List<Room_Shift> room_shift) {
-		this.room_shift = room_shift;
-	}
+		this.room_shift = room_shift;}
+	
 
 }

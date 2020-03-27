@@ -110,10 +110,11 @@
 				class="main-menu collapse navbar-collapse"
 			>
 				<ul class="nav navbar-nav">
-					<li
+					<li 
 						id="pass_button"
+						onclick="change('/dashboard',this)"
 						class="active"
-					><a href="index.html"> <i class="menu-icon fa fa-laptop"></i>Dashboard
+					><a > <i class="menu-icon fa fa-laptop"></i>Dashboard
 					</a></li>
 					
 						<li class="menu-title">Teachers</li>
@@ -186,6 +187,12 @@
 					<li onclick="change('/strand/subjects',this)"><a> <i
 							class="menu-icon fas fa-folder-open"
 						></i>Strand Subject
+					</a></li>
+					
+					<li class="menu-title">BreakTime</li>
+					<li onclick="change('/breaktime/list',this)"><a> <i
+							class="menu-icon fas fa-folder-open"
+						></i>BreakTime List
 					</a></li>
 
 				</ul>

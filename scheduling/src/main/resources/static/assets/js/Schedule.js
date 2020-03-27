@@ -1,5 +1,3 @@
-var id = 0;
-
 function back(number) {
 	alert(number)
 	window.history.go(number)
@@ -15,6 +13,13 @@ function ChageTable_RoomShift(table_name) {
 	var break_content = document.getElementById("break_content");
 	var student_content = document.getElementById("student_content");
 	var schedule_content = document.getElementById("schedule_content");
+	var subject_content = document.getElementById("subject_content");
+
+	// for breaktime form list
+	var TeacherBreaktime_content = document
+			.getElementById("TeacherBreaktime_content");
+	var RoomShiftBreaktime_content = document
+			.getElementById("RoomShiftBreaktime_content");
 
 	if (table_name == "break_table") {
 		display(break_content, student_content, schedule_content);
@@ -22,8 +27,28 @@ function ChageTable_RoomShift(table_name) {
 		display(student_content, break_content, schedule_content);
 	} else if (table_name == "schedule_table") {
 		display(schedule_content, break_content, student_content);
+	} else if (table_name == "TeacherBreaktime_content") {
+		display(TeacherBreaktime_content, RoomShiftBreaktime_content);
+	} else if (table_name == "RoomShiftBreaktime_content") {
+		display(RoomShiftBreaktime_content, TeacherBreaktime_content);
 	}
+}
 
+function ChageTable_Teacher(table_name) {
+	var break_content = document.getElementById("break_content");
+	var student_content = document.getElementById("student_content");
+	var schedule_content = document.getElementById("schedule_content");
+	var subject_content = document.getElementById("subject_content");
+
+	if (table_name == "break_table") {
+		display4(break_content,subject_content, schedule_content,student_content);
+	} else if (table_name == "student_table") {
+		display4(student_content,subject_content, schedule_content, break_content);
+	} else if (table_name == "schedule_table") {
+		display4(schedule_content, subject_content, break_content,student_content);
+	} else if (table_name == "subject_content") {
+		display4(subject_content, schedule_content, break_content,student_content);
+	}
 }
 
 // function changing display
@@ -34,131 +59,150 @@ function display(content_display, content_none, content2_none) {
 	content2_none.style.display = 'none';
 }
 
+function display4(content_display, content_none, content2_none, content3_none) {
+
+	content_display.style.display = 'block';
+	content_none.style.display = 'none';
+	content2_none.style.display = 'none';
+	content3_none.style.display = 'none';
+}
+
+function display(content_display, content_none) {
+
+	content_display.style.display = 'block';
+	content_none.style.display = 'none';
+}
+
 // ************************************************************* subject List
-// ****************************************************//
 var modal_button = document.getElementById("message_button");
 var body = document.getElementsByTagName("BODY")[0];
 
 function DeleteSubject_id(id) {
 	modal_button.innerText = "Yes, delete it ";
-	this.id = id;
 	modal_button.addEventListener('click', function() {
-		DeleteSubject_Main();
+		location.replace("/subject/delete_main?subject_id=" + id);
 	});
 }
 function UpdateSubject_id(id) {
 	modal_button.innerText = "Yes, Update it ";
-	this.id = id;
 	modal_button.addEventListener('click', function() {
-		UpdateSubject();
+		location.replace("/subject/update?subject_id=" + id);
 	});
 }
 
-function DeleteSubject_Main() {
-	location.replace("/subject/delete_main?subject_id=" + this.id);
-}
-
-function UpdateSubject() {
-	location.replace("/subject/update?subject_id=" + this.id);
-}
-
-// ************************************************************* End of subject
-// List ****************************************************//
-
 // ************************************************************* Strand List
-// ****************************************************//
 
 function DeleteStrand_id(id) {
 	modal_button.innerText = "Yes, delete it ";
 	this.id = id;
 	modal_button.addEventListener('click', function() {
-		DeleteStrand_Main();
+		location.replace("/strand/delete_list?strand_id=" + id);
 	});
 }
 function UpdateStrand_id(id) {
 	modal_button.innerText = "Yes, Update it ";
-	this.id = id;
 	modal_button.addEventListener('click', function() {
-		UpdateStrand();
+		location.replace("/strand/update?strand_id=" + id);
 	});
 }
-
-function DeleteStrand_Main() {
-	location.replace("/strand/delete_list?strand_id=" + this.id);
-}
-
-function UpdateStrand() {
-	location.replace("/strand/update?strand_id=" + this.id);
-}
-
-// ************************************************************* End subject
-// List
 
 // ************************************************************* Room List
 function UpdateRoom_id(id) {
 	modal_button.innerText = "Yes, Update it ";
-	this.id = id;
 	modal_button.addEventListener('click', function() {
-		UpdateStrand();
+		location.replace("/room/update?room_id=" + id);
 	});
 }
 
 function DeleteRoom_id(id) {
 	modal_button.innerText = "Yes, Delete it ";
-	this.id = id;
 	modal_button.addEventListener('click', function() {
-		DeleteRoom_Main();
+		location.replace("/room/deleteMain?room_id=" + id);
 	});
 }
-
-function UpdateRoom() {
-	location.replace("/room/update?room_id=" + this.id);
-}
-
-function DeleteRoom_Main() {
-	location.replace("/room/deleteMain?room_id=" + this.id);
-}
-// ************************************************************* End Room List
 
 // ************************************************************* RoomShift List
 function UpdateRoomShift_id(id) {
 	modal_button.innerText = "Yes, Update it ";
-	this.id = id;
 	modal_button.addEventListener('click', function() {
-		 UpdateRoomShift();
+		location.replace("/room/shift/update?roomShift_id=" + id);
 	});
 }
 
 function DeleteRoomShift_id(id) {
 	modal_button.innerText = "Yes, Delete it ";
-	this.id = id;
 	modal_button.addEventListener('click', function() {
-		DeleteRoomShift_Main();
+		location.replace("/room/shift/delete_Main?roomShift_id=" + id);
 	});
 }
 
-function UpdateRoomShift() {
-	location.replace("/room/shift/update?roomShift_id=" + this.id);
-}
-
-function DeleteRoomShift_Main() {
-	location.replace("/room/shift/delete_Main?roomShift_id=" + this.id);
-}
-// ************************************************************* End RoomShift List
-
-//************************************************************* RoomBreak List
-function DeleteRoomBreak_id(break_id, shift_id){
+// ************************************************************* RoomBreak List
+function DeleteRoomBreak_id(break_id, shift_id) {
 	modal_button.innerText = "Yes, Delete it";
 	modal_button.addEventListener('click', function() {
-		DeleteRoomBreak(break_id,shift_id);
+		location.replace("/room/break/delete?break_id=" + break_id
+				+ "&shift_id=" + shift_id);
 	});
 }
 
-function DeleteRoomBreak(break_id,shift_id){
-	location.replace("/room/break/delete?break_id=" + break_id + "&shift_id=" + shift_id);
-	//th:href="@{(break_id=${break.id},shift_id=${rooms.Id})}"
+// ************************************************************* Teacher List
+
+// ------------------------------------------------------------- Alert in
+// teacher information
+function UpdateTeacher_id(id) {
+	modal_button.innerText = "Yes, Update it ";
+	this.id = id;
+	modal_button.addEventListener('click', function() {
+		location.replace("/teacher/update?teacher_id=" + id);
+	});
 }
-//*************************************************************End RoomBreak List
+
+function DeleteTeacher_id(id) {
+	modal_button.innerText = "Yes, Delete it ";
+	this.id = id;
+	modal_button.addEventListener('click', function() {
+		location.replace("/teacher/deleteMain?teacher_id=" + id);
+	});
+}
+
+// ------------------------------------------------------------- Delete subject teacher
+function DeleteSubjectTeacher_id(id) {
+	modal_button.innerText = "Yes, Delete it ";
+	modal_button.addEventListener('click', function() {
+		location.replace("/teacher/subject/delete?subject_id=" + id);
+	});
+}
+//------------------------------------------------------------- Delete Break teacher
+function DeleteBreakTeacher_id(break_id, teacher_id){
+	modal_button.innerText = "Yes, Delete it ";
+	modal_button.addEventListener('click', function() {
+		location.replace("/teacher/break/delete?break_id=" + break_id
+				+ "&teacher_id=" + teacher_id);
+	});
+}
 
 
+// ------------------------------------------------------------- Endteacher
+// information
 
+// ************************************************************* BreakTime
+function UpdateBreakTime(id) {
+	modal_button.innerText = "Yes, Update it ";
+	modal_button.addEventListener('click', function() {
+		location.replace("/breaktime/update?break_id=" + id);
+	});
+}
+
+function DeleteBreakTimeMain(id) {
+	modal_button.innerText = "Yes, Delete it ";
+	modal_button.addEventListener('click', function() {
+		location.replace("/breaktime/deleteMain?break_id=" + id);
+	});
+}
+
+function DeleteBreakTime(id) {
+	modal_button.innerText = "Yes, Delete it ";
+	modal_button.addEventListener('click', function() {
+		location.replace("/breaktime/delete?break_id=" + id);
+	});
+}

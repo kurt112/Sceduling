@@ -8,7 +8,7 @@
 >
 <head>
 
-<title>Subject List</title>
+<title>Teacher BreakTime</title>
 
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -109,72 +109,45 @@
 						<div class="row">
 
 							<div class="col-md-12">
-								<form
-									action="#"
-									th:action="@{/strand/subject/save}"
-									th:object="${strand_subject}"
-									method="POST"
-								>
-									<input
-										type="submit"
-										class="btn btn-success"
-										style="margin-bottom: 10px;"
-										value="Add Subject"
-										onclick="alert('Subject add successfully')"
-									/>
-									
-									<a
-										th:href="@{/strand/update(strand_id=${strand_object.Id})}"
-										class="btn btn-primary"
-										style="margin-bottom: 10px;"
-										>
-									back
-									</a>
 
-									<div class="card">
-										<div class="card-header">
-											<strong class="card-title">Subject List</strong>
-										</div>
-										<div class="card-body">
-
-											<table
-												id="bootstrap-data-table"
-												class="table table-striped table-bordered"
-											>
-												<thead>
-													<tr>
-														<th>Name</th>
-														<th>Code</th>
-														<th>Hour</th>
-														<th>Minute</th>
-														<th>Units</th>
-														<th>Category</th>
-														<th>Action</th>
-													</tr>
-												</thead>
-
-												<tbody>
-
-													<tr th:each="subject: ${subjects}">
-														<td th:text="${subject.subjectName}"></td>
-														<td th:text="${subject.subjectCode}"></td>
-														<td th:text="${subject.hourCost}"></td>
-														<td th:text="${subject.subjectUnit}"></td>
-														<td th:text="${subject.minuteCost}"></td>
-														<td th:text="${subject.is_Major}"></td>
-														<td><input
-															type="checkbox"
-															name="active" 
-															th:field="*{subjectList}"
-															th:value="${subject.id}"
-														/></td>
-													</tr>
-												</tbody>
-											</table>
-
-										</div>
+								<a
+									th:href="@{/teacher/break/form}"
+									class="btn btn-success"
+									style="margin-bottom: 10px;"
+								>Add BreakTime</a>
+								<div class="card">
+									<div class="card-header">
+										<strong class="card-title">Subject List</strong>
 									</div>
-								</form>
+									<div class="card-body">
+										<table
+											id="bootstrap-data-table"
+											class="table table-striped table-bordered"
+										>
+											<thead>
+												<tr>
+													<th>First Name</th>
+													<th>Last Name</th>
+													<th>Start Time</th>
+													<th>End Time</th>
+													<th class="th_end">Delete</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Kurt </td>
+													<td>Orioque</td>
+													<td>12:00</td>
+													<td>1:00</td>
+													<td><a class="btn btn-danger btn-sm aButton"> <i
+															class="fa fa-trash"
+															aria-hidden="true"
+														></i>
+													</a></td>
+												</tr>
+										</table>
+									</div>
+								</div>
 							</div>
 
 
@@ -219,15 +192,8 @@
 	<script th:src="@{/assets/js/lib/data-table/buttons.print.min.js}"></script>
 	<script th:src="@{/assets/js/lib/data-table/buttons.colVis.min.js}"></script>
 	<script th:src="@{/assets/js/init/datatables-init.js}"></script>
-	<script th:src="@{/assets/js/Schedule.js}"></script>
 
 	<script type="text/javascript">
-		//    function button_delete(){
-		// 	   var subject_id = document.getElementById("subject_id").value;
-		//
-		// 	  window.location="/subject/delete?subject_id=" + subject_id;
-		// }
-
 		$(document).ready(function() {
 			$('#bootstrap-data-table-export').DataTable();
 		});

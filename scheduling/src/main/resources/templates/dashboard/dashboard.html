@@ -1,0 +1,78 @@
+<!doctype html>
+<html
+	lang="en"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+<title>Home Page</title>
+<meta charset="utf-8">
+<meta
+	name="viewport"
+	content="width=device-width, initial-scale=1"
+>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<link
+	rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+>
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+></script>
+<style media="screen">
+.container_info {
+	background-color: white;
+	padding-bottom: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
+	height: 50%;
+}
+
+body {
+	background-color: white;
+}
+</style>
+</head>
+<body >
+	<h1 style="color: black; margin-left: 10px;">Scheduling DashBoard</h1>
+	<div class="row container_info">
+
+		<div
+			class="col-md-12"
+			style="background-color: white;"
+		>
+			<canvas
+				id="myChart"
+				style="width: 100%; height: 100%;"
+			></canvas>
+			
+		</div>
+
+	</div>
+
+	<script>
+		var ctx = document.getElementById('myChart').getContext('2d');
+
+		var chart = new Chart(ctx, {
+			// The type of chart we want to create
+			type : 'bar',
+			// The data for our dataset
+			data : {
+				labels : [ 'Subject 1', 'Subject 2', 'Subject 3', 'Subject 4',
+						'Subject 5', 'Subject 6', 'Subject 7' ],
+				datasets : [ {
+					responsive : true,
+					label : 'Subject List',
+					backgroundColor : 'rgb(255, 99, 132)',
+					borderColor : 'rgb(25`5, 99, 132)',
+					data : [ 10, 100, 5, 2, 20, 30, 40 ]
+				} ]
+			},
+
+			// Configuration options go here
+			options : {}
+		});
+	</script>
+</body>
+</html>

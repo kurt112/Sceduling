@@ -61,6 +61,14 @@ public class Room_Shift implements Comparable<Room_Shift>{
 
 	@OneToMany(mappedBy = "room_shift", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 	private List<Student> studentList;
+	
+	@OneToMany(mappedBy = "room_shift", cascade = {
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+	})
+	private List<Room_ShiftSchedule> room_ShiftSchedules;
 
 	public Room_Shift() {
 	}
@@ -164,11 +172,21 @@ public class Room_Shift implements Comparable<Room_Shift>{
 		this.strandAndCourse = strandAndCourse;
 	}
 
+	
+	
+	public List<Room_ShiftSchedule> getRoom_ShiftSchedules() {
+		return room_ShiftSchedules;
+	}
+
+	public void setRoom_ShiftSchedules(List<Room_ShiftSchedule> room_ShiftSchedules) {
+		this.room_ShiftSchedules = room_ShiftSchedules;
+	}
+
 	@Override
 	public int compareTo(Room_Shift o) {
-		
+
 		return 0;
 	}
-	
-	
+
+
 }
