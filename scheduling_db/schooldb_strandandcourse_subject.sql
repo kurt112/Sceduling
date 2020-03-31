@@ -31,7 +31,7 @@ CREATE TABLE `strandandcourse_subject` (
   KEY `subject_fk_idx` (`subject_id`),
   CONSTRAINT `strandcourse_fk` FOREIGN KEY (`strand_and_course_id`) REFERENCES `strandandcourse` (`id`),
   CONSTRAINT `subject_fk` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=270 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1092 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -43,4 +43,4 @@ CREATE TABLE `strandandcourse_subject` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-28  3:17:41
+-- Dump completed on 2020-04-01  3:28:02

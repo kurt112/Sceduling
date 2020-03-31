@@ -9,11 +9,12 @@ if (performance.navigation.type == 1) {
 
 // changing table room shift
 function ChageTable_RoomShift(table_name) {
-
+alert("Wew")
 	var break_content = document.getElementById("break_content");
 	var student_content = document.getElementById("student_content");
 	var schedule_content = document.getElementById("schedule_content");
 	var subject_content = document.getElementById("subject_content");
+	
 
 	// for breaktime form list
 	var TeacherBreaktime_content = document
@@ -22,11 +23,22 @@ function ChageTable_RoomShift(table_name) {
 			.getElementById("RoomShiftBreaktime_content");
 
 	if (table_name == "break_table") {
-		display(break_content, student_content, schedule_content);
+		break_content.style.display = 'block';
+		student_content.style.display = 'none';
+		schedule_content.style.display = 'none';
+		lecture_content.style.display = 'none';
+	
 	} else if (table_name == "student_table") {
-		display(student_content, break_content, schedule_content);
+		break_content.style.display = 'none';
+		student_content.style.display = 'block';
+		schedule_content.style.display = 'none';
+		lecture_content.style.display = 'none';
 	} else if (table_name == "schedule_table") {
-		display(schedule_content, break_content, student_content);
+		break_content.style.display = 'none';
+		student_content.style.display = 'none';
+		schedule_content.style.display = 'block';
+		lecture_content.style.display = 'none';
+
 	} else if (table_name == "TeacherBreaktime_content") {
 		display(TeacherBreaktime_content, RoomShiftBreaktime_content);
 	} else if (table_name == "RoomShiftBreaktime_content") {
@@ -35,19 +47,31 @@ function ChageTable_RoomShift(table_name) {
 }
 
 function ChageTable_Teacher(table_name) {
+	var lecture_content = document.getElementById("lecture_content");
 	var break_content = document.getElementById("break_content");
 	var student_content = document.getElementById("student_content");
 	var schedule_content = document.getElementById("schedule_content");
 	var subject_content = document.getElementById("subject_content");
 
 	if (table_name == "break_table") {
+		lecture_content.style.display = 'none';
 		display4(break_content,subject_content, schedule_content,student_content);
 	} else if (table_name == "student_table") {
+		lecture_content.style.display = 'none';
 		display4(student_content,subject_content, schedule_content, break_content);
 	} else if (table_name == "schedule_table") {
+		lecture_content.style.display = 'none';
 		display4(schedule_content, subject_content, break_content,student_content);
 	} else if (table_name == "subject_content") {
 		display4(subject_content, schedule_content, break_content,student_content);
+		lecture_content.style.display = 'none';
+	}else if(table_name == "lecture_content"){
+		break_content.style.display = 'none';
+		student_content.style.display = 'none';
+		schedule_content.style.display = 'none';
+		subject_content.style.display='none';
+		lecture_content.style.display = 'block';
+	
 	}
 }
 
@@ -178,6 +202,22 @@ function DeleteBreakTeacher_id(break_id, teacher_id){
 	modal_button.addEventListener('click', function() {
 		location.replace("/teacher/break/delete?break_id=" + break_id
 				+ "&teacher_id=" + teacher_id);
+	});
+}
+
+//-------------------------------------------------------------- Teacher Lecture
+
+function UpdateLecture(id){
+	modal_button.innerText = "Yes, Update it ";
+	modal_button.addEventListener('click', function() {
+		location.replace("/teacher/lecture/update?lecture_id=" + id);
+	});
+}
+
+function DeleteLecture(id){
+	modal_button.innerText = "Yes, Delete it ";
+	modal_button.addEventListener('click', function() {
+		location.replace("/teacher/lecture/DeleteMain?lecture_id=" + id);
 	});
 }
 

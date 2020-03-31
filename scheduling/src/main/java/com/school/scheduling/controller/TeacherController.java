@@ -1,11 +1,12 @@
 package com.school.scheduling.controller;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.school.scheduling.entity.Authorities;
 import com.school.scheduling.entity.BreakTime;
+import com.school.scheduling.entity.Room_ShiftSchedule;
 import com.school.scheduling.entity.Subject;
 import com.school.scheduling.entity.Teacher;
+import com.school.scheduling.entity.Teacher_Lecture;
 import com.school.scheduling.service.Services;
 
 @Controller
@@ -31,20 +34,27 @@ public class TeacherController {
 	private Services<Teacher> teacherService;
 	private Services<Subject> subjectService;
 	private Services<BreakTime> breakServices;
+	private Services<Room_ShiftSchedule> scheduleServices;
+	private Services<Teacher_Lecture> lectureServices;
 	private Teacher teacher;
 	private Teacher delete_teacher;
 
+	boolean create_sched = false;
+
 	@Autowired
-	public TeacherController(Services<Teacher> teacherService,Services<Subject> subjectService,Services<BreakTime> breakServices) {
+	public TeacherController(Services<Teacher> teacherService, Services<Subject> subjectService,
+			Services<BreakTime> breakServices, Services<Room_ShiftSchedule> scheduleServices,Services<Teacher_Lecture> lectureServices) {
+		this.scheduleServices = scheduleServices;
 		this.teacherService = teacherService;
 		this.subjectService = subjectService;
 		this.breakServices = breakServices;
+		this.lectureServices = lectureServices;
 	}
 
-	/**********************    ForTeacher     ******************************/
+	/********************** ForTeacher ******************************/
 	@GetMapping("/list")
 	public String Teacher_List(Model model) {
-		if(delete_teacher != null) {
+		if (delete_teacher != null) {
 			teacherService.delete(teacher);
 			delete_teacher = null;
 		}
@@ -54,157 +64,138 @@ public class TeacherController {
 
 	@GetMapping("/form")
 	public String Teacher_Form(Model model) {
-		model.addAttribute("teacher_object",new Teacher());
-		
+		model.addAttribute("teacher_object", new Teacher());
+
 		model.addAttribute("action", "Save Teacher");
 		return "teacher/teacher information/teacher-information-form";
 	}
+
 	@PostMapping("/save")
 	public String Teacher_Save(@ModelAttribute("teacher_object") Teacher teacher) {
 		BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
-		teacher.getUsers().add_Role(new Authorities(teacher.getUsers().getUsername(),"TEACHER"));
+		teacher.getUsers().add_Role(new Authorities(teacher.getUsers().getUsername(), "TEACHER"));
 		teacher.getUsers().setEnabled(1);
 		teacher.getUsers().setPassword(encrypt.encode(teacher.getUsers().getPassword()));
-		teacher.setRemainingTime(teacher.getStartTime());
 		teacherService.save(teacher);
 		this.teacher = null;
 		return "redirect:/teacher/form";
 	}
+
 	@GetMapping("/update")
 	public String Teacher_Update(@RequestParam("teacher_id") int theId, Model model) {
 		Teacher teacher = teacherService.findbyId(theId);
-	
+
 		model.addAttribute("action", "Update Teacher");
-		model.addAttribute("teacher_subject",teacher.getSubjectList());
+		model.addAttribute("teacher_subject", teacher.getSubjectList());
 		model.addAttribute("teacher_break", teacher.getBreaktime_teacherList());
+		model.addAttribute("teacher_lecture", teacher.getTeacher_lecture());
 		model.addAttribute("teacher_object", teacher);
 		teacherService.save(teacher);
 		this.teacher = teacher;
 		return "teacher/teacher information/teacher-information-form";
 	}
-	
+
 	@GetMapping("/deleteMain")
 	public String Teacher_DeleteMain(@RequestParam("teacher_id") int theId) {
 		Teacher teacher = teacherService.findbyId(theId);
-		if(teacher.getBreaktime_teacherList() !=null && teacher.getSubjectList() !=null) {
+		if (teacher.getBreaktime_teacherList() != null && teacher.getSubjectList() != null) {
 			teacher.getBreaktime_teacherList().removeAll(teacher.getBreaktime_teacherList());
 			teacher.getSubjectList().removeAll(teacher.getSubjectList());
 			teacherService.save(teacher);
 			delete_teacher = teacher;
 		}
-		teacherService.deleteById(theId);	
-	
+		teacherService.deleteById(theId);
+
 		return "redirect:/teacher/list";
 	}
-	@GetMapping("/delete")
-	public String Teacher_Delete() {
-		return "redirect:/teacher/form";
-	}
 
-	/**********************    ForTeacherBreak     ******************************/
+	/********************** ForTeacherBreak ******************************/
 
 	@GetMapping("/break/list")
 	public String TeacherBreak_List(Model model) {
 		model.addAttribute("teacher_break", teacherService.findAll());
 		return "teacher/teacher breaktime/teacher-breaktime";
 	}
-	
-	@GetMapping("/break/list/add")
-	public String TeacherBreak_Choose(@ModelAttribute("teacher_object") Teacher teacher,Model model) {
-		teacher = this.teacher;
-		
-		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 
-		Calendar shift_startTime = Calendar.getInstance();
-		Calendar shift_endTime = Calendar.getInstance();
+//	@GetMapping("/break/list/add")
+//	public String TeacherBreak_Choose(@ModelAttribute("teacher_object") Teacher teacher, Model model) {
+//		teacher = this.teacher;
+//
+//		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+//
+//		Calendar shift_startTime = Calendar.getInstance();
+//		Calendar shift_endTime = Calendar.getInstance();
+//
+//		Calendar shift_break_start = Calendar.getInstance();
+//		Calendar shift_break_end = Calendar.getInstance();
+//
+//		List<BreakTime> break_list = new ArrayList<BreakTime>();
+//
+//		try {
+//
+//			// he time of the shift list
+//			shift_startTime.setTime(dateFormat.parse(teacher.getStartTime()));
+//			shift_endTime.setTime(dateFormat.parse(teacher.getEndTime()));
+//
+//			// it will check if the break is between the time of the room shift
+//			// .collect(Collectors.toList());
+//			for (BreakTime shift_break : breakServices.findAll()) {
+//
+//				// converting the time of the break in the break
+//
+//				// start time of the break
+//				shift_break_start.setTime(dateFormat.parse(shift_break.getStart_time()));
+//
+//				// end tiem of the break
+//				shift_break_end.setTime(dateFormat.parse(shift_break.getEnd_time()));
+//
+//				// if the start time and end time of the break is in the middle then we will add
+//				// it
+//
+//				if (shift_startTime.getTime().before(shift_break_start.getTime())
+//						&& shift_endTime.getTime().after(shift_break_end.getTime())) {
+//					break_list.add(shift_break);
+//				}
+//			}
+//		} catch (ParseException e) {
+//			// TODO: handle exception
+//		}
+//
+//		break_list.removeAll(teacher.getBreaktime_teacherList());
+//
+//		model.addAttribute("teacher_breaks", break_list);
+//
+//		model.addAttribute("teacher_object", teacher);
+//
+//		return "teacher/teacher breaktime/teacher-break-check";
+//	}
 
-		Calendar shift_break_start = Calendar.getInstance();
-		Calendar shift_break_end = Calendar.getInstance();
-
-		List<BreakTime> break_list = new ArrayList<BreakTime>();
-
-		try {
-
-			// he time of the shift list
-			shift_startTime.setTime(dateFormat.parse(teacher.getStartTime()));
-			shift_endTime.setTime(dateFormat.parse(teacher.getEndTime()));
-
-			// it will check if the break is between the time of the room shift
-			// .collect(Collectors.toList());
-			for (BreakTime shift_break : breakServices.findAll()) {
-
-				// converting the time of the break in the break
-
-				// start time of the break
-				shift_break_start.setTime(dateFormat.parse(shift_break.getStart_time()));
-
-				// end tiem of the break
-				shift_break_end.setTime(dateFormat.parse(shift_break.getEnd_time()));
-
-				// if the start time and end time of the break is in the middle then we will add
-				// it
-
-				if (shift_startTime.getTime().before(shift_break_start.getTime())
-						&& shift_endTime.getTime().after(shift_break_end.getTime())) {
-					break_list.add(shift_break);
-				}
-			}
-		} catch (ParseException e) {
-			// TODO: handle exception
-		}
-
-		if (teacher.getBreaktime_teacherList() != null) {
-			List<BreakTime> breaks = new ArrayList<BreakTime>();
-
-			for (BreakTime break_time : break_list) {
-				System.out.println(break_time);
-				boolean add = true;
-				for (BreakTime break_room : teacher.getBreaktime_teacherList()) {
-					if (break_time.getId() == break_room.getId()) {
-						add = false;
-						break;
-					}
-
-				}
-				if (add)
-					breaks.add(break_time);
-
-			}
-			model.addAttribute("teacher_breaks", breaks);
-		} else
-			model.addAttribute("teacher_breaks", break_list);
-
-		model.addAttribute("teacher_object", teacher);
-	
-		return "teacher/teacher breaktime/teacher-break-check";
-	}
 	@GetMapping("/break/form")
 	public String TeacherBreak_Form() {
 		return "teacher/teacher breaktime/teacher-breaktime-form";
 	}
+
 	@PostMapping("/break/save")
 	public String TeacherBreak_Save(@ModelAttribute("teacher_obejct") Teacher teacher, Model model) {
-//		this.roomShift.getRoom_shift_breakTimeList().addAll(roomShift.getRoom_shift_breakTimeList());
 		teacher.getBreaktime_teacherList().forEach(e -> this.teacher.getBreaktime_teacherList().add(e));
-
-//		System.out.println(roomShift.toString());
 
 		teacherService.save(this.teacher);
 
-		
-		
 		model.addAttribute("action", "Update Teacher");
-		model.addAttribute("teacher_subject",this.teacher.getSubjectList());
+		model.addAttribute("teacher_subject", this.teacher.getSubjectList());
 		model.addAttribute("teacher_object", this.teacher);
 		model.addAttribute("teacher_break", this.teacher.getBreaktime_teacherList());
 		return "teacher/teacher information/teacher-information-form";
 	}
+
 	@GetMapping("/break/update")
 	public String TeacherBreak_Update() {
 		return "redirect:/teacher/break/form";
 	}
+
 	@GetMapping("/break/delete")
-	public String TeacherBreak_Delete(@RequestParam("break_id") int break_id, @RequestParam("teacher_id") int teacher_id) {
+	public String TeacherBreak_Delete(@RequestParam("break_id") int break_id,
+			@RequestParam("teacher_id") int teacher_id) {
 		Teacher teacher = teacherService.findbyId(teacher_id);
 		teacher.getBreaktime_teacherList().removeIf(e -> e.getId() == break_id);
 		teacherService.save(teacher);
@@ -212,90 +203,228 @@ public class TeacherController {
 	}
 
 	/************************** For teacher schedule ************************/
+	int zero = 0;
+
+//	@GetMapping("/schedule/generateSchedule")
+//	public String GenerateSchedule_List() throws ParseException {
+//		create_sched = true;
+//		List<Room_ShiftSchedule> schedule = scheduleServices.findAll();
+//		List<Teacher> teachers = teacherService.findAll();
+//
+//		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+//
+//		Calendar room_start = Calendar.getInstance();
+//		Calendar room_end = Calendar.getInstance();
+//
+//		Calendar teacher_Remainingtime = Calendar.getInstance();
+//		Calendar teacher_endTime = Calendar.getInstance();
+//
+//		for (Room_ShiftSchedule room : schedule) {
+//
+//			room_start.setTime(dateFormat.parse(room.getStart_time()));
+//			room_end.setTime(dateFormat.parse(room.getEnd_time()));
+//
+//			List<Teacher> possible_lecturer = new ArrayList<>();
+//
+//			for (Teacher teacher : teachers) {
+//
+//				teacher_Remainingtime.setTime(dateFormat.parse(teacher.getRemainingTime()));
+//				teacher_endTime.setTime(dateFormat.parse(teacher.getEndTime()));
+//
+//				if (teacher.getSubjectList().contains(room.getSubject())) {
+//
+//					if (teacher.getBreaktime_teacherList().size() == 0 && teacher.getLecture_day().equals(room.getLecture_day())) {
+//						
+//						if((room_start.getTime().after(teacher_Remainingtime.getTime())) || (room_start.getTime().equals(teacher_Remainingtime.getTime())) 
+//								
+//							&&
+//						  (room_end.getTime().before(teacher_endTime.getTime())) || (room_end.getTime().equals(teacher_endTime.getTime()))){
+//							possible_lecturer.add(teacher);
+//						
+//						}
+//					} else {
+//
+//					}
+//
+//				}
+//
+//			}
+//
+//			// picking the right lecturer for the right time
+//			if (possible_lecturer.size() == 1) {
+//
+//				Teacher teacher =  possible_lecturer.get(0);
+//				
+//				teacher_Remainingtime.add(Calendar.HOUR, room.getSubject().getHourCost());
+//				teacher_Remainingtime.add(Calendar.MINUTE, room.getSubject().getMinuteCost());
+//
+//				teacher.setRemainingTime(dateFormat.format(teacher_Remainingtime.getTime()));
+//
+//				room.setTeacher(teacher);	
+//				scheduleServices.save(room);
+//
+//			} else if(possible_lecturer.size() >=2) {
+//
+//				Calendar future_lecturer = Calendar.getInstance();
+//				Calendar current_lecturer = Calendar.getInstance();
+//				Teacher teacher = null;
+//
+//				for (int i = 0; i < possible_lecturer.size(); i++) {
+//					
+//					if (teacher == null) {
+//
+//						teacher = possible_lecturer.get(i);
+//						current_lecturer.setTime(dateFormat.parse(teacher.getRemainingTime()));
+//
+//					} else {
+//						future_lecturer.setTime(dateFormat.parse(possible_lecturer.get(i).getRemainingTime()));
+//
+//						if (current_lecturer.getTime().after(future_lecturer.getTime())) {
+//							teacher = possible_lecturer.get(i);
+//							current_lecturer.setTime(dateFormat.parse(teacher.getRemainingTime()));
+//						}
+//					}
+//				}
+//
+//				teacher_Remainingtime.add(Calendar.HOUR, room.getSubject().getHourCost());
+//				teacher_Remainingtime.add(Calendar.MINUTE, room.getSubject().getMinuteCost());
+//
+//				teacher.setRemainingTime(dateFormat.format(teacher_Remainingtime.getTime()));
+//
+//				room.setTeacher(teacher);
+//				scheduleServices.save(room);
+//
+//			}
+//
+//			if (possible_lecturer.size() == 0) {
+//				zero++;
+//			}
+//			System.out.println("The possible Lecturer -> " + possible_lecturer.size() + " The subject "
+//					+ room.getSubject().getSubjectName());
+//
+//		}
+//		System.out.println("The zero -> " + zero);
+//		zero = 0;
+//		return "redirect:/teacher/schedule/list";
+//	}
 
 	@GetMapping("/schedule/list")
-	public String TeacherSchedule_List() {
+	public String TeacherSchedule_List(Model model) {
+
+		List<Teacher> teacher = teacherService.findAll();
+
+//		if (create_sched) {
+//			teacher.forEach(e -> {
+//				e.setRemainingTime(e.getStartTime());
+//				teacherService.save(e);
+//			});
+//			create_sched = false;
+//		}
+
+		model.addAttribute("teachers", teacher);
+
 		return "teacher/teacher schedule/teacher-schedule";
 	}
 
-	@GetMapping("/schedule/form")
-	public String TeacherSchedule_Form() {
-		return "teacher/teacher schedule/teacher-schedule-form";
-	}
-
-	@PostMapping("/schedule/save")
-	public String TeacherSchedule_Save() {
-		return "redirect:/teacher/schedule/form";
-	}
-
-	@GetMapping("/schedule/update")
-	public String TeacherSchedule_Update() {
-		return "redirect:/teacher/schedule/form";
-	}
-
-	@GetMapping("/schedule/delete")
-	public String TeacherSchedule_Delete() {
-		return "redirect:/teacher/schedule/form";
-	}
-	
 	/************************** For teacher Suject ************************/
 
 	// will redirect to you the possible subject of the teacher
 	// if the teacher have that subject then the subject will filter
 	@GetMapping("/subject/list")
-	public String Teacher_SubjectList(@ModelAttribute("teacher_object") Teacher teacher,Model model) {
+	public String Teacher_SubjectList(@ModelAttribute("teacher_object") Teacher teacher, Model model) {
 		teacher = this.teacher;
-		System.out.println("the tacher " + teacher);
-		if(teacher.getFirstName() !=null) {
-			List<Subject> subjectdb = subjectService.findAll();
-			List<Subject> unique = new ArrayList<Subject>();
-			
-			for (int i = 0; i < subjectdb.size(); i++) {
-				boolean duplicate = false;
-				for (Subject sbj : teacher.getSubjectList()) {
-					if (subjectdb.get(i).getId() == sbj.getId()) {
-						duplicate = true;
-						break;
-					}
-				}
+		List<Subject> subjectdb = subjectService.findAll();
 
-				if (duplicate == false) {
-					unique.add(subjectdb.get(i));
-				}
-			}
-			model.addAttribute("subjects", unique);
-		}else {
-			System.out.println("Did i call?");
-			model.addAttribute("subjects", subjectService.findAll());
-		}
+		List<Subject> teacher_subject = teacher.getSubjectList();
+
+		subjectdb.removeAll(teacher_subject);
+
+		model.addAttribute("subjects", subjectdb);
+
 		model.addAttribute("teacher_object", teacher);
-		
+
 		return "subject/subject add teacher/add-subject-teacher";
 	}
-	
+
 	// adding all the subject click in the subject list
 	@PostMapping("/subject/add")
 	public String Teacher_SubjectAdd(@ModelAttribute("teacher_obejct") Teacher teacher, Model model) {
-		
-		if(this.teacher.getSubjectList() != null) {
-			if(teacher.getSubjectList() !=null) this.teacher.getSubjectList().addAll(teacher.getSubjectList());
-		}else {
+
+		if (this.teacher.getSubjectList() != null) {
+			if (teacher.getSubjectList() != null)
+				this.teacher.getSubjectList().addAll(teacher.getSubjectList());
+		} else {
 			this.teacher.setSubjectList(teacher.getSubjectList());
 		}
 		model.addAttribute("teacher_object", this.teacher);
 		teacherService.save(this.teacher);
 		model.addAttribute("action", "Update Teacher");
-		return "subject/subject add teacher/add-subject-teacher";
+		model.addAttribute("teacher_subject", this.teacher.getSubjectList());
+		return "teacher/teacher information/teacher-information-form";
 	}
-	
+
 	@GetMapping("/subject/delete")
 	public String Teacher_SubjectDelete(@RequestParam("subject_id") int subject_id, Model model) {
 		this.teacher.getSubjectList().removeIf(e -> e.getId() == subject_id);
 		teacherService.save(this.teacher);
 		model.addAttribute("action", "Update Teacher");
-		model.addAttribute("teacher_subject",this.teacher.getSubjectList());
+		model.addAttribute("teacher_subject", this.teacher.getSubjectList());
 		model.addAttribute("teacher_object", this.teacher);
-		
+
 		return "teacher/teacher information/teacher-information-form";
 	}
+
+	@GetMapping("/subjects")
+	public String Teacher_Subject(Model model) {
+
+		List<Teacher> teacher_list = teacherService.findAll();
+		model.addAttribute("teacher_list", teacher_list);
+		return "teacher/teacher subjects/teacher-subjects";
+	}
+	
+	@GetMapping("/lecture/form")
+	public String TeacherLecture_Form(Model model) {
+	
+		model.addAttribute("teacher_lecture",new Teacher_Lecture());
+		if(this.teacher !=null)model.addAttribute("teacher_list",this.teacher);
+		else model.addAttribute("teacher_list", teacherService.findAll());
+		return "teacher/teacher lecture/teacher-lecture-form";
+	}	
+	
+	@GetMapping("/lecture/update")
+	public String TeacherLecture_update(@RequestParam("lecture_id") int id,Model model) {
+		Teacher_Lecture lecture = lectureServices.findbyId(id);
+		
+		model.addAttribute("teacher_lecture",lecture);
+		
+		 model.addAttribute("teacher_list", teacherService.findAll());
+		return "teacher/teacher lecture/teacher-lecture-form";
+	}	
+	
+	
+	@PostMapping("/lecture/save")
+	public String Teacher_Lecture_Save(@ModelAttribute("teacher_lecture") Teacher_Lecture teacher_lecture) {
+		teacher_lecture.setRemainingtTime(teacher_lecture.getStartTime());
+		lectureServices.save(teacher_lecture);
+		
+		return "redirect:/teacher/update?teacher_id="+teacher_lecture.getTeacher().getId();
+	}
+	
+	@GetMapping("/lecture/list")
+	public String TeacherLecture_List(Model model) {
+		model.addAttribute("teacher_list", teacherService.findAll());
+		this.teacher = null;
+		return "teacher/teacher lecture/teacher-lecture-list";
+		
+	}
+	
+	@GetMapping("/lecture/DeleteMain")
+	public String TeacherLecture_Delete(@RequestParam("lecture_id") int id,Model model) {
+		
+		lectureServices.deleteById(id);
+		
+		return "teacher/teacher lecture/teacher-lecture-list";
+		
+	}
+	
 }

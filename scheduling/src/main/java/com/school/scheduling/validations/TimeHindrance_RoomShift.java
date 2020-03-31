@@ -41,7 +41,6 @@ public class TimeHindrance_RoomShift implements ConstraintValidator<CheckTime_Ro
 			}
 
 			if (value.getStartTime().equals(value.getEndTime())) {
-				System.out.println("Im in euqls");
 
 				message = "Can't sched the same time";
 				context.disableDefaultConstraintViolation();
@@ -70,12 +69,10 @@ public class TimeHindrance_RoomShift implements ConstraintValidator<CheckTime_Ro
 
 							old_start_time.setTime(dateFormat.parse(roomshift.getStartTime()));
 							old_end_time.setTime(dateFormat.parse(roomshift.getEndTime()));
-
-							System.out.println("Did i loop");
 							if (roomshift.getId() == value.getId()) {
 
 							} else {
-								// if the time is in the middle 
+								// if the time is in the middle
 								if (new_start_time.getTime().after(old_start_time.getTime())
 										&& new_start_time.getTime().before(old_end_time.getTime())) {
 
@@ -85,9 +82,7 @@ public class TimeHindrance_RoomShift implements ConstraintValidator<CheckTime_Ro
 
 									context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
 
-									
-									System.out.println("Something in the middle");
-									return false;
+										return false;
 									// this else if the time is uqual to old and new time
 								} else if (new_start_time.getTime().equals(old_start_time.getTime())
 										&& new_end_time.getTime().equals(old_end_time.getTime())) {
@@ -96,45 +91,38 @@ public class TimeHindrance_RoomShift implements ConstraintValidator<CheckTime_Ro
 
 									context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
 									context.disableDefaultConstraintViolation();
-									
+
 									return false;
-									
-									// this else if the time if before the old_start time and should not exceed to the old start time
-								}else if(new_start_time.getTime().before(old_start_time.getTime())
+
+									// this else if the time if before the old_start time and should not exceed to
+									// the old start time
+								} else if (new_start_time.getTime().before(old_start_time.getTime())
 										&& new_end_time.getTime().after(old_start_time.getTime())) {
-									
-									
+
 									message = "Time Start suggestion " + dateFormat.format(old_end_time.getTime());
 
 									context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
 									context.disableDefaultConstraintViolation();
-									
-									
-									
+
 									return false;
-									// this else if the start time is equal to the old start time and before || and after the old end time
-								}else if(new_start_time.getTime().equals(old_start_time.getTime())
-										&& 
-										(new_end_time.getTime().before(old_end_time.getTime()) 
-												|| 
-										(new_end_time.getTime().after(old_end_time.getTime())) )) 
-								
+									// this else if the start time is equal to the old start time and before || and
+									// after the old end time
+								} else if (new_start_time.getTime().equals(old_start_time.getTime())
+										&& (new_end_time.getTime().before(old_end_time.getTime())
+												|| (new_end_time.getTime().after(old_end_time.getTime()))))
+
 								{
-									
+
 									message = "Time Start suggestion " + dateFormat.format(old_end_time.getTime());
 
 									context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
 									context.disableDefaultConstraintViolation();
 
-									
-									
-									
 									return false;
 								}
 
 							}
 						} // a for loop
-						System.out.println("The Break " + between);
 						return between;
 
 					} // end in size 0

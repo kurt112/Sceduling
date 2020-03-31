@@ -114,7 +114,11 @@
 									th:href=@{/subject/form}
 									class="btn btn-success"
 									style="margin-bottom: 10px;"
-								>Add Teacher Schedule</a>
+								>Add Teacher Schedule</a> <a
+									th:href=@{/teacher/schedule/generateSchedule}
+									class="btn btn-success"
+									style="margin-bottom: 10px;"
+								> Generate Teacher Schedule </a>
 								<div class="card">
 									<div class="card-header">
 										<strong class="card-title">Subject List</strong>
@@ -126,28 +130,23 @@
 										>
 											<thead>
 												<tr>
-													<th>Room</th>
-													<th>Room Shift</th>
-													<th>Grade</th>
-													<th>Section</th>
 													<th>Teacher</th>
 													<th>Subject Name</th>
 													<th>Start time</th>
 													<th>End time</th>
+													<th>Lecture Day</th>
 													<th class="th_end">Update</th>
 													<th class="th_end">Delete</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>Room 101</td>
-													<td>3rd Shift</td>
-													<td>11</td>
-													<td>Dell</td>
-													<td>Katingo Emmanuela</td>
-													<td>MWF</td>
-													<td>7:00</td>
-													<td>15:00</td>
+												<span th:each="teacher: ${teachers}">
+												<tr th:each="teacher_schedule: ${teacher.teacher_schedule}">
+													<td th:text="${teacher.firstName} + ' , ' + ${teacher.lastName}"></td>
+													<td th:text="${teacher_schedule.subject.subjectName}"></td>
+													<td th:text="${teacher_schedule.start_time}"></td>
+													<td th:text="${teacher_schedule.end_time}"></td>
+													<td th:text="${teacher.lecture_day}"></td>
 													<td><a class="btn btn-success btn-sm aButton"><i
 															class="fa fa-pencil"
 															aria-hidden="true"
@@ -158,6 +157,8 @@
 														></i>
 													</a></td>
 												</tr>
+												</span>
+											</tbody>
 										</table>
 									</div>
 								</div>

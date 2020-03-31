@@ -1,0 +1,257 @@
+
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
+
+
+
+
+body {
+
+    color: #797979;
+
+    background: #eeeeee;
+
+    font-family: 'Lato', sans-serif;
+
+    padding: 0px !important;
+
+    margin: 0px !important;
+
+    font-size:14px !important;
+    
+    background-color:white;
+    width:100%;
+
+}
+
+h1,h2,h3,h4,h5{
+
+    font-weight: 300;
+
+}
+
+label{
+
+    font-weight: 300;
+
+}
+
+
+input:focus, textarea:focus { outline: none; }
+
+table tr th { color: #688a7e;}
+
+*:focus {outline: none;}
+
+::selection {
+
+    background: #688a7e;
+
+    color: #fff;
+
+}
+
+::-moz-selection {
+
+    background: #688a7e;
+
+    color: #fff;
+
+}
+
+
+
+#container {
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+
+/*main content*/
+
+
+
+
+.header, .footer {
+
+    min-height: 60px;
+
+    padding: 0 15px;
+
+}
+
+.box1 {
+
+    font-size: 16px;
+
+    display: inline-block;
+
+    width: 25%;
+
+    padding: .25em .5em;
+
+    margin: 20px 10px 0 0;
+
+}
+
+.header {
+
+    position: fixed;
+
+    left: 0;
+
+    right: 0;
+
+    z-index: 1002;
+
+}
+
+
+
+
+
+.dark-bg {
+
+    background: #000d1a;
+
+    border-bottom: 1px solid #f1f2f7;
+
+}
+
+
+
+
+
+
+
+/* .info-box
+
+=================================================================== */
+
+.info-box {
+
+  min-height: 140px;
+
+  margin-bottom: 30px;
+
+  padding: 20px;
+
+  color: white;
+
+  -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.35), 0 3px 1px -1px rgba(0, 0, 0, 0.1);
+
+  -moz-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.35), 0 3px 1px -1px rgba(0, 0, 0, 0.1);
+
+  box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.35), 0 3px 1px -1px rgba(0, 0, 0, 0.1);
+
+}
+
+.info-box i {
+
+  display: block;
+
+  height: 100px;
+
+  font-size: 60px;
+
+  line-height: 100px;
+
+  width: 100px;
+
+  float: left;
+
+  text-align: center;
+
+  margin-right: 20px;
+
+  padding-right: 20px;
+
+  color: rgba(255, 255, 255, 0.75);
+
+}
+
+.info-box .count {
+
+  margin-top: 20px;
+
+  font-size: 34px;
+
+  font-weight: 700;
+
+}
+
+.info-box .title {
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  font-weight: 600;
+
+}
+
+.info-box .desc {
+
+  margin-top: 10px;
+
+  font-size: 12px;
+
+}
+
+
+
+
+
+.info-box.primary {
+
+  background: #20a8d8;
+
+  border: 1px solid #1985ac;
+
+}
+
+.info-box.info {
+
+  background: #67c2ef;
+
+  border: 1px solid #39afea;
+
+}
+
+.info-box.success {
+
+  background: #79c447;
+
+  border: 1px solid #61a434;
+
+}
+
+/*----------------	color------------------------*/
+
+.dark-heading-bg {
+
+  background: #4c4f53;
+
+  border: 1px solid #4c4f53;
+
+}
+
+.main-bg {
+
+  background: #e6e8ea;
+
+}
+
+.title_dashboard{
+	color:black;
+	margin-left:20px;
+	margin-bottom:20px;
+	font-family: "Arial";
+}
+
+.row{
+	margin-right: 0px !important;
+	margin-left:  0px !important;
+}

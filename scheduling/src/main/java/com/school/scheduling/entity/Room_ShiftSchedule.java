@@ -37,7 +37,7 @@ public class Room_ShiftSchedule {
 	@JoinColumn(name= "teacher_id")
 	private Teacher teacher;
 
-	@OneToOne(cascade = {
+	@ManyToOne(cascade = {
 			CascadeType.DETACH,
 			CascadeType.MERGE,
 			CascadeType.PERSIST,
@@ -56,7 +56,10 @@ public class Room_ShiftSchedule {
 	private String lecture_day;
 
 	
-	
+	public Room_ShiftSchedule() {
+		
+	}
+
 	public Room_ShiftSchedule(Room_Shift room_shift,Subject subject, String start_time,
 			String end_time, String lecture_day) {
 		this.room_shift = room_shift;

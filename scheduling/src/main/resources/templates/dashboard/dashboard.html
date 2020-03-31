@@ -1,78 +1,227 @@
-<!doctype html>
+<!DOCTYPE html>
 <html
 	lang="en"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 >
+
 <head>
-<title>Home Page</title>
 <meta charset="utf-8">
 <meta
 	name="viewport"
-	content="width=device-width, initial-scale=1"
+	content="width=device-width, initial-scale=1.0"
 >
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 <link
 	rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 >
 
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-></script>
-<style media="screen">
-.container_info {
-	background-color: white;
-	padding-bottom: 20px;
-	margin-left: 20px;
-	margin-right: 20px;
-	height: 50%;
-}
 
-body {
-	background-color: white;
-}
-</style>
+<!-- font icon -->
+
+<link
+	th:href="@{assets/dashboard/css/font-awesome.min.css}"
+	rel="stylesheet"
+/>
+<!-- Custom styles -->
+<link
+	th:href="@{assets/dashboard/css/style.css}"
+	rel="stylesheet"
+>
 </head>
-<body >
-	<h1 style="color: black; margin-left: 10px;">Scheduling DashBoard</h1>
-	<div class="row container_info">
 
-		<div
-			class="col-md-12"
-			style="background-color: white;"
-		>
-			<canvas
-				id="myChart"
-				style="width: 100%; height: 100%;"
-			></canvas>
-			
-		</div>
+<body>
 
-	</div>
+	<h2 class="title_dashboard">
+		<i class="fa fa-tachometer"></i> CLASS SCHEDULING DASHBOARD
+	</h2>
 
-	<script>
-		var ctx = document.getElementById('myChart').getContext('2d');
 
-		var chart = new Chart(ctx, {
-			// The type of chart we want to create
-			type : 'bar',
-			// The data for our dataset
-			data : {
-				labels : [ 'Subject 1', 'Subject 2', 'Subject 3', 'Subject 4',
-						'Subject 5', 'Subject 6', 'Subject 7' ],
-				datasets : [ {
-					responsive : true,
-					label : 'Subject List',
-					backgroundColor : 'rgb(255, 99, 132)',
-					borderColor : 'rgb(25`5, 99, 132)',
-					data : [ 10, 100, 5, 2, 20, 30, 40 ]
-				} ]
-			},
+	<!-- container section start -->
+	<section
+		id="container"
+		class=""
+	>
 
-			// Configuration options go here
-			options : {}
-		});
-	</script>
+
+		<!--sidebar start-->
+		<aside>
+			<div
+				id="sidebar"
+				class="nav-collapse "
+			></div>
+		</aside>
+		<!--sidebar end-->
+
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<div class="row"></div>
+
+				<div class="row">
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						<div class="info-box dark-bg">
+							<i class="fa fa-user"></i>
+							<div class="count">47</div>
+							<div class="title">Teachers</div>
+						</div>
+						<!--/.info-box-->
+					</div>
+					<!--/.col-->
+
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						<div class="info-box dark-bg">
+							<i class="fa fa-list"></i>
+							<div class="count">43</div>
+							<div class="title">Sections</div>
+						</div>
+						<!--/.info-box-->
+					</div>
+					<!--/.col-->
+
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						<div class="info-box dark-bg">
+							<i class="fa fa-university"></i>
+							<div class="count">30</div>
+							<div class="title">Rooms</div>
+						</div>
+						<!--/.info-box-->
+					</div>
+					<!--/.col-->
+
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						<div class="info-box dark-bg">
+							<i class="fa fa-calendar"></i>
+							<div class="count"></div>
+							<div class="title">Saturday</div>
+						</div>
+						<!--/.info-box-->
+					</div>
+					<!--/.col-->
+
+				</div>
+				<div class="row">
+					<!-- chart morris start -->
+					<div class="col-lg-12">
+						<div class="panel-body">
+							<div
+								class="tab-pane"
+								id="chartjs"
+							>
+								<div class="row">
+									<!-- Line -->
+									<div class="col-lg-4">
+										<section class="panel">
+											<header class="panel-heading"> Line </header>
+											<div class="panel-body text-center">
+												<canvas
+													id="line"
+													height="300"
+													width="300"
+												></canvas>
+											</div>
+										</section>
+									</div>
+									<!-- Bar -->
+									<div class="col-lg-4">
+										<section class="panel">
+											<header class="panel-heading"> Bar </header>
+											<div class="panel-body text-center">
+												<canvas
+													id="bar"
+													height="300"
+													width="300"
+												></canvas>
+											</div>
+										</section>
+									</div>
+									<!-- Radar -->
+									<div class="col-lg-4">
+										<section class="panel">
+											<header class="panel-heading"> Radar </header>
+											<div class="panel-body text-center">
+												<canvas
+													id="radar"
+													height="300"
+													width="300"
+												></canvas>
+											</div>
+										</section>
+									</div>
+								</div>
+								<div class="row">
+									<!-- Doughnut -->
+									<div class="col-lg-4">
+										<section class="panel">
+											<header class="panel-heading"> Doughnut </header>
+											<div class="panel-body text-center">
+												<canvas
+													id="doughnut"
+													height="300"
+													width="300"
+												></canvas>
+											</div>
+										</section>
+									</div>
+									<!-- Polar Area -->
+									<div class="col-lg-4">
+										<section class="panel">
+											<header class="panel-heading"> Polar Area </header>
+											<div class="panel-body text-center">
+												<canvas
+													id="polarArea"
+													height="300"
+													width="300"
+												></canvas>
+											</div>
+										</section>
+									</div>
+									<!-- Pie -->
+									<div class="col-lg-4">
+										<section class="panel">
+											<header class="panel-heading"> Pie </header>
+											<div class="panel-body text-center">
+												<canvas
+													id="pie"
+													height="300"
+													width="300"
+												></canvas>
+											</div>
+										</section>
+									</div>
+								</div>
+								<div class="row"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- chart morris start -->
+
+		</section>
+		<!--main content end-->
+
+	</section>
+	<!-- container section end -->
+	<!-- javascripts -->
+	<script th:src="@{assets/dashboard/js/jquery.js}"></script>
+	<script th:src="@{assets/dashboard/js/jquery-1.8.3.min.js}"></script>
+
+
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+	></script>
+	<!-- chartjs -->
+	<script th:src="@{assets/dashboard/js/Chart.js}"></script>
+
+	<!-- custom chart script for this page only-->
+	<script th:src="@{assets/dashboard/js/chartjs-custom.js}"></script>
+
+	<!--custome script for all page-->
+	<script th:src="@{assets/dashboard/js/scripts.js}"></script>
+
 </body>
 </html>

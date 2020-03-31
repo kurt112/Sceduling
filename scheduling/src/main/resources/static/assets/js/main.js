@@ -61,7 +61,9 @@ jQuery(document).ready(function($) {
 			} 
 		} else {
 			$('body').toggleClass('open');
-			$('#left-panel').removeClass('open-menu');  
+			$('#left-panel').toggleClass('open-menu');  
+			
+			//$('#left-panel').removeClass('open-menu');  
 		} 
 			 
 	}); 
@@ -77,11 +79,13 @@ jQuery(document).ready(function($) {
 
 	// Load Resize 
 	$(window).on("load resize", function(event) { 
-		var windowWidth = $(window).width();  		 
+		var windowWidth = $(window).width();  		
+		$('body').removeClass('open'); 
 		if (windowWidth<1010) {
 			$('body').addClass('small-device'); 
 		} else {
-			$('body').removeClass('small-device');  
+			$('body').removeClass('small-device');
+
 		} 
 		
 	});

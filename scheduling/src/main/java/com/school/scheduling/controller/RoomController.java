@@ -5,15 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.school.scheduling.entity.BreakTime;
 import com.school.scheduling.entity.Room;
 import com.school.scheduling.entity.Room_Shift;
+import com.school.scheduling.entity.Room_ShiftSchedule;
 import com.school.scheduling.entity.StrandAndCourse;
 import com.school.scheduling.entity.Student;
+import com.school.scheduling.entity.Subject;
+import com.school.scheduling.entity.Teacher;
 import com.school.scheduling.service.RoomShiftService;
 import com.school.scheduling.service.Services;
 import com.school.scheduling.serviceimplementation.RoomShiftService_Impl;
@@ -55,7 +51,7 @@ public class RoomController {
 	private Services<Room> roomService;
 	private Services<Room_Shift> roomShiftService;
 	private Services<StrandAndCourse> strandService;
-	private Services<Student> studentService;
+	private Services<Room_ShiftSchedule> shiftSchedule;
 	private Room room;
 	private Room_Shift roomShift;
 	private Room_Shift delete_shift;
@@ -63,12 +59,12 @@ public class RoomController {
 	@Autowired
 	public RoomController(Services<Room> roomService, Services<Room_Shift> roomShiftService,
 			Services<StrandAndCourse> strandService, Services<BreakTime> breakService,
-			Services<Student> studentService) {
+			Services<Room_ShiftSchedule> shiftSchedule) {
 		this.roomService = roomService;
 		this.roomShiftService = roomShiftService;
 		this.strandService = strandService;
 		this.breakService = breakService;
-		this.studentService = studentService;
+		this.shiftSchedule = shiftSchedule;
 	}
 
 	/********************************* Mapping for Room ******************/
@@ -249,26 +245,10 @@ public class RoomController {
 			// TODO: handle exception
 		}
 
-		if (room.getRoom_shift_breakTimeList() != null) {
-			List<BreakTime> breaks = new ArrayList<BreakTime>();
-
-			for (BreakTime break_time : break_list) {
-				System.out.println(break_time);
-				boolean add = true;
-				for (BreakTime break_room : room.getRoom_shift_breakTimeList()) {
-					if (break_time.getId() == break_room.getId()) {
-						add = false;
-						break;
-					}
-
-				}
-				if (add)
-					breaks.add(break_time);
-
-			}
-			model.addAttribute("room_breaks", breaks);
-		} else
-			model.addAttribute("room_breaks", break_list);
+		
+		break_list.removeAll(room.getRoom_shift_breakTimeList());
+		
+		model.addAttribute("room_breaks", break_list);
 
 		model.addAttribute("shift_object", room);
 		return "room/room breaktime/room-break-check";
@@ -393,6 +373,10 @@ public class RoomController {
 		model.addAttribute("back", back);
 		model.addAttribute("action", "Update Shift");
 
+		//Room Shift Schedule
+		model.addAttribute("shift_schedule",room_shift.getRoom_ShiftSchedules());
+		
+		
 		System.out.println(room_shift.getStudentList());
 		model.addAttribute("student_list", room_shift.getStudentList());
 		this.roomShift = room_shift;
@@ -428,8 +412,96 @@ public class RoomController {
 
 	/********************************* Mapping for Room Schedule ******************/
 
+	@GetMapping("/schedule/generate")
+	public String GenerateSchedule() {
+		
+		List<StrandAndCourse> strands = strandService.findAll();
+		List<Room_Shift> room_shift = roomShiftService.findAll();
+//		Collections.shuffle(strands);
+		Collections.shuffle(room_shift);
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+		Calendar shift_startTime = Calendar.getInstance();
+		Calendar shift_endTime = Calendar.getInstance();
+		
+		for(Room_Shift shift: room_shift) {
+			
+			String day = "MWF";
+			try {
+				shift_startTime.setTime(dateFormat.parse(shift.getInitial_time()));
+				shift_endTime.setTime(dateFormat.parse(shift.getEndTime()));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			StrandAndCourse strand_new = null;
+			
+			for(StrandAndCourse strand: strands) {
+				strand_new = strand;
+				if(shift.getStrandAndCourse() == strand) {
+					
+					for(Subject sbj: strand.getSubjectList()) {
+						if(!sbj.getSubjectName().contains("Physical Education and Health")) {
+							try {
+								shift_startTime.add(Calendar.HOUR, sbj.getHourCost());
+								shift_startTime.add(Calendar.MINUTE, sbj.getMinuteCost());
+								if((shift_startTime.getTime().before(shift_endTime.getTime())) 
+										|| 
+									shift_startTime.getTime().equals(shift_endTime.getTime())) {
+
+									shiftSchedule.save(new Room_ShiftSchedule(shift, sbj, 
+											shift.getInitial_time() , dateFormat.format(shift_startTime.getTime()), day));
+									
+									
+									shift.setInitial_time(dateFormat.format(shift_startTime.getTime()));
+									
+								}else {
+									day = "TTH";
+									shift.setInitial_time(shift.getStartTime());
+									shift_startTime.setTime(dateFormat.parse(shift.getInitial_time()));
+								
+								}	
+								
+								
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+						}
+					}
+					
+					break;
+				}
+				
+			}
+			
+			Subject temp_subject = strand_new.getSubjectList().get(0);
+
+			strands.remove(strand_new);
+			
+			strand_new.getSubjectList().remove(temp_subject);
+			strand_new.getSubjectList().add(temp_subject);
+			
+			strands.add(strand_new);
+			
+		}
+		
+		
+		return"redirect:/room/schedule/list";
+	}
+	
 	@GetMapping("/schedule/list")
-	public String RoomSchedule_List() {
+	public String RoomSchedule_List(Model model) {
+		
+		roomShiftService.findAll().forEach(e ->{
+			e.setInitial_time(e.getStartTime());
+		});
+		
+		List<Room_ShiftSchedule> sched = shiftSchedule.findAll();
+		
+		
+		model.addAttribute("sched_list", sched);
 		return "room/room shift schedule/room-schedule";
 	}
 

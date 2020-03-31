@@ -90,5 +90,13 @@ public class BreakTime {
 	public void setRoom_shift(List<Room_Shift> room_shift) {
 		this.room_shift = room_shift;}
 	
+	@Override
+	public boolean equals(Object object) {
+
+		if (!(object instanceof BreakTime)) return false;
+		
+		BreakTime break_time = (BreakTime) object;
+		return break_time.getId() == getId();
+	}
 
 }

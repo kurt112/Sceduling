@@ -70,6 +70,10 @@ public class Room_Shift implements Comparable<Room_Shift>{
 	})
 	private List<Room_ShiftSchedule> room_ShiftSchedules;
 
+
+	@Column(name ="initial_time")
+	private String initial_time;
+	
 	public Room_Shift() {
 	}
 
@@ -180,6 +184,14 @@ public class Room_Shift implements Comparable<Room_Shift>{
 
 	public void setRoom_ShiftSchedules(List<Room_ShiftSchedule> room_ShiftSchedules) {
 		this.room_ShiftSchedules = room_ShiftSchedules;
+	}
+	
+	public String getInitial_time() {
+		return initial_time;
+	}
+
+	public void setInitial_time(String initial_time) {
+		this.initial_time = initial_time;
 	}
 
 	@Override

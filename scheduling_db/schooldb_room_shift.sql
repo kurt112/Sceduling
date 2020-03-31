@@ -31,6 +31,7 @@ CREATE TABLE `room_shift` (
   `section` varchar(45) DEFAULT NULL,
   `start_time` varchar(45) DEFAULT NULL,
   `end_time` varchar(45) DEFAULT NULL,
+  `initial_time` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `RoomId_FK_idx` (`room_id`),
   KEY `StrandandCourse_FK_idx` (`strand_and_course_id`),
@@ -48,4 +49,4 @@ CREATE TABLE `room_shift` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-28  3:17:41
+-- Dump completed on 2020-04-01  3:28:01

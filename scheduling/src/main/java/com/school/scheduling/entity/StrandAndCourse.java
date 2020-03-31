@@ -105,4 +105,13 @@ public class StrandAndCourse {
     public void setRoom_shiftList(List<Room_Shift> room_shiftList) {
         this.room_shiftList = room_shiftList;
     }
+    
+    @Override
+	public boolean equals(Object object) {
+
+		if (!(object instanceof StrandAndCourse)) return false;
+		
+		StrandAndCourse strand = (StrandAndCourse) object;
+		return strand.getId() == getId();
+	}
 }

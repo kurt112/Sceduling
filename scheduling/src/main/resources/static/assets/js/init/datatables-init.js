@@ -4,6 +4,18 @@
 	/*
 	 * Data Table -------------
 	 */
+	 
+	 $('#lecture_table').DataTable({
+
+			lengthMenu : [ [ 10, 20, 50, -1 ], [ 10, 20, 50, "All" ] ],
+			"scrollY" : "350px",
+			"scrollX" : true,
+			dom : 'lBfrtip',
+			"paging" : false,
+			buttons : [ 'excel', 'pdf', 'print', ]
+
+		});
+	 
 	$('#teacher_breaktime').DataTable({
 
 		lengthMenu : [ [ 10, 20, 50, -1 ], [ 10, 20, 50, "All" ] ],

@@ -1,8 +1,4 @@
 package com.school.scheduling.controller;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.school.scheduling.entity.StrandAndCourse;
 import com.school.scheduling.entity.Subject;
 import com.school.scheduling.service.Services;
 
@@ -27,7 +21,6 @@ import com.school.scheduling.service.Services;
 public class SubjectController {
 
 	private Services<Subject> subjectService;
-	private Services<StrandAndCourse> strandService;
 	private int back =0;
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -35,9 +28,8 @@ public class SubjectController {
 	}
 
 	@Autowired
-	public SubjectController(Services<Subject> subjectService,Services<StrandAndCourse> strandService ) {
+	public SubjectController(Services<Subject> subjectService) {
 		this.subjectService = subjectService;
-		this.strandService = strandService;
 	}
 
 	@GetMapping("/form")
@@ -94,25 +86,8 @@ public class SubjectController {
 	public String SubjectUpdate(@RequestParam("subject_id") int theiD, Model theModel) {
 		
 		Subject subject = subjectService.findbyId(theiD);
-		System.out.println(subject);
-		// Model for the table in update subject in the model property
 		
-		List<StrandAndCourse> strandAndCourses = new ArrayList<>();
-		
-		
-		for(StrandAndCourse strand: strandService.findAll()) {
-			for(Subject sbj: strand.getSubjectList()) {
-				if(sbj.getId() == subject.getId()){
-					strandAndCourses.add(strand);
-					break;
-				}
-			}
-		}
-
-		theModel.addAttribute("strand_list", strandAndCourses);
-		
-		
-		if (subject == null) subject = new Subject();
+		theModel.addAttribute("strand_list", subject.getStrandAndCourseList());
 		
 		theModel.addAttribute("subject", subject);
 		theModel.addAttribute("back", back);
@@ -142,7 +117,9 @@ public class SubjectController {
 	}
 
 	@GetMapping("/schedule/list")
-	public String SubjectScheduleList() {
+	public String SubjectScheduleList(Model model) {
+	
+		model.addAttribute("subject_schedule",subjectService.findAll());
 		return "subject/subject schedule/subject-schedule";
 	}
 

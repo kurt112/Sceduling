@@ -448,29 +448,23 @@
 										>
 											<thead>
 												<tr>
+													<th>Teacher</th>
+													<th>Subject</th>
+													<th>Day</th>
 													<th>Start Time</th>
-													<th>End Time</th>
-													<th class="th_end">Delete</th>
+													<th>End Time </th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr
-													th:each="break: ${roomShift_object.room_shift_breakTimeList}"
+													th:each="schedule: ${shift_schedule}"
 												>
-													<td th:text="${break.start_time}"></td>
-													<td th:text="${break.end_time}"></td>
-													<!-- 
-                                              th:href="@{/subject/update(subject_id=${subject.Id})}"
-                                          	onclick="if (!(confirm('Are you sure you want to update this subject?'))) return false" -->
-													<td><a
-														th:href="@{/room/break/delete(break_id=${break.id},shift_id=${roomShift_object.Id})}"
-														class="btn btn-danger btn-sm"
-														style="width: 100%; color: white;"
-													> <i
-															class="fa fa-trash"
-															aria-hidden="true"
-														></i>
-													</a></td>
+													<td th:if="${schedule.teacher == null}">N/A</td>
+													<td th:if="${schedule.teacher != null}" th:text="${schedule.teacher.firstName} + ' , ' + ${schedule.teacher.lastName} "></td>
+													<td th:text="${schedule.subject.subjectName}">asdasd</td>
+													<td th:text="${schedule.lecture_day}"></td>
+													<td th:text="${schedule.start_time}">qweqweqw</td>
+													<td th:text="${schedule.end_time}">qweqweqw</td>
 												</tr>
 											</tbody>
 										</table>

@@ -24,24 +24,22 @@ public class Teacher {
 
     @Column(name = "sex")
     private String sex;
-
-    @Column(name = "start_time")
-    private String startTime;
-
-    @Column(name = "end_time")
-    private String endTime;
     
-    @Column(name = "remaining_time")
-    private String remainingTime;
-    
-    @Column(name = "lecture_day")
-    private String lecture_day;
+    @Column(name = "work_type")
+    private String workType;
 
+    
+    @OneToMany(mappedBy = "teacher",cascade ={
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+			})
+    private List<Teacher_Lecture> teacher_lecture;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH,
-            CascadeType.MERGE,
             CascadeType.PERSIST,
             CascadeType.REFRESH
     })
@@ -56,7 +54,8 @@ public class Teacher {
 	@ManyToMany(fetch = FetchType.LAZY,
 	cascade = {
 			CascadeType.DETACH,
-			CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.MERGE, 
+			CascadeType.PERSIST,
 			CascadeType.REFRESH
 			})
 	@JoinTable(
@@ -66,6 +65,14 @@ public class Teacher {
 			)
 	private List<BreakTime> breaktime_teacherList;
 
+	@OneToMany(mappedBy = "teacher", cascade = {
+			CascadeType.DETACH,
+			CascadeType.MERGE, 
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+			
+	})
+	private List<Room_ShiftSchedule> teacher_schedule;
 	
 
 
@@ -76,15 +83,20 @@ public class Teacher {
 
     }
 
-    public Teacher(String firstName, String lastName, String sex, String startTime, String endTime, String lecture_day) {
+    public Teacher(String firstName, String lastName, String sex, String workType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.lecture_day = lecture_day;
+        this.workType = workType;
+      
     }
+    public void add_Lecture(Teacher_Lecture lecture){
 
+        if(teacher_lecture == null) breaktime_teacherList = new ArrayList<>();
+        teacher_lecture.add(lecture);
+
+
+    }
     public void add_BreakTime(BreakTime breaktime_teacher){
 
         if(breaktime_teacherList == null) breaktime_teacherList = new ArrayList<>();
@@ -156,49 +168,47 @@ public class Teacher {
         this.breaktime_teacherList = breaktime_teacherList;
     }
 
-    public String getStartTime() {
-        return startTime;
-    }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
 
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getLecture_day() {
-		return lecture_day;
+	public List<Room_ShiftSchedule> getTeacher_schedule() {
+		return teacher_schedule;
 	}
 
-	public void setLecture_day(String lecture_day) {
-		this.lecture_day = lecture_day;
+	public void setTeacher_schedule(List<Room_ShiftSchedule> teacher_schedule) {
+		this.teacher_schedule = teacher_schedule;
+	}
+	
+	
+
+	public List<Teacher_Lecture> getTeacher_lecture() {
+		return teacher_lecture;
 	}
 
-	public String getRemainingTime() {
-		return remainingTime;
+	public void setTeacher_lecture(List<Teacher_Lecture> teacher_lecture) {
+		this.teacher_lecture = teacher_lecture;
 	}
 
-	public void setRemainingTime(String remainingTime) {
-		this.remainingTime = remainingTime;
+	
+	
+	public String getWorkType() {
+		return workType;
+	}
+
+	public void setWorkType(String workType) {
+		this.workType = workType;
 	}
 
 	@Override
-    public String toString() {
-        return "Teacher{" +
-                "Id=" + id +
-                ", FirstName='" + firstName + '\'' +
-                ", LastName='" + lastName + '\'' +
-                ", Sex='" + sex + '\'' +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
-                ", breaktime_teacherList=" + breaktime_teacherList +
-//                ", subjectList=" + subjectList +
-                '}';
-    }
+	public boolean equals(Object object) {
+
+		if (!(object instanceof Teacher)) return false;
+		
+		Teacher teacher = (Teacher) object;
+		return teacher.getId() == id;
+		
+	}
+
+
+	
+	
 }
