@@ -43,4 +43,4 @@ CREATE TABLE `strandandcourse_subject` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-01  3:28:02
+-- Dump completed on 2020-04-02  0:46:04

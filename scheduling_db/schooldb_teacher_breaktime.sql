@@ -24,14 +24,14 @@ DROP TABLE IF EXISTS `teacher_breaktime`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `teacher_breaktime` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `teacher_id` int DEFAULT NULL,
+  `teacher_shift_id` int DEFAULT NULL,
   `break_time_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `Teacher_IDFK_idx` (`teacher_id`),
   KEY `BreakTime_ID_idx` (`break_time_id`),
+  KEY `Teacher_IDFK_idx` (`teacher_shift_id`),
   CONSTRAINT `BreakTime_ID` FOREIGN KEY (`break_time_id`) REFERENCES `break_time` (`id`),
-  CONSTRAINT `Teacher_IDFK` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `Teacher_IDFK` FOREIGN KEY (`teacher_shift_id`) REFERENCES `teacher_lecture` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -43,4 +43,4 @@ CREATE TABLE `teacher_breaktime` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-01  3:28:02
+-- Dump completed on 2020-04-02  0:46:04

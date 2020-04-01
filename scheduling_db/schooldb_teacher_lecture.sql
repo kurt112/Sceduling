@@ -32,7 +32,7 @@ CREATE TABLE `teacher_lecture` (
   PRIMARY KEY (`id`),
   KEY `teacherFK_id_idx` (`teacher_data`),
   CONSTRAINT `data_teacher_FK` FOREIGN KEY (`teacher_data`) REFERENCES `teacher` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -44,4 +44,4 @@ CREATE TABLE `teacher_lecture` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-01  3:28:02
+-- Dump completed on 2020-04-02  0:46:04
