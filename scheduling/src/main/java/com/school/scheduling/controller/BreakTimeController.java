@@ -35,7 +35,7 @@ public class BreakTimeController {
 	@GetMapping("/form")
 	public String BreakTime_Form(Model model) {
 		model.addAttribute("break_object",new BreakTime());
-		
+		model.addAttribute("action", "Save BreakTime");
 		return "breaktime/breaktime-form";
 	}
 	
@@ -44,9 +44,10 @@ public class BreakTimeController {
 		
 		BreakTime breaktime = breakService.findbyId(id);
 
-		model.addAttribute("teacher_list", breaktime.getTeacher());
+		model.addAttribute("teacher_list", breaktime.getTeacher_lecture());
 		model.addAttribute("room_shifts", breaktime.getRoom_shift());
 		model.addAttribute("break_object", breaktime);
+		model.addAttribute("action", "Update");
 		
 		return "breaktime/breaktime-form";
 	}

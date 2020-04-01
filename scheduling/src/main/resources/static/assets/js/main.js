@@ -80,10 +80,12 @@ jQuery(document).ready(function($) {
 	// Load Resize 
 	$(window).on("load resize", function(event) { 
 		var windowWidth = $(window).width();  		
-		$('body').removeClass('open'); 
+//		$('body').toggleClass('open');		
 		if (windowWidth<1010) {
 			$('body').addClass('small-device'); 
 		} else {
+		
+			
 			$('body').removeClass('small-device');
 
 		} 

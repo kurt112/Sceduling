@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.school.scheduling.validations.CheckTime_RoomShift;
+import com.school.scheduling.validations.RoomShift.CheckTime_RoomShift;
 
 import java.util.ArrayList;
 import java.util.Comparator;

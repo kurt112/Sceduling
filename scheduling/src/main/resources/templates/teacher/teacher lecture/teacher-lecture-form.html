@@ -154,7 +154,7 @@
 			style=""
 		>
 
-			<div class="col-md-12">
+			<div class="col-md-5">
 				<h1>Teacher Lecture Form</h1>
 
 				<form
@@ -184,7 +184,7 @@
 								placeholder="Last Name"
 							>
 						</div>
-						
+
 					</div>
 
 					<div class="form-group col-md-12">
@@ -194,7 +194,7 @@
 								style="margin-right: 10px;"
 								class="form-control"
 								th:field="*{teacher}"
-							> 
+							>
 								<option
 									th:each="teachers: ${teacher_list}"
 									th:value="${teachers.id}"
@@ -206,6 +206,11 @@
 								th:field="*{lectureDay}"
 							>
 								<!-- selected -->
+								<option th:value="MONDAY">Monday</option>
+								<option th:value="TUESDAY">Tuesday</option>
+								<option th:value="WEDNESDAY">Wednesday</option>
+								<option th:value="THURSDAY">Thursday</option>
+								<option th:value="FRIDAY">Friday</option>
 								<option th:value="MWF">MWF</option>
 								<option th:value="TTH">TTH</option>
 							</select>
@@ -234,7 +239,72 @@
 
 				</form>
 			</div>
+			<div class="col-md-7"> 
+				<a th:href="@{/	teacher/break/list/add(lecture_id=${teacher_lecture.id})}"
+					class="btn btn-success"
+					style="margin-bottom: 10px; color: white;"
+				> Add BreakTime </a>
+				<div
+					class="content"
+					id="break_content"
+				>
+					<div class="animated fadeIn">
+						<div class="row">
 
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<strong class="card-title">BreakTime List</strong>
+									</div>
+									<div class="card-body">
+										<table
+											style="width: 100%;"
+											id="break_table"
+											class="table table-striped table-bordered"
+										>
+											<thead>
+												<tr>
+													<th>Shift Day</th>
+													<th>BreakTime</th>
+													<th>Start Time</th>
+													<th>End Time</th>
+													<th class="th_end">Delete</th>
+												</tr>
+											</thead>
+											<tbody>
+												<span th:each="lecture:${teacher_lecture}">
+													<tr th:each="break:${lecture.breaktime_teacherList}">
+														<td th:text="${lecture.lectureDay}"></td>
+														<td
+															th:text="${break.start_time}+ ' - ' + ${break.end_time}"
+														></td>
+														<td th:text="${lecture.startTime}"></td>
+														<td th:text="${lecture.endTime}"></td>
+														<td><a
+															class="btn btn-danger btn-sm"
+															style="width: 100%; color: white;"
+														> <i
+																class="fa fa-trash"
+																aria-hidden="true"
+															></i>
+														</a></td>
+													</tr>
+												</span>
+											</tbody>
+										</table>
+
+
+									</div>
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<!-- .animated -->
+				</div>
+			</div>
 		</div>
 	</div>
 

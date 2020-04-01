@@ -9,7 +9,7 @@ if (performance.navigation.type == 1) {
 
 // changing table room shift
 function ChageTable_RoomShift(table_name) {
-alert("Wew")
+
 	var break_content = document.getElementById("break_content");
 	var student_content = document.getElementById("student_content");
 	var schedule_content = document.getElementById("schedule_content");

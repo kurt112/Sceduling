@@ -1,5 +1,6 @@
 package com.school.scheduling.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -34,8 +35,8 @@ public class BreakTime {
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH,CascadeType.PERSIST})
-	@JoinTable(name = "teacher_breaktime", joinColumns = @JoinColumn(name = "break_time_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
-	private List<Teacher> teacher;
+	@JoinTable(name = "teacher_breaktime", joinColumns = @JoinColumn(name = "break_time_id"), inverseJoinColumns = @JoinColumn(name = "teacher_shift_id"))
+	private List<Teacher_Lecture> teacher_lecture;
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL})
@@ -45,11 +46,27 @@ public class BreakTime {
 	public BreakTime() {
 
 	}
-
+	
 	public BreakTime(String start_time, String end_time) {
 		this.start_time = start_time;
 		this.end_time = end_time;
 	}
+	
+	public void Add_RoomShift(Room_Shift room) {
+		if(room_shift == null) room_shift = new ArrayList<>();
+		
+		room_shift.add(room);
+	
+	}
+
+	
+	public void Add_TeacherLecture(Teacher_Lecture teacher) {
+		if(teacher_lecture == null) teacher_lecture = new ArrayList<>();
+		
+		teacher_lecture.add(teacher);
+		
+	}
+
 
 	public int getId() {
 		return id;
@@ -75,12 +92,13 @@ public class BreakTime {
 		this.end_time = end_time;
 	}
 
-	public List<Teacher> getTeacher() {
-		return teacher;
+
+	public List<Teacher_Lecture> getTeacher_lecture() {
+		return teacher_lecture;
 	}
 
-	public void setTeacher(List<Teacher> teacher) {
-		this.teacher = teacher;
+	public void setTeacher_lecture(List<Teacher_Lecture> teacher_lecture) {
+		this.teacher_lecture = teacher_lecture;
 	}
 
 	public List<Room_Shift> getRoom_shift() {

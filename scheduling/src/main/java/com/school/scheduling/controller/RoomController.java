@@ -266,11 +266,7 @@ public class RoomController {
 //		System.out.println("The name " + this.roomShift.getShiftName());
 		roomShift.getRoom_shift_breakTimeList().forEach(e -> System.out.println(e.getStart_time()));
 
-		model.addAttribute("roomShift_object", this.roomShift);
-		model.addAttribute("room_list", roomService.findAll());
-		model.addAttribute("action", "Update Shift");
-		model.addAttribute("strand_list", strandService.findAll());
-		return "room/room shift/room-shift-form";
+		return "redirect:/room/shift/update?roomShift_id="+this.roomShift.getId();
 	}
 
 	/********************************* Mapping for roomShift ******************/

@@ -63,7 +63,10 @@
 					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<div class="info-box dark-bg">
 							<i class="fa fa-user"></i>
-							<div class="count">47</div>
+							<div
+								id="teacher_count"
+								class="count"
+							></div>
 							<div class="title">Teachers</div>
 						</div>
 						<!--/.info-box-->
@@ -73,33 +76,39 @@
 					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<div class="info-box dark-bg">
 							<i class="fa fa-list"></i>
-							<div class="count">43</div>
+							<div
+								id="section_count"
+								class="count"
+							></div>
 							<div class="title">Sections</div>
 						</div>
 						<!--/.info-box-->
 					</div>
 					<!--/.col-->
-
+					
 					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<div class="info-box dark-bg">
 							<i class="fa fa-university"></i>
-							<div class="count">30</div>
+							<div
+								id="room_count"
+								class="count"
+							></div>
 							<div class="title">Rooms</div>
 						</div>
 						<!--/.info-box-->
 					</div>
 					<!--/.col-->
-
 					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<div class="info-box dark-bg">
-							<i class="fa fa-calendar"></i>
-							<div class="count"></div>
-							<div class="title">Saturday</div>
+							<i class="fa fa-graduation-cap"></i>
+							<div
+								id="student_count"
+								class="count"
+							></div>
+							<div class="title">Student</div>
 						</div>
 						<!--/.info-box-->
 					</div>
-					<!--/.col-->
-
 				</div>
 				<div class="row">
 					<!-- chart morris start -->
@@ -222,6 +231,6 @@
 
 	<!--custome script for all page-->
 	<script th:src="@{assets/dashboard/js/scripts.js}"></script>
-
+	<script th:src="@{assets/dashboard/js/ScheduleAPI.js}"></script>
 </body>
 </html>

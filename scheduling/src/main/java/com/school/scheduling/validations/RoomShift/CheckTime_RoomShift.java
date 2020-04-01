@@ -1,4 +1,4 @@
-package com.school.scheduling.validations;
+package com.school.scheduling.validations.RoomShift;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

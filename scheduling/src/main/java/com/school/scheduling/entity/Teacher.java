@@ -29,12 +29,7 @@ public class Teacher {
     private String workType;
 
     
-    @OneToMany(mappedBy = "teacher",cascade ={
-			CascadeType.DETACH,
-			CascadeType.MERGE,
-			CascadeType.PERSIST,
-			CascadeType.REFRESH
-			})
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.REFRESH)
     private List<Teacher_Lecture> teacher_lecture;
 
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -50,20 +45,7 @@ public class Teacher {
     )
     private List<Subject> subjectList;
 
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToMany(fetch = FetchType.LAZY,
-	cascade = {
-			CascadeType.DETACH,
-			CascadeType.MERGE, 
-			CascadeType.PERSIST,
-			CascadeType.REFRESH
-			})
-	@JoinTable(
-			name = "teacher_breaktime",
-			joinColumns = @JoinColumn(name = "teacher_id"),
-			inverseJoinColumns = @JoinColumn(name = "break_time_id")
-			)
-	private List<BreakTime> breaktime_teacherList;
+	
 
 	@OneToMany(mappedBy = "teacher", cascade = {
 			CascadeType.DETACH,
@@ -90,21 +72,7 @@ public class Teacher {
         this.workType = workType;
       
     }
-    public void add_Lecture(Teacher_Lecture lecture){
-
-        if(teacher_lecture == null) breaktime_teacherList = new ArrayList<>();
-        teacher_lecture.add(lecture);
-
-
-    }
-    public void add_BreakTime(BreakTime breaktime_teacher){
-
-        if(breaktime_teacherList == null) breaktime_teacherList = new ArrayList<>();
-        breaktime_teacherList.add(breaktime_teacher);
-
-
-    }
-
+  
 
     public Users getUsers() {
         return users;
@@ -123,6 +91,7 @@ public class Teacher {
     public int getId() {
         return id;
     }
+    
 
     public void setId(int id) {
     	this.id = id;
@@ -158,14 +127,6 @@ public class Teacher {
 
     public void setSubjectList(List<Subject> subjectList) {
         this.subjectList = subjectList;
-    }
-
-    public List<BreakTime> getBreaktime_teacherList() {
-        return breaktime_teacherList;
-    }
-
-    public void setBreaktime_teacherList(List<BreakTime> breaktime_teacherList) {
-        this.breaktime_teacherList = breaktime_teacherList;
     }
 
 

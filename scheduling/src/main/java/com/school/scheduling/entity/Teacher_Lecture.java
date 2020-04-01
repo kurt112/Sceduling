@@ -1,6 +1,12 @@
 package com.school.scheduling.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "teacher_lecture")
@@ -33,7 +39,20 @@ public class Teacher_Lecture {
 	@JoinColumn(name = "teacher_data")
 	private Teacher teacher;
 	
-	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(fetch = FetchType.LAZY,
+	cascade = {
+			CascadeType.DETACH,
+			CascadeType.MERGE, 
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+			})
+	@JoinTable(
+			name = "teacher_breaktime",
+			joinColumns = @JoinColumn(name = "teacher_shift_id"),
+			inverseJoinColumns = @JoinColumn(name = "break_time_id")
+			)
+	private List<BreakTime> breaktime_teacherList;
 	
 	public Teacher_Lecture() {
 		
@@ -48,6 +67,16 @@ public class Teacher_Lecture {
 		this.endTime = endTime;
 		this.remainingtTime = remainingtTime;
 	}
+	
+	
+	public void Add_Breaktime(BreakTime breaktime) {
+		
+		if(breaktime_teacherList == null) breaktime_teacherList = new ArrayList<>();
+		
+		breaktime_teacherList.add(breaktime);
+		
+	}
+	
 
 	public int getId() {
 		return id;
@@ -96,7 +125,23 @@ public class Teacher_Lecture {
 	public void setRemainingtTime(String remainingtTime) {
 		this.remainingtTime = remainingtTime;
 	}
-	
+
+	public List<BreakTime> getBreaktime_teacherList() {
+		return breaktime_teacherList;
+	}
+
+	public void setBreaktime_teacherList(List<BreakTime> breaktime_teacherList) {
+		this.breaktime_teacherList = breaktime_teacherList;
+	}
+	@Override
+	public boolean equals(Object object) {
+
+		if (!(object instanceof Teacher_Lecture)) return false;
+		
+		Teacher_Lecture teacher = (Teacher_Lecture) object;
+		return teacher.getId() == id;
+		
+	}
 	
 	
 	

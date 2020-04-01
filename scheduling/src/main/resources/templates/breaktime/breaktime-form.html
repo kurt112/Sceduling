@@ -203,7 +203,6 @@
 													<th>First Name</th>
 													<th>Last Name</th>
 													<th>Sex</th>
-													<th>Username</th>
 													<th>Lecture Day</th>
 													<th>Start Time</th>
 													<th>End Time</th>
@@ -211,11 +210,10 @@
 											</thead>
 											<tbody>
 												<tr th:each="teacher: ${teacher_list}">
-													<td th:text="${teacher.firstName}">Kurt</td>
-													<td th:text="${teacher.lastName}">Oriqoue</td>
-													<td th:text="${teacher.sex}">Male</td>
-													<td th:text="${teacher.users.username}">Kurt123</td>
-													<td th:text="${teacher.lecture_day}">MWF</td>
+													<td th:text="${teacher.teacher.firstName}">Kurt</td>
+													<td th:text="${teacher.teacher.lastName}">Oriqoue</td>
+													<td th:text="${teacher.teacher.sex}">Male</td>
+													<td th:text="${teacher.lectureDay}">MWF</td>
 													<td th:text="${teacher.startTime}">7:00</td>
 													<td th:text="${teacher.endTime}">15:00</td>
 

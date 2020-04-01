@@ -1,4 +1,4 @@
-package com.school.scheduling.validations;
+package com.school.scheduling.validations.RoomShift;
 
 import java.text.DateFormat;
 import java.text.ParseException;

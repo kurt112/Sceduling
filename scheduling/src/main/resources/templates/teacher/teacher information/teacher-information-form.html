@@ -304,11 +304,7 @@
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<strong class="card-title">BreakTime List</strong> <a
-											th:href="@{/teacher/break/list/add}"
-											class="btn btn-success"
-											style="float: right;"
-										> Add BreakTime</a>
+										<strong class="card-title">BreakTime List</strong>
 									</div>
 									<div class="card-body">
 										<table
@@ -318,15 +314,22 @@
 										>
 											<thead>
 												<tr>
+													<th>Shift Day</th>
+													<th>BreakTime</th>
 													<th>Start Time</th>
 													<th>End Time</th>
 													<th class="th_end">Delete</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="break:${teacher_break}">
-													<td th:text="${break.start_time}"></td>
-													<td th:text="${break.end_time}"></td>
+												<span th:each="lecture:${teacher_lecture}">
+												<tr th:each="break:${lecture.breaktime_teacherList}">
+													<td th:text="${lecture.lectureDay}"></td>
+													<td
+														th:text="${break.start_time}+ ' - ' + ${break.end_time}"
+													></td>
+													<td th:text="${lecture.startTime}"></td>
+													<td th:text="${lecture.endTime}"></td>
 													<td><a
 														class="btn btn-danger btn-sm"
 														style="width: 100%; color: white;"
@@ -336,6 +339,7 @@
 														></i>
 													</a></td>
 												</tr>
+												</span>
 											</tbody>
 										</table>
 
@@ -391,6 +395,7 @@
 													<td th:text="${lecture.remainingtTime}"></td>
 													<td th:text="${lecture.lectureDay}"></td>
 													<td><a
+														th:href="@{/teacher/lecture/update(lecture_id=${lecture.id})}"
 														class="btn btn-info btn-sm"
 														style="width: 100%; color: white;"
 													> <i

@@ -151,6 +151,7 @@
 			style=""
 		>
 			<div class="col-md-12">
+			
 				<div class="content">
 					<div class="animated fadeIn">
 						<div class="row">
@@ -169,30 +170,38 @@
 												<tr>
 													<th>First Name</th>
 													<th>Last Name</th>
+													<th>Shift</th>
+													<th>BreakTime</th>
 													<th>Start Time</th>
 													<th>End Time</th>
 													<th class="th_end">Delete</th>
 												</tr>
 											</thead>
 											<tbody>
-												<span th:each="teacher: ${teacher_break}">
-													<tr th:each="break: ${teacher.breaktime_teacherList}">
-														<td th:text="${teacher.firstName}">Kurt</td>
-														<td th:text="${teacher.lastName}">Orioque</td>
-														<td th:text="${break.start_time}">12:00</td>
-														<td th:text="${break.end_time}">1:00</td>
-														<td><a
-															th:onclick="'DeleteBreakTeacher_id('+${break.id}+','+${teacher.id}+')'"
-															data-target="#modal"
-															data-toggle="modal"
-															class="btn btn-danger btn-sm aButton"
-														> <i
-																class="fa fa-trash"
-																aria-hidden="true"
-															></i>
-														</a></td>
-													</tr>
+												<span th:each="teacher: ${teachers}"> 
+												<span th:each="teacher_lecture: ${teacher.teacher_lecture}">
+														<tr th:each="break: ${teacher_lecture.breaktime_teacherList}">
+														<td th:text="${teacher.firstName}"></td>
+														<td th:text="${teacher.lastName}"></td>
+														<td th:text="${teacher_lecture.lectureDay}"></td>
+														<td th:text="${break.start_time}+ ' - ' + ${break.end_time}"></td>
+														<td th:text="${teacher_lecture.startTime}"></td>
+														<td th:text="${teacher_lecture.endTime}"></td>
+															
+															<td><a
+																th:onclick="'DeleteBreakTeacher_id('+${break.id}+','+${teacher.id}+')'"
+																data-target="#modal"
+																data-toggle="modal"
+																class="btn btn-danger btn-sm aButton"
+															> <i
+																	class="fa fa-trash"
+																	aria-hidden="true"
+																></i>
+															</a></td>
+														</tr>
 												</span>
+												</span>
+											</tbody>
 										</table>
 									</div>
 								</div>

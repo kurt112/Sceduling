@@ -113,9 +113,10 @@
 
 								<form
 									th:action="@{/teacher/break/save}"
-									th:object="${teacher_object}"
+									th:object="${teacher_lecture}"
 									method="POST"
 								>
+								<input type="hidden" th:field=*{id}>
 									<input
 										type="submit"
 										class="btn btn-success"
