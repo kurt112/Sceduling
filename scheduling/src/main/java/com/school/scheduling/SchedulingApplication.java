@@ -13,7 +13,7 @@ public class SchedulingApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SchedulingApplication.class, args);
 	}
-	
+
 	@Bean
 	public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
 	    final SpringTemplateEngine templateEngine = new SpringTemplateEngine();

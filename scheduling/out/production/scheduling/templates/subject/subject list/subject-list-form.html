@@ -98,9 +98,7 @@
 
 	<div class="container-fluid rounded">
 		<div
-			class="row container_info"
-			style=""
-		>
+			class="row container_info">
 
 			<div class="col-md-5">
 				<h1>Subject Information</h1>
@@ -273,36 +271,22 @@
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<strong class="card-title">Subject List</strong>
+										<strong class="card-title">Strand List</strong>
 									</div>
 									<div class="card-body">
 										<table
-											id="bootstrap-data-table"
+											id="subject_Strand_Table"
 											class="table table-striped table-bordered"
 										>
 											<thead>
 												<tr>
-													<th>Id</th>
-													<th>Name</th>
-													<th>Code</th>
-													<th>Hour</th>
-													<th>Minute</th>
-													<th>Units</th>
-													<th>Category</th>
-
+													<th>Strand Name</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="subject: ${subjects}">
-													<td th:text="${subject.id}"></td>
-													<td th:text="${subject.subjectName}"></td>
-													<td th:text="${subject.subjectCode}"></td>
-													<td th:text="${subject.hourCost}"></td>
-													<td th:text="${subject.minuteCost}"></td>
-													<td th:text="${subject.subjectUnit}"></td>
-													<td th:text="${subject.is_Major}"></td>
+												<tr th:each="strand: ${strand_list}">
+													<td th:text="${strand.strandName}"></td>
 												</tr>
-											</tbody>
 										</table>
 									</div>
 								</div>
@@ -315,7 +299,7 @@
 				</div>
 				<!-- .content -->
 				<a
-					th:onclick="'back('+${back}+')'"
+					th:href="@{/subject/list}"
 					class="btn btn-info btn-block"
 					title="View"
 					style="margin-top: 10px; margin-bottom: 10px;"

@@ -12,15 +12,6 @@ padding-top:10px;
    margin-top:10px;
  }
 }
-
-.btn-group a{
- border:1px solid black;
-}
-
-.buttons-copy{
-
-}
-
 .th_end{
 	width:5px;
 }
@@ -47,16 +38,28 @@ body { padding-right: 0 !important;}
 .fa-trash{
 	color:white;
 }
-.buttons-csv{
 
+.btn-group{
+
+}
+
+.buttons-csv{
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: 10px !important;
 }
 
 .buttons-excel{
-
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: 10px !important;
 }
 .buttons-pdf{
-
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: 10px !important;
 }
 .buttons-print{
-
+    padding-right: 20px;
+    padding-left: 20px;
 }

@@ -221,8 +221,6 @@
 									id="input_starttime"
 									class="form-control timepicker"
 								>
-
-
 							</div>
 							<div class="col-md-6">
 								<label for="end_time">End Time<span
@@ -306,7 +304,7 @@
 									<div class="card-body">
 										<table
 											style="width: 100%;"
-											id="break_table"
+											id="roomShift_breaktime_Table"
 											class="table table-striped table-bordered"
 										>
 											<thead>
@@ -369,7 +367,7 @@
 									<div class="card-body">
 										<table
 											style="width: 100%;"
-											id="student_table"
+											id="roomShift_Student_Table"
 											class="table table-striped table-bordered"
 										>
 											<thead>
@@ -443,7 +441,7 @@
 									<div class="card-body">
 										<table
 											style="width: 100%;"
-											id="schedule_table"
+											id="roomShift_Schedule_Table"
 											class="table table-striped table-bordered"
 										>
 											<thead>
@@ -484,7 +482,7 @@
 
 
 				<a
-					th:onclick="'back('+${back}+')'"
+					th:href="@{/room/shift/list}"
 					class="btn btn-info btn-block"
 					title="View"
 					style="margin-top: 10px; margin-bottom: 10px;"

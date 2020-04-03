@@ -93,6 +93,10 @@
 	rel="stylesheet"
 	th:href="@{/assets/css/main.css}"
 >
+<link
+	rel="stylesheet"
+	th:href="@{/assets/css/contents.css}"
+>
 </head>
 <body style="margin-bottom: 10px;">
 
@@ -122,13 +126,17 @@
 					<div class="form-group col-md-12">
 						<label for="shift_name">Shift Name </label>
 						<div class="input-group mb-3">
-							<input
+							<select
 								th:field="*{shiftName}"
-								type="text"
 								class="form-control"
 								id="shift_name"
-								placeholder="shift_name"
 							>
+								<!-- selected -->
+								<option th:value="'1st Shift'">1st Shift</option>
+								<option th:value="'2nd Shift'">2nd Shift</option>
+								<option th:value="'3rd Shift'">3rd Shift</option>
+
+							</select>
 						</div>
 
 					</div>
@@ -201,7 +209,7 @@
 
 						<div class="input-group mb-3">
 							<div class="col-md-6">
-								<label for="input_starttime">Start Time </span> <span
+								<label for="input_starttime">Start Time <span
 									class="error"
 									th:if="${#fields.hasErrors('${roomShift_object.*}')}"
 									th:errors="${roomShift_object.*}"
@@ -213,11 +221,9 @@
 									id="input_starttime"
 									class="form-control timepicker"
 								>
-
-
 							</div>
 							<div class="col-md-6">
-								<label for="end_time">End Time </span> <span
+								<label for="end_time">End Time<span
 									class="error"
 									th:if="${#fields.hasErrors('${roomShift_object.*}')}"
 									th:errors="${roomShift_object.*}"
@@ -260,46 +266,69 @@
 			<div class="col-md-7">
 				<a
 					th:if="${roomShift_object.shiftName != null}"
-					th:href="@{/room/break/list/add}"
 					class="btn btn-success"
-					style="margin-bottom: 10px;"
-					onclick="ChangeTableRoomShift(add_break)"
-				> Add BreakTime</a>
-				<div class="content">
+					style="margin-bottom: 10px; color: white;"
+					onclick="ChageTable_RoomShift('break_table')"
+				> View Breaktime
+				</a> <a
+					th:if="${roomShift_object.shiftName != null}"
+					class="btn btn-success"
+					style="margin-bottom: 10px; color: white;"
+					onclick="ChageTable_RoomShift('student_table')"
+				> View Student</a> <a
+					th:if="${roomShift_object.shiftName != null}"
+					class="btn btn-success"
+					style="margin-bottom: 10px; color: white;"
+					onclick="ChageTable_RoomShift('schedule_table')"
+				> View Schedule</a>
+
+
+				<div
+					class="content"
+					id="break_content"
+					style="display: none;"
+				>
 					<div class="animated fadeIn">
 						<div class="row">
 
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<strong class="card-title">BreakTime List</strong>
+										<strong class="card-title">BreakTime List</strong> <a
+											th:if="${roomShift_object.shiftName != null}"
+											th:href="@{/room/break/list/add}"
+											class="btn btn-success"
+											style="float: right;"
+										> Add BreakTime</a>
 									</div>
 									<div class="card-body">
-										<table id="bootstrap-data-table"
+										<table
+											style="width: 100%;"
+											id="roomShift_breaktime_Table"
 											class="table table-striped table-bordered"
 										>
 											<thead>
 												<tr>
 													<th>Start Time</th>
 													<th>End Time</th>
-													<th>Action</th>
+													<th class="th_end">Delete</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="shift: ${room_shifts}">
-													<td th:text="${subject.id}"></td>
-													<td th:text="${subject.subjectName}"></td>
-													<td th:text="${subject.subjectCode}"></td>
-													<!-- 
-                                              th:href="@{/subject/update(subject_id=${subject.Id})}"
-                                          	onclick="if (!(confirm('Are you sure you want to update this subject?'))) return false" -->
+												<tr
+													th:each="break: ${roomShift_object.room_shift_breakTimeList}"
+												>
+													<td th:text="${break.start_time}"></td>
+													<td th:text="${break.end_time}"></td>
 													<td><a
-														class="btn btn-info btn-sm"
-														style="width: 100%"
-													>Update </a> <a
+														th:href="@{/room/break/deleteShiftForm(break_id=${break.id},shift_id=${roomShift_object.Id})}"
 														class="btn btn-danger btn-sm"
-														style="width: 100%"
-													> Delete </a></td>
+														style="width: 100%; color: white;"
+													> <i
+															class="fa fa-trash"
+															aria-hidden="true"
+														></i>
+													</a></td>
 												</tr>
 											</tbody>
 										</table>
@@ -316,8 +345,144 @@
 					<!-- .animated -->
 				</div>
 				<!-- .content -->
+
+				<div
+					class="content"
+					id="student_content"
+					style="display: block;"
+				>
+					<div class="animated fadeIn">
+						<div class="row">
+
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<strong class="card-title">Student List</strong> <a
+											th:if="${roomShift_object.shiftName != null}"
+											th:href="@{/room/shift/student_form}"
+											class="btn btn-success"
+											style="float: right;"
+										> Add Student</a>
+									</div>
+									<div class="card-body">
+										<table
+											style="width: 100%;"
+											id="roomShift_Student_Table"
+											class="table table-striped table-bordered"
+										>
+											<thead>
+												<tr>
+													<th>First Name</th>
+													<th>Last Name</th>
+													<th>Sex</th>
+													<th>Room</th>
+													<th>Shift Name</th>
+													<th>Strand</th>
+													<th>Grade</th>
+													<th>Section</th>
+													<th class="th_end">Delete</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="student:${student_list}">
+													<td th:text="${student.firstName}"></td>
+													<td th:text="${student.lastName}"></td>
+													<td th:text="${student.sex}"></td>
+													<td th:text="${student.room_shift.room.roomName}"></td>
+													<td th:text="${student.room_shift.shiftName}"></td>
+													<td th:text="${student.strandAndCourse.strandName}"></td>
+													<td th:text="${student.room_shift.grade}"></td>
+													<td th:text="${student.room_shift.section}"></td>
+													<td><a
+														style="width: 100%; color: white;"
+														class="btn btn-danger btn-sm"
+														th:href="@{/student/delete(student_id=${student.id})}"
+														onclick="if (!(confirm('Are you sure you want to delete this Strand?'))) return false"
+													> <i
+															class="fa fa-trash"
+															aria-hidden="true"
+														></i>
+													</a></td>
+												</tr>
+											</tbody>
+										</table>
+
+
+									</div>
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<!-- .animated -->
+				</div>
+				<!-- .content -->
+
+				<div
+					class="content"
+					id="schedule_content"
+					style="display: none;"
+				>
+					<div class="animated fadeIn">
+						<div class="row">
+
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<strong class="card-title">Schedule List</strong> <a
+											th:if="${roomShift_object.shiftName != null}"
+											th:href="@{/room/break/list/add}"
+											class="btn btn-success"
+											style="float: right;"
+										> Add Schedule</a>
+									</div>
+									<div class="card-body">
+										<table
+											style="width: 100%;"
+											id="roomShift_Schedule_Table"
+											class="table table-striped table-bordered"
+										>
+											<thead>
+												<tr>
+													<th>Teacher</th>
+													<th>Subject</th>
+													<th>Day</th>
+													<th>Start Time</th>
+													<th>End Time </th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr
+													th:each="schedule: ${shift_schedule}"
+												>
+													<td th:if="${schedule.teacher == null}">N/A</td>
+													<td th:if="${schedule.teacher != null}" th:text="${schedule.teacher.firstName} + ' , ' + ${schedule.teacher.lastName} "></td>
+													<td th:text="${schedule.subject.subjectName}">asdasd</td>
+													<td th:text="${schedule.lecture_day}"></td>
+													<td th:text="${schedule.start_time}">qweqweqw</td>
+													<td th:text="${schedule.end_time}">qweqweqw</td>
+												</tr>
+											</tbody>
+										</table>
+
+
+									</div>
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<!-- .animated -->
+				</div>
+				<!-- .content -->
+
+
 				<a
-					th:onclick="'back('+${back}+')'"
+					th:href="@{/room/shift/list}"
 					class="btn btn-info btn-block"
 					title="View"
 					style="margin-top: 10px; margin-bottom: 10px;"

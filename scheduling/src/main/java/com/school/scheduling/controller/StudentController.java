@@ -101,6 +101,13 @@ public class StudentController {
 		return "redirect:/student/form";
 	}
 
+	@GetMapping("delete/main")
+	public String Student_DeleteMain(@ModelAttribute("student_id") int theId){
+		studentservice.deleteById(theId);
+
+		return "redirect:/student/list";
+	}
+
 	@GetMapping("/update")
 	public String Student_Update(@RequestParam("student_id") int theId, Model model) {
 		Student student = studentservice.findbyId(theId);

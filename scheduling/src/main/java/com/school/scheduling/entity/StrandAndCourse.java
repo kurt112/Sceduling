@@ -1,6 +1,7 @@
 package com.school.scheduling.entity;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class StrandAndCourse {
     @Column(name = "strand_name")
     private String strandName;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY , cascade = 
     	{CascadeType.MERGE}
     )
@@ -41,6 +43,7 @@ public class StrandAndCourse {
     )
     private List<Student> studentList;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "strandAndCourse",
     		fetch = FetchType.LAZY)
     private List<Room_Shift> room_shiftList;

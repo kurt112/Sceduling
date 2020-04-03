@@ -1,19 +1,15 @@
 package com.school.scheduling.controller;
 
-import java.util.List;
-
+import com.school.scheduling.entity.BreakTime;
+import com.school.scheduling.service.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.context.Theme;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
-import com.school.scheduling.entity.BreakTime;
-import com.school.scheduling.service.Services;
+import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/breaktime")
@@ -48,7 +44,6 @@ public class BreakTimeController {
 		model.addAttribute("room_shifts", breaktime.getRoom_shift());
 		model.addAttribute("break_object", breaktime);
 		model.addAttribute("action", "Update");
-		
 		return "breaktime/breaktime-form";
 	}
 	
@@ -67,7 +62,10 @@ public class BreakTimeController {
 
 	// request mapping for room break save
 	@PostMapping("/save")
-	public String BreakTime_Add(@ModelAttribute("break_object") BreakTime breaks, Model model) {
+	public String BreakTime_Add(@Valid @ModelAttribute("break_object") BreakTime breaks, BindingResult binding) {
+		if(binding.hasErrors()){
+			return "breaktime/breaktime-form";
+		}
 		breakService.save(breaks);
 		return "redirect:/breaktime/form";
 	}

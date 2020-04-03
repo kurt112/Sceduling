@@ -23,12 +23,6 @@
 	float:right;
 }
 
-@media only screen and (max-width: 1222px) {
-  .dataTables_filter{
-    float:left;
-    margin-top:10px;
-  } 
-}
 
 .btn-group a{
 	border:1px solid black;

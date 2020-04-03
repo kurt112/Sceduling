@@ -98,6 +98,57 @@
 </head>
 <body>
 
+<div
+		class="modal fade right"
+		id="modal"
+		tabindex="-1"
+		role="dialog"
+		aria-labelledby="myModalLabel"
+		aria-hidden="true"
+		data-backdrop="true"
+>
+	<div
+			class="modal-dialog modal-side modal-bottom-right modal-notify modal-info"
+			role="document"
+	>
+
+		<div class="modal-content">
+			<!--Header-->
+
+			<!--Body-->
+			<div class="modal-body ">
+				<div class="col-12">
+					<i
+							class="fa fa-exclamation-circle"
+							style="margin-top: 20px; margin-bottom: 20px; font-size: 100px; color: #C32828;"
+					></i>
+					<h1>Are you sure?</h1>
+					<p>You won't be able to revert this</p>
+				</div>
+
+			</div>
+
+			<!--Footer-->
+			<div
+					class="modal-footer flex-right"
+					style="border-top: none;"
+			>
+				<a
+						id="message_button"
+						class="btn btn-success"
+						style="color: white; margin-right: 10px;"
+				> </a> <a
+					class="btn btn-info"
+					data-dismiss="modal"
+			>Cancel </a>
+
+			</div>
+		</div>
+		<!--/.Content Delete-->
+	</div>
+</div>
+
+
 	<div class="container-fluid rounded">
 		<div
 			class="row container_info"
@@ -121,7 +172,7 @@
 									</div>
 									<div class="card-body">
 										<table
-											id="bootstrap-data-table"
+											id="studentList_table"
 											class="table table-striped table-bordered"
 										>
 											<thead>
@@ -150,18 +201,20 @@
 													<td th:text="${student.room_shift.grade}"></td>
 													<td th:text="${student.room_shift.section}"></td>
 													<td><a
-														class="btn btn-info btn-sm aButton"
-														th:href="@{/student/update(student_id=${student.id})}"
-														onclick="if (!(confirm('Are you sure you want to delete this Strand?'))) return false"
+															class="btn btn-info btn-sm aButton"
+															data-target="#modal"
+															data-toggle="modal"
+															th:onclick="'UpdateStudent('+${student.id}+')'"
 													> <i
 															class="fa fa-pencil"
 															aria-hidden="true"
 														></i>
 													</a></td>
 													<td><a
-														class="btn btn-danger btn-sm aButton"
-														th:href="@{/student/delete(student_id=${student.id})}"
-														onclick="if (!(confirm('Are you sure you want to delete this Student?'))) return false"
+															data-target="#modal"
+															data-toggle="modal"
+															th:onclick="'DeleteStudentMain('+${student.id}+')'"
+															class="btn btn-danger btn-sm aButton"
 													> <i
 															class="fa fa-trash"
 															aria-hidden="true"
@@ -215,7 +268,7 @@
 	<script th:src="@{/assets/js/lib/data-table/buttons.print.min.js}"></script>
 	<script th:src="@{/assets/js/lib/data-table/buttons.colVis.min.js}"></script>
 	<script th:src="@{/assets/js/init/datatables-init.js}"></script>
-
+	<script th:src="@{/assets/js/Schedule.js}"></script>
 
 	<script type="text/javascript">
 		//    function button_delete(){

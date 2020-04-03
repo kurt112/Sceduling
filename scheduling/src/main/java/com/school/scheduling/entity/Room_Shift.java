@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.school.scheduling.validations.RoomShift.CheckTime_RoomShift;
 
 import java.util.ArrayList;
@@ -30,8 +31,8 @@ public class Room_Shift implements Comparable<Room_Shift>{
 	@Column(name = "id")
 	private int Id;
 
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 	@JoinColumn(name = "room_id")
 	private Room room;
 
@@ -49,19 +50,23 @@ public class Room_Shift implements Comparable<Room_Shift>{
 
 	@Column(name = "end_time")
 	private String endTime;
-
+	
+	@JsonIgnore
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH})
 	@JoinTable(name = "room_shift_breaktime", joinColumns = @JoinColumn(name = "room_shift_id"), inverseJoinColumns = @JoinColumn(name = "break_id"))
 	private List<BreakTime> room_shift_breakTimeList;
 
+	
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 	@JoinColumn(name = "strand_and_course_id")
 	private StrandAndCourse strandAndCourse;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "room_shift", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 	private List<Student> studentList;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "room_shift", cascade = {
 			CascadeType.DETACH,
 			CascadeType.MERGE,

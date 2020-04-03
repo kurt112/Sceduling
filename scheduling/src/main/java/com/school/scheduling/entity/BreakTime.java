@@ -15,9 +15,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.school.scheduling.validations.Breaktime.Check_BreakTime;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+@Check_BreakTime
 @Entity
 @Table(name = "break_time")
 public class BreakTime {
@@ -33,11 +38,13 @@ public class BreakTime {
 	@Column(name ="end_time")
 	private String end_time;
 
+	@JsonIgnore
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH,CascadeType.PERSIST})
 	@JoinTable(name = "teacher_breaktime", joinColumns = @JoinColumn(name = "break_time_id"), inverseJoinColumns = @JoinColumn(name = "teacher_shift_id"))
 	private List<Teacher_Lecture> teacher_lecture;
 
+	@JsonIgnore
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL})
 	@JoinTable(name = "room_shift_breaktime", joinColumns = @JoinColumn(name = "break_id"), inverseJoinColumns = @JoinColumn(name = "room_shift_id"))

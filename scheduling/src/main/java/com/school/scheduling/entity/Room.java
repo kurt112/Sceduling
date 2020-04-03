@@ -11,6 +11,8 @@ package com.school.scheduling.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class Room {
 	@Column(name = "room_name")
 	private String roomName;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "room")
 	private List<Room_Shift> room_shiftList;
 
