@@ -28,6 +28,16 @@ CREATE TABLE `room` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `room`
+--
+
+LOCK TABLES `room` WRITE;
+/*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` VALUES (2,'Room 101'),(3,'Room 102'),(4,'Room 103'),(5,'Room 104'),(6,'Room 105'),(7,'Room 106'),(8,'Room 107'),(9,'Room 108'),(10,'Room 301 (Lab 3)'),(11,'Room 302 (Room 2)'),(12,'Room 303 (Room 3)'),(13,'Room 304 (Room 4)'),(14,'Room 305 (Room 5)'),(15,'Room 306 (Room 6)'),(16,'Room 307 (Room 7)'),(17,'Room 308 (Room 8)'),(18,'Room 309 (Room 9 Bio/Chem Lab)'),(19,'P.E Room');
+/*!40000 ALTER TABLE `room` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -38,4 +48,4 @@ CREATE TABLE `room` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-02  0:46:04
+-- Dump completed on 2020-04-06  2:07:05

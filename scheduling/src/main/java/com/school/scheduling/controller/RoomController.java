@@ -30,9 +30,7 @@ import com.school.scheduling.entity.StrandAndCourse;
 import com.school.scheduling.entity.Student;
 import com.school.scheduling.entity.Subject;
 import com.school.scheduling.entity.Teacher;
-import com.school.scheduling.service.RoomShiftService;
 import com.school.scheduling.service.Services;
-import com.school.scheduling.serviceimplementation.RoomShiftService_Impl;
 
 @Controller()
 @RequestMapping("/room")
@@ -411,8 +409,16 @@ public class RoomController {
 	@GetMapping("/schedule/generate")
 	public String GenerateSchedule() {
 		
+		
+		
 		List<StrandAndCourse> strands = strandService.findAll();
 		List<Room_Shift> room_shift = roomShiftService.findAll();
+		
+
+		room_shift.forEach(e ->{
+			e.setInitial_time(e.getStartTime());
+			roomShiftService.save(e);
+		});
 //		Collections.shuffle(strands);
 		Collections.shuffle(room_shift);
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -420,8 +426,9 @@ public class RoomController {
 		Calendar shift_startTime = Calendar.getInstance();
 		Calendar shift_endTime = Calendar.getInstance();
 		
+		// iterating all the shift in the room
 		for(Room_Shift shift: room_shift) {
-			
+			System.out.println("The room " + shift.getRoom().getRoomName() + " The Shift -> " + shift.getShiftName());
 			String day = "MWF";
 			try {
 				shift_startTime.setTime(dateFormat.parse(shift.getInitial_time()));
@@ -431,32 +438,62 @@ public class RoomController {
 				e1.printStackTrace();
 			}
 			StrandAndCourse strand_new = null;
-			
+			// iterating all the strand in the school	
 			for(StrandAndCourse strand: strands) {
+			
 				strand_new = strand;
+				// getting the same strand in the room
 				if(shift.getStrandAndCourse() == strand) {
+					System.out.println("The Strand -> " + strand.getStrandName() );
 					
+					// iterating all the subjects
 					for(Subject sbj: strand.getSubjectList()) {
+						
 						if(!sbj.getSubjectName().contains("Physical Education and Health")) {
+							System.out.println(" The subject -> " + shift.getStrandAndCourse().getStrandName()+ " -> " + sbj.getSubjectName() + " the time -> " + dateFormat.format(shift_startTime.getTime()));
 							try {
+								boolean exist =false;
 								shift_startTime.add(Calendar.HOUR, sbj.getHourCost());
 								shift_startTime.add(Calendar.MINUTE, sbj.getMinuteCost());
-								if((shift_startTime.getTime().before(shift_endTime.getTime())) 
-										|| 
-									shift_startTime.getTime().equals(shift_endTime.getTime())) {
-
-									shiftSchedule.save(new Room_ShiftSchedule(shift, sbj, 
-											shift.getInitial_time() , dateFormat.format(shift_startTime.getTime()), day));
-									
-									
-									shift.setInitial_time(dateFormat.format(shift_startTime.getTime()));
-									
-								}else {
-									day = "TTH";
-									shift.setInitial_time(shift.getStartTime());
-									shift_startTime.setTime(dateFormat.parse(shift.getInitial_time()));
 								
-								}	
+								// checking if the room schedule has a already subject in that schedule
+								for(Room_ShiftSchedule schedule: shift.getRoom_ShiftSchedules()) {
+									if(schedule.getSubject() == sbj) exist =true;
+								}
+								
+								if(exist == false) {
+									if(shift_startTime.getTime().equals(shift_endTime.getTime())) {
+									} 
+									
+									if((shift_startTime.getTime().before(shift_endTime.getTime())) 
+											|| 
+											shift_startTime.getTime().equals(shift_endTime.getTime())) {
+										
+										
+										shiftSchedule.save(new Room_ShiftSchedule(shift, sbj, 
+												shift.getInitial_time() , dateFormat.format(shift_startTime.getTime()), day));
+										
+								
+										shift.setInitial_time(dateFormat.format(shift_startTime.getTime()));
+										
+									}else {
+										day = "TTH";
+										shift.setInitial_time(shift.getStartTime());
+										
+										shift_startTime.setTime(dateFormat.parse(shift.getInitial_time()));
+										
+										shift_startTime.add(Calendar.HOUR, sbj.getHourCost());
+										shift_startTime.add(Calendar.MINUTE, sbj.getMinuteCost());
+										
+										
+										shiftSchedule.save(new Room_ShiftSchedule(shift, sbj, 
+												shift.getInitial_time() , dateFormat.format(shift_startTime.getTime()), day));
+										
+										shift.setInitial_time(dateFormat.format(shift_startTime.getTime()));
+									
+									}	
+									
+								}
 								
 								
 							} catch (ParseException e) {
@@ -464,8 +501,13 @@ public class RoomController {
 								e.printStackTrace();
 							}
 
+						}else {
+							shiftSchedule.save(new Room_ShiftSchedule(shift, sbj, 
+									"0:00", "0:00", day));
 						}
 					}
+					
+					System.out.println("-------------------------------------------------------------------------------");
 					
 					break;
 				}
@@ -489,11 +531,7 @@ public class RoomController {
 	
 	@GetMapping("/schedule/list")
 	public String RoomSchedule_List(Model model) {
-		
-		roomShiftService.findAll().forEach(e ->{
-			e.setInitial_time(e.getStartTime());
-		});
-		
+
 		List<Room_ShiftSchedule> sched = shiftSchedule.findAll();
 		
 		
@@ -502,27 +540,41 @@ public class RoomController {
 	}
 
 	@GetMapping("/schedule/form")
-	public String RoomSchedule_Form() {
+	public String RoomSchedule_Form(Model model) {
 
+		
+		model.addAttribute("shift_schedule", new Room_ShiftSchedule());
+		model.addAttribute("room_list", roomService.findAll());
+		model.addAttribute("strand_list", strandService.findAll());
+		model.addAttribute("action", "Add Schedule");
 		return "room/room shift schedule/room-schedule-form";
 	}
 
 	// request mapping for room add
 	@PostMapping("/schedule/add")
-	public String RoomSchedule_Add() {
+	public String RoomSchedule_Add(@ModelAttribute("shift_schedule") Room_ShiftSchedule scheudle) {
+		
+		shiftSchedule.save(scheudle);
 
 		return "redirect:/room/schedule/form";
 	}
 
 	@GetMapping("/schedule/update")
-	private String RoomSchedule_Update() {
-		return "redirect:/room/schedule/form";
+	private String RoomSchedule_Update(@RequestParam("schedule_id") int id, Model model) {
+		Room_ShiftSchedule shift = shiftSchedule.findbyId(id);
+		model.addAttribute("shift_schedule", shift);
+		model.addAttribute("room_list", roomService.findAll());
+		model.addAttribute("strand_list", strandService.findAll());
+		model.addAttribute("action", "Update Schedule");
+		model.addAttribute("teacher_id", shift.getSubject().getTeacherList().get(0));
+		
+		return "room/room shift schedule/room-schedule-form";
 	}
 
-	@GetMapping("/schedule/delete")
-	private String RoomSchedule_Delete(int theId) {
-		roomShiftService.deleteById(theId);
-		return "redirect:/room/schedule/form";
+	@	GetMapping("/schedule/deleteMain")
+	private String RoomSchedule_Delete(@RequestParam("schedule_id") int id) {
+		shiftSchedule.deleteById(id);
+		return "redirect:/room/schedule/list";
 	}
 
 }

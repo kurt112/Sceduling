@@ -1,12 +1,8 @@
 package com.school.scheduling.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +17,6 @@ import com.school.scheduling.entity.Room;
 import com.school.scheduling.entity.Room_Shift;
 import com.school.scheduling.entity.StrandAndCourse;
 import com.school.scheduling.entity.Student;
-import com.school.scheduling.service.RoomShiftService;
 import com.school.scheduling.service.Services;
 
 @Controller

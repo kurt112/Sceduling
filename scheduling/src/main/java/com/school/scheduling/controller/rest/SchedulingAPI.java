@@ -41,6 +41,22 @@ public class SchedulingAPI {
 	private long TeacherCount() {
 		return (int) teacherService.findAll().stream().distinct().count();
 	}
+	@GetMapping("/teacher/with/subject")
+	public List<Teacher> Teacher_WithSubject(@RequestParam("subject_id") int id, @RequestParam("lecture_day") String day){
+		Subject subject  = subjectServices.findbyId(id);
+		List<Teacher> teacher_list  = new ArrayList<Teacher>();
+		
+		subject.getTeacherList().forEach(e->{
+			e.getTeacher_lecture().forEach(f-> {
+				System.out.println("The day " + day +"lecture " + f.getLectureDay());
+				System.out.println(f.getLectureDay().equals(day));
+				if(f.getLectureDay().equals(day)) {
+					teacher_list.add(e);
+				}
+			});
+		});
+		return teacher_list;
+	}
 
 	@GetMapping("/section/count")
 	private long SectionCount() {
@@ -84,6 +100,11 @@ public class SchedulingAPI {
 
 		return top_subject;
 	}
+	
+	@GetMapping("/strand/subject")
+	public List<Subject> Strand_Subject(@RequestParam("strand_id") int id){
+		return strandServices.findbyId(id).getSubjectList();
+	}
 
 	@GetMapping("/strand/composition")
 	public List<Top> StrandComposition() {
@@ -104,6 +125,12 @@ public class SchedulingAPI {
 
 		return top.stream().filter(e-> e.qty !=0).collect(Collectors.toList());
 	}
+	
+	@GetMapping("/room/shift")
+	public List<Room_Shift> Room_Shift(@RequestParam("room_id") int id){
+		
+		return roomService.findbyId(id).getRoom_shiftList();
+	}
 
 	static class Top implements Comparable<Top> {
 
@@ -120,7 +147,7 @@ public class SchedulingAPI {
 
 		public int getQty() {
 			return qty;
-		}
+			}
 
 		public void setQty(int qty) {
 			this.qty = qty;

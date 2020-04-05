@@ -12,15 +12,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class BreakTimeHindrance implements ConstraintValidator<Check_BreakTime, BreakTime> {
+
     private Services<BreakTime> breakTimeServices;
+
+    public BreakTimeHindrance() {
+    }
+
     @Autowired
     public BreakTimeHindrance(Services<BreakTime> breakTimeServices) {
         this.breakTimeServices = breakTimeServices;
-    }
-
-    @Override
-    public void initialize(Check_BreakTime constraintAnnotation) {
-
     }
 
     @Override
@@ -34,7 +34,7 @@ public class BreakTimeHindrance implements ConstraintValidator<Check_BreakTime, 
         Calendar old_end_time = Calendar.getInstance();
 
         if(value.getStart_time().equals(value.getEnd_time())){
-            Message(" (Can't have a same time) ",context);
+            Message(" (Same Time Error) ",context);
             return false;
         }
 
@@ -47,10 +47,23 @@ public class BreakTimeHindrance implements ConstraintValidator<Check_BreakTime, 
                 return false;
             }
 
+            for(BreakTime breakTime:breakTimeServices.findAll()){
+                old_start_time.setTime(dateFormat.parse(breakTime.getStart_time()));
+                old_end_time.setTime(dateFormat.parse(breakTime.getEnd_time()));
+
+                if(breakTime.getId() != value.getId()){
+                    if(new_start_time.getTime().equals(old_start_time.getTime()) && new_end_time.getTime().equals(old_end_time.getTime())){
+                        Message(" (BreakTime Already Exist) ", context);
+                        return false;
+                    }
+
+                }
 
 
-        } catch (ParseException e) {
-            e.printStackTrace();
+            }
+
+        } catch (ParseException ignored) {
+
         }
 
         return true;

@@ -4,6 +4,9 @@ import javax.persistence.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.school.scheduling.repository.RoomShiftSchedule_Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,11 +30,14 @@ public class Teacher {
     
     @Column(name = "work_type")
     private String workType;
-
     
+    @Column(name = "subject_load")
+    private int subject_load;
+    
+	@JsonIgnore
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.REFRESH)
     private List<Teacher_Lecture> teacher_lecture;
-
+	@JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH,
@@ -46,8 +52,8 @@ public class Teacher {
     private List<Subject> subjectList;
 
 	
-
-	@OneToMany(mappedBy = "teacher", cascade = {
+	@JsonIgnore
+	@OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY,cascade = {
 			CascadeType.DETACH,
 			CascadeType.MERGE, 
 			CascadeType.PERSIST,
@@ -57,12 +63,18 @@ public class Teacher {
 	private List<Room_ShiftSchedule> teacher_schedule;
 	
 
-
+	@JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_name")
     private Users users;
     public Teacher (){
 
+    }
+    
+    public void add_Schedule(Room_ShiftSchedule schedule) {
+    	if(teacher_schedule == null) teacher_schedule = new ArrayList<>();
+    	schedule.setTeacher(this);
+    	teacher_schedule.add(schedule);
     }
 
     public Teacher(String firstName, String lastName, String sex, String workType) {
@@ -148,9 +160,17 @@ public class Teacher {
 	public void setTeacher_lecture(List<Teacher_Lecture> teacher_lecture) {
 		this.teacher_lecture = teacher_lecture;
 	}
+	
+	
+	
+	public int getSubject_load() {
+		return subject_load;
+	}
 
-	
-	
+	public void setSubject_load(int subject_load) {
+		this.subject_load = subject_load;
+	}
+
 	public String getWorkType() {
 		return workType;
 	}
@@ -168,7 +188,8 @@ public class Teacher {
 		return teacher.getId() == id;
 		
 	}
-
+	
+	
 
 	
 	

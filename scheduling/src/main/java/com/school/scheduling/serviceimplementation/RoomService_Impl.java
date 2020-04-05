@@ -32,7 +32,7 @@ public class RoomService_Impl implements Services<Room> {
 	public Room findbyId(int theId) {
 		Optional<Room> result = repo.findById(theId);
 		
-		return result.isPresent()?result.get(): null;
+		return result.orElse(null);
 	}
 	
 	

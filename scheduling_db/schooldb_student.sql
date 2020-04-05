@@ -40,8 +40,18 @@ CREATE TABLE `student` (
   CONSTRAINT `roomshift_fk` FOREIGN KEY (`room_shift_id`) REFERENCES `room_shift` (`id`),
   CONSTRAINT `strand_fk` FOREIGN KEY (`strand_and_course_id`) REFERENCES `strandandcourse` (`id`),
   CONSTRAINT `username_fk` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `student`
+--
+
+LOCK TABLES `student` WRITE;
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES (13,'ELLYSA-ST',98,4,'Ellysa Kaye','Jarilla','Female');
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -52,4 +62,4 @@ CREATE TABLE `student` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-02  0:46:04
+-- Dump completed on 2020-04-06  2:07:06

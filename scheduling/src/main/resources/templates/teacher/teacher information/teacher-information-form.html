@@ -213,7 +213,7 @@
 					</div>
 
 					<div class="form-group col-md-12">
-						<label>Teacher UserName</label>
+						<label>Teacher UserName </label>
 						<div class="input-group mb-3">
 							<input
 								type="text"
@@ -382,7 +382,6 @@
 												<tr>
 													<th>Start Time</th>
 													<th>End Time</th>
-													<th>Remaining Time</th>
 													<th>Lecture Day</th>
 													<th class="th_end">Update</th>
 													<th class="th_end">Delete</th>
@@ -392,7 +391,6 @@
 												<tr th:each="lecture:${teacher_lecture}">
 													<td th:text="${lecture.startTime}"></td>
 													<td th:text="${lecture.endTime}"></td>
-													<td th:text="${lecture.remainingtTime}"></td>
 													<td th:text="${lecture.lectureDay}"></td>
 													<td><a
 														th:href="@{/teacher/lecture/update(lecture_id=${lecture.id})}"

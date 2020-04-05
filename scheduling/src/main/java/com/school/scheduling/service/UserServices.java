@@ -1,4 +1,8 @@
 package com.school.scheduling.service;
 
-public class UserServies {
+import java.util.List;
+
+public interface UserServices<Users> {
+
+    public boolean find(String username);
 }

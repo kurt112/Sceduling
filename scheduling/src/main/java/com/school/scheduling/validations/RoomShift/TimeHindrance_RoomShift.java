@@ -66,15 +66,16 @@ public class TimeHindrance_RoomShift implements ConstraintValidator<CheckTime_Ro
 										&& new_end_time.getTime().equals(old_end_time.getTime())) {
 									Message("Occupied Time", context);
 									return false;
-									// this else if the time if before the old_start time and should not exceed to
-									// the old start time
+									// this else if, if the new start time is before the old start time but the 
+									// end time is after the old start time means it has a intercept
 								} else if (new_start_time.getTime().before(old_start_time.getTime())
 										&& new_end_time.getTime().after(old_start_time.getTime())) {
 
 									Message("Time Start suggestion " + dateFormat.format(old_end_time.getTime()),context);
 									return false;
-									// this else if the start time is equal to the old start time and before || and
-									// after the old end time
+									// if the schedule start is equal to the lecture start but the  
+									// end of the schedule is after or before the lecture end meaning 
+									// it has a Interception;
 								} else if (new_start_time.getTime().equals(old_start_time.getTime())
 										&& (new_end_time.getTime().before(old_end_time.getTime())
 												|| (new_end_time.getTime().after(old_end_time.getTime()))))

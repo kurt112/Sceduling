@@ -144,6 +144,15 @@ function DeleteRoomShift_id(id) {
 	ModalAction(delete_,"/room/shift/delete_Main?roomShift_id=" + id);
 }
 
+// ************************************************************** Room Scheudle
+function UpdateRoomSchedule_id(id){
+	ModalAction(update_,"/room/schedule/update?schedule_id="+id);
+}
+
+function DeleteRoomSchedule_id(id){
+	ModalAction(delete_,"/room/schedule/deleteMain?schedule_id="+id)
+}
+
 // ************************************************************* RoomBreak List
 function DeleteRoomBreak_id(break_id, shift_id) {
 	ModalAction(delete_,"/room/break/delete?break_id=" + break_id

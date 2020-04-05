@@ -3,12 +3,17 @@ package com.school.scheduling.controller;
 import com.school.scheduling.entity.BreakTime;
 import com.school.scheduling.service.Services;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -62,12 +67,17 @@ public class BreakTimeController {
 
 	// request mapping for room break save
 	@PostMapping("/save")
-	public String BreakTime_Add(@Valid @ModelAttribute("break_object") BreakTime breaks, BindingResult binding) {
+	public String BreakTime_Add(@Valid @ModelAttribute("break_object") BreakTime breaks, BindingResult binding,Model model){
+
 		if(binding.hasErrors()){
+			model.addAttribute("action", "Update");
 			return "breaktime/breaktime-form";
 		}
+
+
 		breakService.save(breaks);
 		return "redirect:/breaktime/form";
 	}
+
 
 }

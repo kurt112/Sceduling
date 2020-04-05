@@ -97,7 +97,55 @@
 >
 </head>
 <body>
+	<div
+		class="modal fade right"
+		id="modal"
+		tabindex="-1"
+		role="dialog"
+		aria-labelledby="myModalLabel"
+		aria-hidden="true"
+		data-backdrop="true"
+	>
+		<div
+			class="modal-dialog modal-side modal-bottom-right modal-notify modal-info"
+			role="document"
+		>
 
+			<div class="modal-content">
+				<!--Header-->
+
+				<!--Body-->
+				<div class="modal-body ">
+					<div class="col-12">
+						<i
+							class="fa fa-exclamation-circle"
+							style="margin-top: 20px; margin-bottom: 20px; font-size: 100px; color: #C32828;"
+						></i>
+						<h1>Are you sure?</h1>
+						<p>You won't be able to revert this</p>
+					</div>
+
+				</div>
+
+				<!--Footer-->
+				<div
+					class="modal-footer flex-right"
+					style="border-top: none;"
+				>
+					<a
+						id="message_button"
+						class="btn btn-success"
+						style="color: white; margin-right: 10px;"
+					> </a> <a
+						class="btn btn-info"
+						data-dismiss="modal"
+					>Cancel </a>
+
+				</div>
+			</div>
+			<!--/.Content Delete-->
+		</div>
+	</div>
 	<div class="container-fluid rounded">
 		<div
 			class="row container_info"
@@ -146,7 +194,7 @@
 												<tr th:each="schedule: ${sched_list}">
 													<td th:text="${schedule.room_shift.room.roomName}">asdasd</td>
 													<td th:text="${schedule.room_shift.shiftName}">asdasd</td>
-												<td th:text="${schedule.subject.subjectName}">asdasd</td>
+													<td th:text="${schedule.subject.subjectName}">asdasd</td>
 													<td
 														th:text="${schedule.room_shift.strandAndCourse.strandName}"
 													>qweqweqw</td>
@@ -155,21 +203,26 @@
 														th:if="${schedule.teacher !=null}"
 														th:text="${schedule.teacher.firstName} + ' , ' + ${schedule.teacher.lastName} "
 													>qweqweqw</td>
-													
+
 													<td th:text="${schedule.lecture_day}"></td>
 													<td th:text="${schedule.start_time}">qweqweqw</td>
 													<td th:text="${schedule.end_time}">qweqweqw</td>
 													<td><a
+														th:onclick="'UpdateRoomSchedule_id('+${schedule.id}+')'"
+														data-target="#modal"
+														data-toggle="modal"
 														class="btn btn-info btn-sm aButton"
-														onclick=""
 													> <i
 															class="fa fa-pencil"
 															aria-hidden="true"
 														></i>
 													</a></td>
 													<td><a
+														th:onclick="'UpdateRoomSchedule_id('+${schedule.id}+')'"
+														data-target="#modal"
+														data-toggle="modal"
 														class="btn btn-danger btn-sm aButton"
-														onclick=""
+														
 													><i
 															class="fa fa-trash"
 															aria-hidden="true"

@@ -10,23 +10,30 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.school.scheduling.SchedulingAlgorithm.ScheduleAlgho;
 import com.school.scheduling.entity.Authorities;
 import com.school.scheduling.entity.BreakTime;
 import com.school.scheduling.entity.Room_ShiftSchedule;
 import com.school.scheduling.entity.Subject;
 import com.school.scheduling.entity.Teacher;
 import com.school.scheduling.entity.Teacher_Lecture;
+import com.school.scheduling.repository.RoomShiftSchedule_Repository;
 import com.school.scheduling.service.Services;
+
+import javax.naming.Binding;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/teacher")
@@ -38,7 +45,6 @@ public class TeacherController {
 	private Services<Room_ShiftSchedule> scheduleServices;
 	private Services<Teacher_Lecture> lectureServices;
 	private Teacher teacher;
-	private Teacher delete_teacher;
 
 	boolean create_sched = false;
 
@@ -56,10 +62,7 @@ public class TeacherController {
 	/********************** ForTeacher ******************************/
 	@GetMapping("/list")
 	public String Teacher_List(Model model) {
-//		if(delete_teacher !=null) {
-//			teacherService.delete(delete_teacher);
-//			delete_teacher = null;
-//		}
+
 		model.addAttribute("teacher_list", teacherService.findAll());
 		return "teacher/teacher information/teacher-information";
 	}
@@ -73,7 +76,10 @@ public class TeacherController {
 	}
 
 	@PostMapping("/save")
-	public String Teacher_Save(@ModelAttribute("teacher_object") Teacher teacher) {
+	public String Teacher_Save(@Valid @ModelAttribute("teacher_object") Teacher teacher, BindingResult binding) {
+		if (binding.hasErrors()) {
+			return "teacher/teacher information/teacher-information-form";
+		}
 		if (teacher.getId() == 0) {
 
 			BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
@@ -83,7 +89,7 @@ public class TeacherController {
 		} else {
 			System.out.println(teacher.getSubjectList());
 		}
-	teacherService.save(teacher);
+		teacherService.save(teacher);
 		this.teacher = null;
 		return "redirect:/teacher/form";
 	}
@@ -104,23 +110,19 @@ public class TeacherController {
 	@GetMapping("/deleteMain")
 	public String Teacher_DeleteMain(@RequestParam("teacher_id") int theId) {
 		Teacher teacher = teacherService.findbyId(theId);
-		
-		if(teacher.getTeacher_lecture() != null) {
-			teacher.getTeacher_lecture().forEach(e-> {
-				e.getBreaktime_teacherList().forEach(f ->{
-					f.setTeacher_lecture(null);
-				});
+
+		if (teacher.getTeacher_lecture() != null) {
+			teacher.getTeacher_lecture().forEach(e -> {
+				e.getBreaktime_teacherList().forEach(f -> f.setTeacher_lecture(null));
 				lectureServices.deleteById(e.getId());
 			});
 		}
-		
-				
+
 		if (teacher.getSubjectList() != null) {
-			teacher.getSubjectList().removeAll(teacher.getSubjectList());		
+			teacher.getSubjectList().removeAll(teacher.getSubjectList());
 		}
-		
+
 		teacherService.deleteById(theId);
-		
 
 		return "redirect:/teacher/list";
 	}
@@ -190,14 +192,14 @@ public class TeacherController {
 	}
 
 	@PostMapping("/break/save")
-	public String TeacherBreak_Save(@ModelAttribute("teacher_lecture") Teacher_Lecture teacher, Model model) {
-		Teacher_Lecture teacher_lecture  = lectureServices.findbyId(teacher.getId());
+	public String TeacherBreak_Save(@ModelAttribute("teacher_lecture") Teacher_Lecture teacher) {
+		Teacher_Lecture teacher_lecture = lectureServices.findbyId(teacher.getId());
 
-		if(teacher_lecture.getBreaktime_teacherList() != null) {
+		if (teacher_lecture.getBreaktime_teacherList() != null) {
 			teacher_lecture.getBreaktime_teacherList().addAll(teacher.getBreaktime_teacherList());
 
 			lectureServices.save(teacher_lecture);
-		}else {
+		} else {
 			lectureServices.save(teacher);
 		}
 		return "redirect:/teacher/update?teacher_id=" + teacher_lecture.getTeacher().getId();
@@ -212,130 +214,47 @@ public class TeacherController {
 	public String TeacherBreak_Delete(@RequestParam("break_id") int break_id,
 			@RequestParam("teacher_id") int teacher_id) {
 		Teacher teacher = teacherService.findbyId(teacher_id);
-		teacher.getTeacher_lecture().removeIf(e -> e.getBreaktime_teacherList().removeIf(f-> f.getId() == break_id));
+		teacher.getTeacher_lecture().removeIf(e -> e.getBreaktime_teacherList().removeIf(f -> f.getId() == break_id));
 
 		teacherService.save(teacher);
 		return "redirect:/teacher/break/list";
+	}
+	@GetMapping("/schedule/deleteSchedule")
+	public String DeleteSchedule() {
+		scheduleServices.findAll().forEach(e-> {
+			 e.setTeacher(null);
+			 scheduleServices.save(e);
+		});
+		return "redirect:/teacher/schedule/list";
 	}
 
 	/************************** For teacher schedule ************************/
 	int zero = 0;
 
-//	@GetMapping("/schedule/generateSchedule")
-//	public String GenerateSchedule_List() throws ParseException {
-//		create_sched = true;
-//		List<Room_ShiftSchedule> schedule = scheduleServices.findAll();
-//		List<Teacher> teachers = teacherService.findAll();
-//
-//		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-//
-//		Calendar room_start = Calendar.getInstance();
-//		Calendar room_end = Calendar.getInstance();
-//
-//		Calendar teacher_Remainingtime = Calendar.getInstance();
-//		Calendar teacher_endTime = Calendar.getInstance();
-//
-//		for (Room_ShiftSchedule room : schedule) {
-//
-//			room_start.setTime(dateFormat.parse(room.getStart_time()));
-//			room_end.setTime(dateFormat.parse(room.getEnd_time()));
-//
-//			List<Teacher> possible_lecturer = new ArrayList<>();
-//
-//			for (Teacher teacher : teachers) {
-//
-//				teacher_Remainingtime.setTime(dateFormat.parse(teacher.getRemainingTime()));
-//				teacher_endTime.setTime(dateFormat.parse(teacher.getEndTime()));
-//
-//				if (teacher.getSubjectList().contains(room.getSubject())) {
-//
-//					if (teacher.getBreaktime_teacherList().size() == 0 && teacher.getLecture_day().equals(room.getLecture_day())) {
-//						
-//						if((room_start.getTime().after(teacher_Remainingtime.getTime())) || (room_start.getTime().equals(teacher_Remainingtime.getTime())) 
-//								
-//							&&
-//						  (room_end.getTime().before(teacher_endTime.getTime())) || (room_end.getTime().equals(teacher_endTime.getTime()))){
-//							possible_lecturer.add(teacher);
-//						
-//						}
-//					} else {
-//
-//					}
-//
-//				}
-//
-//			}
-//
-//			// picking the right lecturer for the right time
-//			if (possible_lecturer.size() == 1) {
-//
-//				Teacher teacher =  possible_lecturer.get(0);
-//				
-//				teacher_Remainingtime.add(Calendar.HOUR, room.getSubject().getHourCost());
-//				teacher_Remainingtime.add(Calendar.MINUTE, room.getSubject().getMinuteCost());
-//
-//				teacher.setRemainingTime(dateFormat.format(teacher_Remainingtime.getTime()));
-//
-//				room.setTeacher(teacher);	
-//				scheduleServices.save(room);
-//
-//			} else if(possible_lecturer.size() >=2) {
-//
-//				Calendar future_lecturer = Calendar.getInstance();
-//				Calendar current_lecturer = Calendar.getInstance();
-//				Teacher teacher = null;
-//
-//				for (int i = 0; i < possible_lecturer.size(); i++) {
-//					
-//					if (teacher == null) {
-//
-//						teacher = possible_lecturer.get(i);
-//						current_lecturer.setTime(dateFormat.parse(teacher.getRemainingTime()));
-//
-//					} else {
-//						future_lecturer.setTime(dateFormat.parse(possible_lecturer.get(i).getRemainingTime()));
-//
-//						if (current_lecturer.getTime().after(future_lecturer.getTime())) {
-//							teacher = possible_lecturer.get(i);
-//							current_lecturer.setTime(dateFormat.parse(teacher.getRemainingTime()));
-//						}
-//					}
-//				}
-//
-//				teacher_Remainingtime.add(Calendar.HOUR, room.getSubject().getHourCost());
-//				teacher_Remainingtime.add(Calendar.MINUTE, room.getSubject().getMinuteCost());
-//
-//				teacher.setRemainingTime(dateFormat.format(teacher_Remainingtime.getTime()));
-//
-//				room.setTeacher(teacher);
-//				scheduleServices.save(room);
-//
-//			}
-//
-//			if (possible_lecturer.size() == 0) {
-//				zero++;
-//			}
-//			System.out.println("The possible Lecturer -> " + possible_lecturer.size() + " The subject "
-//					+ room.getSubject().getSubjectName());
-//
-//		}
-//		System.out.println("The zero -> " + zero);
-//		zero = 0;
-//		return "redirect:/teacher/schedule/list";
-//	}
+	@GetMapping("/schedule/generateSchedule")
+	public String GenerateSchedule_List() {
+
+		List<Room_ShiftSchedule> schedule_tth = scheduleServices.findAll().stream()
+				.filter(e -> e.getLecture_day().equals("TTH")).collect(Collectors.toList());
+		List<Room_ShiftSchedule> schedule_mwf = scheduleServices.findAll().stream()
+				.filter(e -> e.getLecture_day().equals("MWF")).collect(Collectors.toList());
+
+		List<Teacher_Lecture> teacher_tth = lectureServices.findAll().stream()
+				.filter(e -> e.getLectureDay().equals("TTH")).collect(Collectors.toList());
+		List<Teacher_Lecture> teacher_wmf = lectureServices.findAll().stream()
+				.filter(f -> f.getLectureDay().equals("MWF")).collect(Collectors.toList());
+
+		ScheduleAlgho.CreateSchedule(teacher_tth, schedule_tth, lectureServices);
+		ScheduleAlgho.CreateSchedule(teacher_wmf, schedule_mwf, lectureServices);
+
+		return "redirect:/teacher/schedule/list";
+	}
 
 	@GetMapping("/schedule/list")
 	public String TeacherSchedule_List(Model model) {
 
 		List<Teacher> teacher = teacherService.findAll();
 
-//		if (create_sched) {
-//			teacher.forEach(e -> {
-//				e.setRemainingTime(e.getStartTime());
-//				teacherService.save(e);
-//			});
-//			create_sched = false;
-//		}
 
 		model.addAttribute("teachers", teacher);
 
@@ -418,7 +337,7 @@ public class TeacherController {
 
 	@PostMapping("/lecture/save")
 	public String Teacher_Lecture_Save(@ModelAttribute("teacher_lecture") Teacher_Lecture teacher_lecture) {
-		teacher_lecture.setRemainingtTime(teacher_lecture.getStartTime());
+
 		lectureServices.save(teacher_lecture);
 
 		return "redirect:/teacher/update?teacher_id=" + teacher_lecture.getTeacher().getId();

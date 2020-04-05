@@ -26,9 +26,6 @@ public class Teacher_Lecture {
 	@Column(name = "end_time")
 	private String endTime;
 	
-	@Column(name = "remaining_time")
-	private String remainingtTime;
-
 	
 	@ManyToOne(cascade ={
 				CascadeType.DETACH,
@@ -58,14 +55,12 @@ public class Teacher_Lecture {
 		
 	}
 
-	public Teacher_Lecture(int id, Teacher teacher, String lectureDay, String startTime, String endTime,
-			String remainingtTime) {
+	public Teacher_Lecture(int id, Teacher teacher, String lectureDay, String startTime, String endTime) {
 		this.id = id;
 		this.teacher = teacher;
 		this.lectureDay = lectureDay;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.remainingtTime = remainingtTime;
 	}
 	
 	
@@ -116,14 +111,6 @@ public class Teacher_Lecture {
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
-	}
-
-	public String getRemainingtTime() {
-		return remainingtTime;
-	}
-
-	public void setRemainingtTime(String remainingtTime) {
-		this.remainingtTime = remainingtTime;
 	}
 
 	public List<BreakTime> getBreaktime_teacherList() {

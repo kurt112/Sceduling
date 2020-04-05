@@ -124,4 +124,6 @@ public class Room_ShiftSchedule {
 	public void setLecture_day(String lecture_day) {
 		this.lecture_day = lecture_day;
 	}
+	
+	
 }

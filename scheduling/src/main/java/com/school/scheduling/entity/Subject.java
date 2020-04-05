@@ -23,6 +23,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.school.scheduling.validations.RoomShift.CheckTime_RoomShift;
 
 import javax.persistence.JoinColumn;
@@ -70,19 +71,19 @@ public class Subject {
 	@Column(name = "is_major")
 
 	private String is_Major;
-
+	@JsonIgnore
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
 	@JoinTable(name = "teacher_subjects", joinColumns = @JoinColumn(name = "subject_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
 	private List<Teacher> teacherList;
-
+	@JsonIgnore
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH, })
 	@JoinTable(name = "strandandcourse_subject", joinColumns = @JoinColumn(name = "subject_id"), inverseJoinColumns = @JoinColumn(name = "strand_and_course_id"))
 	private List<StrandAndCourse> strandAndCourseList;
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "subject", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
 	private List<Room_ShiftSchedule> room_ShiftSchedule;

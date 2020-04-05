@@ -119,6 +119,11 @@
 									class="btn btn-success"
 									style="margin-bottom: 10px;"
 								> Generate Teacher Schedule </a>
+								<a
+									th:href=@{/teacher/schedule/deleteSchedule}
+									class="btn btn-success"
+									style="margin-bottom: 10px;"
+								> Delete Schedule </a>
 								<div class="card">
 									<div class="card-header">
 										<strong class="card-title">Subject List</strong>
@@ -146,7 +151,7 @@
 													<td th:text="${teacher_schedule.subject.subjectName}"></td>
 													<td th:text="${teacher_schedule.start_time}"></td>
 													<td th:text="${teacher_schedule.end_time}"></td>
-													<td th:text="${teacher.lecture_day}"></td>
+													<td th:text="${teacher_schedule.lecture_day}"></td>
 													<td><a class="btn btn-success btn-sm aButton"><i
 															class="fa fa-pencil"
 															aria-hidden="true"

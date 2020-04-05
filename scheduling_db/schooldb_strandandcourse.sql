@@ -28,6 +28,16 @@ CREATE TABLE `strandandcourse` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `strandandcourse`
+--
+
+LOCK TABLES `strandandcourse` WRITE;
+/*!40000 ALTER TABLE `strandandcourse` DISABLE KEYS */;
+INSERT INTO `strandandcourse` VALUES (1,'ICT-Programming 11-1ST SEM'),(3,'ICT-Programming 11- 2ND  SEM'),(4,'ICT-Programming 12-1ST SEM'),(5,'ICT-Programming 12- 2ND  SEM'),(6,'ICT-Animation 11-1ST SEM'),(8,'ICT-Animation 11-2ND SEM'),(9,'ICT-Animation 12-1ST SEM'),(10,'ICT-Animation 12- 2ND  SEM'),(12,'ABM 11 2ND SEM'),(13,'ABM 12 1ST SEM'),(14,'ABM 12 2ND SEM'),(15,'HUMSS 11-1ST SEM'),(16,'HUMSS 11- 2ND  SEM'),(18,'HUMSS 12 1ST SEM'),(19,'HUMSS 12 2ND SEM'),(20,'STEM 11 1ST SEM'),(21,'STEM 11 2ND SEM'),(22,'STEM 12 1ST SEM'),(23,'STEM 12 2ND SEM'),(25,'ABM 11 1ST SEM');
+/*!40000 ALTER TABLE `strandandcourse` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -38,4 +48,4 @@ CREATE TABLE `strandandcourse` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-02  0:46:04
+-- Dump completed on 2020-04-06  2:07:05
