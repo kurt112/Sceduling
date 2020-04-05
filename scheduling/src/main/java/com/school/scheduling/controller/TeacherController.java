@@ -221,6 +221,7 @@ public class TeacherController {
 	}
 	@GetMapping("/schedule/deleteSchedule")
 	public String DeleteSchedule() {
+		teacherService.findAll().forEach(e-> e.setSubject_load(0));
 		scheduleServices.findAll().forEach(e-> {
 			 e.setTeacher(null);
 			 scheduleServices.save(e);
