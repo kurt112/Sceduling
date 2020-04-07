@@ -217,16 +217,16 @@
 							<input
 								type="submit"
 								class="btn btn-success form-control"
-								value="Add Lecture"
+								th:value="${action}"
 							>
 						</div>
 					</div>
 					<div class="form-group col-md-12">
 						<div class="input-group mb-3">
 							<a
-								onclick="button_delete()"
+								onclick="button_back()"
 								style="color: white;"
-								class="btn btn-danger form-control"
+								class="btn btn-info form-control"
 							> Back </a>
 						</div>
 					</div>
@@ -235,7 +235,8 @@
 				</form>
 			</div>
 			<div class="col-md-7"> 
-				<a th:href="@{/	teacher/break/list/add(lecture_id=${teacher_lecture.id})}"
+				<a th:if="${action.equals('Update Lecture')}" 
+				th:href="@{/teacher/break/list/add(lecture_id=${teacher_lecture.id})}"
 					class="btn btn-success"
 					style="margin-bottom: 10px; color: white;"
 				> Add BreakTime </a>
@@ -337,12 +338,6 @@
 	<script th:src="@{/assets/js/Schedule.js}"></script>
 
 	<script type="text/javascript">
-		function button_delete() {
-			var subject_id = document.getElementById("subject_id").value;
-
-			window.location = "/subject/delete?subject_id=" + subject_id;
-		}
-
 		$(document).ready(function() {
 			$('#bootstrap-data-table-export').DataTable();
 		});

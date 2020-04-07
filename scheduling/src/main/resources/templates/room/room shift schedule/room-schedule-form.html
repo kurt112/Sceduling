@@ -104,251 +104,201 @@
 </head>
 <!-- th:onclick="'DeleteRoomBreak_id('+${break.id}+','+${rooms.Id}+')'"-->
 
-<span th:if="${shift_schedule.subject !=null}"> <body th:onload="'Change_id('+${shift_schedule.subject.id}+', ' + ${shift_schedule.room_shift.id} + ' , '+ ${teacher_id.id} +')'">
+<span th:if="${shift_schedule.subject !=null}">
+	<body
+		th:onload="'Change_id('+${shift_schedule.subject.id}+', ' + ${shift_schedule.room_shift.id} + ' , '+ ${teacher_id} +')'"
+	>
 </span>
 <span th:if="${shift_schedule.subject == null}"><body></span>
-	<div class="container-fluid rounded">
-		<div
-			class="row container_info"
-			style=""
-		>
+<div class="container-fluid rounded">
+	<div
+		class="row container_info"
+		style=""
+	>
 
-			<div class="col-md-5">
-				<h1>Room Schedule Information</h1>
+		<div class="col-md-12">
+			<h1>Room Schedule Information</h1>
 
-				<form
-					th:object="${shift_schedule}"
-					th:action="@{/room/schedule/add}"
-					method="POST"
+			<form
+				th:object="${shift_schedule}"
+				th:action="@{/room/schedule/add}"
+				method="POST"
+			>
+				<input
+					type="hidden"
+					th:field=*{id}
 				>
-					<input
-						type="hidden"
-						th:field=*{id}
-					>
 
-					<div class="form-group col-md-12">
-						<div class="input-group mb-3">
-							<div class="col-md-6">
-								<label>Room Name</label> <select
-									class="form-control"
-									th:field="*{room_shift.room}"
-									id="room"
-								>
-									<!-- selected -->
-									<option
-										th:each="room: ${room_list}"
-										th:value="${room.id}"
-										th:text="${room.roomName}"
-									></option>
-								</select>
-
-							</div>
-							<div class="col-md-6">
-								<label for="subject_units">Shift Name</label> <select
-									class="form-control"
-									th:field="*{room_shift}"
-									id="shift"
-								>
-									<!-- selected -->
-
-								</select>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="form-group col-md-12">
-						<div class="input-group mb-3">
-							<div class="col-md-6">
-								<label for="subject_code">Strand Name </label> <select
-									class="form-control"
-									id="strand"
-									th:field="*{room_shift.strandAndCourse}"
-								>
-									<!-- selected -->
-									<option
-										th:each="strand: ${strand_list}"
-										th:text="${strand.strandName}"
-										th:value="${strand.id}"
-									>
-								</select>
-
-							</div>
-							<div class="col-md-6">
-								<label>Subject</label> <select
-									class="form-control"
-									id="strand_subject"
-									th:field="*{subject}"
-								>
-									<!-- selected -->
-
-								</select>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="form-group col-md-12">
-						<div class="input-group mb-3">
-							<div class="col-md-6">
-								<label>Start Time</label> <input
-									type="time"
-									th:field="*{start_time}"
-									class="form-control"
-								/>
-							</div>
-							<div class="col-md-6">
-								<label for="subject_units">End time</label> <input
-									type="time"
-									th:field="*{end_time}"
-									class="form-control"
-								/>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="form-group col-md-12">
-						<div class="input-group mb-3">
-							<div class="col-md-6">
-								<label for="subject_code">Select Day</label> <select
-									class="form-control"
-									th:field="*{lecture_day}"
-									id="day_lecture"
-								>
-									<!-- selected -->
-									<option th:value="'MWF'">MWF</option>
-									<option th:value="'TTH'">TTH</option>
-								</select>
-							</div>
-							<div class="col-md-6">
-								<label for="subject_units">Select Teacher</label> <select
-									class="form-control"
-									id="teacher"
-									th:field="*{teacher}"
-								>
-									<!-- selected -->
-								</select>
-							</div>
-
-						</div>
-
-					</div>
-
-
-					<div class="form-group col-md-12">
-						<div class="input-group mb-3">
-							<input
-								type="submit"
-								class="btn btn-success form-control"
-								th:value="${action}"
+				<div class="form-group col-md-12">
+					<div class="input-group mb-3">
+						<div class="col-md-6">
+							<label>Room Name</label> <select
+								class="form-control"
+								th:field="*{room_shift.room}"
+								id="room"
 							>
-						</div>
-					</div>
-					<div class="form-group col-md-12">
-						<div class="input-group mb-3">
-							<a
-								th:if="${!action.equals('Add Schedule')}"
-								onclick="button_delete()"
-								style="color: white;"
-								class="btn btn-danger form-control"
-							> Delete </a>
-						</div>
-					</div>
-				</form>
-			</div>
-
-			<div class="col-md-7">
-				<div class="content">
-					<div class="animated fadeIn">
-						<div class="row">
-
-							<div class="col-md-12">
-								<div class="card">
-									<div class="card-header">
-										<strong class="card-title">Subject List</strong>
-									</div>
-									<div class="card-body">
-										<table
-											id="bootstrap-data-table"
-											class="table table-striped table-bordered"
-										>
-											<thead>
-												<tr>
-													<th>Id</th>
-													<th>Name</th>
-													<th>Code</th>
-													<th>Hour</th>
-													<th>Minute</th>
-													<th>Units</th>
-													<th>Category</th>
-													<th>Status</th>
-
-												</tr>
-											</thead>
-											<tbody>
-												<tr th:each="subject: ${subjects}">
-													<td th:text="${subject.Id}"></td>
-													<td th:text="${subject.subjectName}"></td>
-													<td th:text="${subject.subjectCode}"></td>
-													<td th:text="${subject.hourCost}"></td>
-													<td th:text="${subject.minuteCost}"></td>
-													<td th:text="${subject.subjectUnit}"></td>
-													<td th:text="${subject.is_Major}"></td>
-													<td th:text="${subject.is_Active}"></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-
+								<!-- selected -->
+								<option
+									th:each="room: ${room_list}"
+									th:value="${room.id}"
+									th:text="${room.roomName}"
+								></option>
+							</select>
 
 						</div>
+						<div class="col-md-6">
+							<label for="subject_units">Shift Name</label> <select
+								class="form-control"
+								th:field="*{room_shift}"
+								id="shift"
+							>
+								<!-- selected -->
+
+							</select>
+						</div>
 					</div>
-					<!-- .animated -->
+
 				</div>
-				<!-- .content -->
-				<a
-					class="btn btn-info btn-block"
-					title="View"
-					style="margin-top: 10px; margin-bottom: 10px;"
-				> Back </a>
-			</div>
+
+				<div class="form-group col-md-12">
+					<div class="input-group mb-3">
+						<div class="col-md-6">
+							<label for="subject_code">Strand Name </label> <select
+								class="form-control"
+								id="strand"
+								th:field="*{room_shift.strandAndCourse}"
+							>
+								<!-- selected -->
+								<option
+									th:each="strand: ${strand_list}"
+									th:text="${strand.strandName}"
+									th:value="${strand.id}"
+								>
+							</select>
+
+						</div>
+						<div class="col-md-6">
+							<label>Subject</label> <select
+								class="form-control"
+								id="strand_subject"
+								th:field="*{subject}"
+							>
+								<!-- selected -->
+
+							</select>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="form-group col-md-12">
+					<div class="input-group mb-3">
+						<div class="col-md-6">
+							<label>Start Time</label> <input
+								type="time"
+								th:field="*{start_time}"
+								class="form-control"
+							/>
+						</div>
+						<div class="col-md-6">
+							<label for="subject_units">End time</label> <input
+								type="time"
+								th:field="*{end_time}"
+								class="form-control"
+							/>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="form-group col-md-12">
+					<div class="input-group mb-3">
+						<div class="col-md-6">
+							<label for="subject_code">Select Day</label> <select
+								class="form-control"
+								th:field="*{lecture_day}"
+								id="day_lecture"
+							>
+								<!-- selected -->
+								<option th:value="'MWF'">MWF</option>
+								<option th:value="'TTH'">TTH</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label for="subject_units">Select Teacher</label> <select
+								class="form-control"
+								id="teacher"
+								th:field="*{teacher}"
+							>
+								<!-- selected -->
+							</select>
+						</div>
+
+					</div>
+
+				</div>
+
+
+				<div class="form-group col-md-12">
+					<div class="input-group mb-3">
+						<input
+							type="submit"
+							class="btn btn-success form-control"
+							th:value="${action}"
+						>
+					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<div class="input-group mb-3">
+						<a
+							th:if="${!action.equals('Add Schedule')}"
+							onclick="button_delete()"
+							style="color: white;  margin-right: 20px;" 
+							class="btn btn-danger form-control"
+						> Delete </a> <a
+							onclick="button_delete()"
+							style="color: white;"
+							class="btn btn-info form-control"
+						> Back </a>
+
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
+</div>
 
-	<!-- Scripts -->
-	<!--  <script th:src="@{/assets/js/sample.js}"></script> -->
+<!-- Scripts -->
+<!--  <script th:src="@{/assets/js/sample.js}"></script> -->
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"
-	></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"
-	></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
-	></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"
-	></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"
-	></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"
+></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"
+></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"
+></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"
+></script>
 
-	<script th:src="@{/assets/js/lib/data-table/datatables.min.js}"></script>
-	<script
-		th:src="@{/assets/js/lib/data-table/dataTables.bootstrap.min.js}"
-	></script>
-	<script th:src="@{/assets/js/lib/data-table/dataTables.buttons.min.js}"></script>
-	<script th:src="@{/assets/js/lib/data-table/buttons.bootstrap.min.js}"></script>
-	<script th:src="@{/assets/js/lib/data-table/jszip.min.js}"></script>
-	<script th:src="@{/assets/js/lib/data-table/vfs_fonts.js}"></script>
-	<script th:src="@{/assets/js/lib/data-table/buttons.html5.min.js}"></script>
-	<script th:src="@{/assets/js/lib/data-table/buttons.print.min.js}"></script>
-	<script th:src="@{/assets/js/lib/data-table/buttons.colVis.min.js}"></script>
-	<script th:src="@{/assets/js/init/datatables-init.js}"></script>
-	<script th:src="@{/assets/js/Schedule.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/datatables.min.js}"></script>
+<script
+	th:src="@{/assets/js/lib/data-table/dataTables.bootstrap.min.js}"
+></script>
+<script th:src="@{/assets/js/lib/data-table/dataTables.buttons.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/buttons.bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/jszip.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/vfs_fonts.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/buttons.html5.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/buttons.print.min.js}"></script>
+<script th:src="@{/assets/js/lib/data-table/buttons.colVis.min.js}"></script>
+<script th:src="@{/assets/js/init/datatables-init.js}"></script>
+<script th:src="@{/assets/js/Schedule.js}"></script>
 </body>
 </html>

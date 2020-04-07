@@ -454,17 +454,5 @@
 	></script>
 	<script th:src="@{/assets/js/main.js}"></script>
 	<script th:src="@{/assets/js/Schedule.js}"></script>
-	<script>
-		function change(url, j) {
-			var past_button = document.getElementById("pass_button");
-
-			pass_button.classList.remove("active");
-			j.classList.add("active");
-
-			var frame = document.getElementById('iFrame').src = url;
-
-			pass_button = j;
-		}
-	</script>
 </body>
 </html>

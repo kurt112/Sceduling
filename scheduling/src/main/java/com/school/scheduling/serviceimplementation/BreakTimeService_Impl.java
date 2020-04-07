@@ -26,6 +26,7 @@ public class BreakTimeService_Impl implements Services<BreakTime> {
 
 	@Override
 	public List<BreakTime> findAll() {
+		System.out.println(repository.findAll());
 		return repository.findAll();
 	}
 

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "room_shift_schedule")
-public class Room_ShiftSchedule {
+public class Room_ShiftSchedule implements Comparable<Room_ShiftSchedule>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -123,6 +123,13 @@ public class Room_ShiftSchedule {
 
 	public void setLecture_day(String lecture_day) {
 		this.lecture_day = lecture_day;
+	}
+
+	@Override
+	public int compareTo(Room_ShiftSchedule o) {
+		
+		
+		return  start_time.compareToIgnoreCase(o.getStart_time());
 	}
 	
 	

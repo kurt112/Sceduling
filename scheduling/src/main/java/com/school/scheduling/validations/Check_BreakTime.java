@@ -1,4 +1,4 @@
-package com.school.scheduling.validations.Breaktime;
+package com.school.scheduling.validations;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

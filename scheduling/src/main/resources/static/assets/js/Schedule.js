@@ -219,3 +219,20 @@ function DeleteStudentMain(id) {
 function DeleteStudent(id) {
 
 }
+
+
+//************************************************************ IFrame
+var frame =  document.getElementById('iFrame');
+function change(url, j) {
+	var past_button = document.getElementById("pass_button");
+
+	pass_button.classList.remove("active");
+	j.classList.add("active");
+
+	frame.src = url;
+	pass_button = j;
+}
+
+function button_back(){
+	window.history.back(); 
+}

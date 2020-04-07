@@ -5,6 +5,7 @@ import com.school.scheduling.service.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+@Service
 @Controller
 @RequestMapping("/breaktime")
 public class BreakTimeController {
+	
 	private Services<BreakTime> breakService;
 
 	@Autowired

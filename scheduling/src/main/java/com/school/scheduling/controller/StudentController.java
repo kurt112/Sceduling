@@ -128,7 +128,9 @@ public class StudentController {
 	 * For the Schedule of student
 	 ******************************/
 	@GetMapping("/schedule/list")
-	public String StudentSchedule_List() {
+	public String StudentSchedule_List(Model model) {
+		model.addAttribute("student_list", studentservice.findAll());
+		
 		return "student/student schedule/student-schedule";
 	}
 

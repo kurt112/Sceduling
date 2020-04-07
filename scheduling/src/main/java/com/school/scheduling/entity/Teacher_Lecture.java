@@ -10,7 +10,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "teacher_lecture")
-public class Teacher_Lecture {
+public class Teacher_Lecture  implements Comparable<Teacher_Lecture>{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -128,6 +128,12 @@ public class Teacher_Lecture {
 		Teacher_Lecture teacher = (Teacher_Lecture) object;
 		return teacher.getId() == id;
 		
+	}
+
+	@Override
+	public int compareTo(Teacher_Lecture o) {
+	
+		return startTime.compareToIgnoreCase(o.getStartTime());
 	}
 	
 	

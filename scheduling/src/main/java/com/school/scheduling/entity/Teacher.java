@@ -1,11 +1,11 @@
 package com.school.scheduling.entity;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.school.scheduling.repository.RoomShiftSchedule_Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +21,14 @@ public class Teacher {
 
     @Column(name = "first_name")
     private String firstName;
-
+    
     @Column(name = "last_name")
     private String lastName;
 
+    
     @Column(name = "sex")
     private String sex;
+    
     
     @Column(name = "work_type")
     private String workType;

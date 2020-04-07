@@ -15,11 +15,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.school.scheduling.validations.Breaktime.Check_BreakTime;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.school.scheduling.validations.Check_BreakTime;
 
 
 @Check_BreakTime

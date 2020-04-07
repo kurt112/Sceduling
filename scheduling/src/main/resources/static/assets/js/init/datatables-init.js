@@ -58,8 +58,22 @@
 	creatable("#teacher_Subject_Table", column6,"List of Subjects for Teacher");
 	creatable("#teacher_Lecture_Table",column4,"List of Lecture for Teacher");
 
+	
+	
 
+	$(document).ready(function() {
+		$("#bootstrap-data-table").DataTable({
 
+			lengthMenu : [ [ 10, 20, 50, -1 ], [ 10, 20, 50, "All" ] ],
+			"scrollY" : "350px",
+			"scrollX" : true,
+			dom : 'lBfrtip',
+			"paging" : false,
+			buttons:[]
+		});
+		
+	});
+	
 	// this function will create a table
 	function creatable(tableName, column_data,title){
 		$(tableName).DataTable({
@@ -105,5 +119,6 @@
 
 		});
 	}
+
 
 })(jQuery);

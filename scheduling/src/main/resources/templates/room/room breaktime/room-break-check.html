@@ -120,39 +120,41 @@
 										type="submit"
 										class="btn btn-success"
 										style="margin-bottom: 10px;"
-									    value="Add BreakTime">
+										value="Add BreakTime"
+									> <a class="btn btn-info" th:href="@{/room/shift/update(roomShift_id=*{id})}" style="margin-bottom: 10px;">
+										Back
+									</a>
 									<div class="card">
-										<div class="card-header">
-											<strong class="card-title">Room Break List</strong>
-										</div>
-										<div class="card-body">
-											<table
-												id="bootstrap-data-table"
-												class="table table-striped table-bordered"
-											>
-												<thead>
-													<tr>
-														<th>Start Time</th>
-														<th>End Time</th>
-														<th>Action</th>
-													</tr>
-												</thead>
-												<tbody>
+											<div class="card-header">
+												<strong class="card-title">Room Break List</strong>
+											</div>
+											<div class="card-body">
+												<table
+													id="bootstrap-data-table"
+													class="table table-striped table-bordered"
+												>
+													<thead>
+														<tr>
+															<th>Start Time</th>
+															<th>End Time</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<tbody>
 
-													<tr th:each="break:${room_breaks}">
-														<td th:text="${break.start_time}">asdasd</td>
-														<td th:text="${break.end_time}">asdasd</td>
-														<td><input
-															type="checkbox"
-															name="active"
-															th:field="*{room_shift_breakTimeList}"
-															th:value="${break.id}"
-														/></td>
-													</tr>
-											</table>
+														<tr th:each="break:${room_breaks}">
+															<td th:text="${break.start_time}">asdasd</td>
+															<td th:text="${break.end_time}">asdasd</td>
+															<td><input
+																type="checkbox"
+																name="active"
+																th:field="*{room_shift_breakTimeList}"
+																th:value="${break.id}"
+															/></td>
+														</tr>
+												</table>
+											</div>
 										</div>
-									</div>
-
 								</form>
 							</div>
 

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.school.scheduling.SchedulingAlgorithm.ScheduleAlgho;
+import com.school.scheduling.SchedulingAlgorithm.GenerateTeacher_Schedule;
 import com.school.scheduling.entity.Authorities;
 import com.school.scheduling.entity.BreakTime;
 import com.school.scheduling.entity.Room_ShiftSchedule;
@@ -102,6 +102,8 @@ public class TeacherController {
 		model.addAttribute("teacher_subject", teacher.getSubjectList());
 		model.addAttribute("teacher_lecture", teacher.getTeacher_lecture());
 		model.addAttribute("teacher_object", teacher);
+		model.addAttribute("teacher_schedule", teacher.getTeacher_schedule());
+		
 		teacherService.save(teacher);
 		this.teacher = teacher;
 		return "teacher/teacher information/teacher-information-form";
@@ -150,7 +152,7 @@ public class TeacherController {
 
 		List<BreakTime> break_list = new ArrayList<>();
 
-		// he time of the shift list
+		//t he time of the shift list
 		shift_startTime.setTime(dateFormat.parse(teacher_time.getStartTime()));
 		shift_endTime.setTime(dateFormat.parse(teacher_time.getEndTime()));
 
@@ -196,7 +198,7 @@ public class TeacherController {
 		Teacher_Lecture teacher_lecture = lectureServices.findbyId(teacher.getId());
 
 		if (teacher_lecture.getBreaktime_teacherList() != null) {
-			teacher_lecture.getBreaktime_teacherList().addAll(teacher.getBreaktime_teacherList());
+			if(teacher.getBreaktime_teacherList() !=null)teacher_lecture.getBreaktime_teacherList().addAll(teacher.getBreaktime_teacherList());
 
 			lectureServices.save(teacher_lecture);
 		} else {
@@ -244,10 +246,14 @@ public class TeacherController {
 				.filter(e -> e.getLectureDay().equals("TTH")).collect(Collectors.toList());
 		List<Teacher_Lecture> teacher_wmf = lectureServices.findAll().stream()
 				.filter(f -> f.getLectureDay().equals("MWF")).collect(Collectors.toList());
-
-		ScheduleAlgho.CreateSchedule(teacher_tth, schedule_tth, lectureServices);
-		ScheduleAlgho.CreateSchedule(teacher_wmf, schedule_mwf, lectureServices);
-
+		
+		GenerateTeacher_Schedule scheduletth = new GenerateTeacher_Schedule(teacher_tth, schedule_tth, lectureServices);
+		GenerateTeacher_Schedule schedulewmf = new GenerateTeacher_Schedule(teacher_wmf, schedule_mwf, lectureServices);
+		
+		scheduletth.Schedule();
+		schedulewmf.Schedule();
+		
+		
 		return "redirect:/teacher/schedule/list";
 	}
 
@@ -321,8 +327,10 @@ public class TeacherController {
 		model.addAttribute("teacher_lecture", new Teacher_Lecture());
 		if (this.teacher != null)
 			model.addAttribute("teacher_list", this.teacher);
-		else
+		else {
 			model.addAttribute("teacher_list", teacherService.findAll());
+		}
+		model.addAttribute("action", "Save Lecture");
 		return "teacher/teacher lecture/teacher-lecture-form";
 	}
 
@@ -331,7 +339,7 @@ public class TeacherController {
 		Teacher_Lecture lecture = lectureServices.findbyId(id);
 
 		model.addAttribute("teacher_lecture", lecture);
-
+		model.addAttribute("action", "Update Lecture");
 		model.addAttribute("teacher_list", teacherService.findAll());
 		return "teacher/teacher lecture/teacher-lecture-form";
 	}

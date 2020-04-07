@@ -22,21 +22,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.school.scheduling.SchedulingAlgorithm.GenerateRoomShift_Schedule;
 import com.school.scheduling.entity.BreakTime;
 import com.school.scheduling.entity.Room;
 import com.school.scheduling.entity.Room_Shift;
 import com.school.scheduling.entity.Room_ShiftSchedule;
 import com.school.scheduling.entity.StrandAndCourse;
 import com.school.scheduling.entity.Student;
-import com.school.scheduling.entity.Subject;
-import com.school.scheduling.entity.Teacher;
 import com.school.scheduling.service.Services;
 
 @Controller()
 @RequestMapping("/room")
 public class RoomController {
-
-	private int back = 0;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -71,7 +69,6 @@ public class RoomController {
 	@GetMapping("/list")
 	public String RoomList(Model model) {
 		model.addAttribute("rooms", roomService.findAll());
-		back = -1;
 		this.room = null;
 		return "room/room list/room-list";
 
@@ -83,7 +80,6 @@ public class RoomController {
 		this.room = new Room();
 		model.addAttribute("room_object", this.room);
 
-		model.addAttribute("back", back);
 		model.addAttribute("action", "Save Room");
 		return "room/room list/room-form";
 
@@ -93,7 +89,6 @@ public class RoomController {
 	public String Room_Save(@ModelAttribute("room_object") Room room, Model model, BindingResult binding) {
 		this.room.setRoomName(room.getRoomName());
 		roomService.save(this.room);
-		back = -2;
 
 		return "redirect:/room/form";
 	}
@@ -119,7 +114,7 @@ public class RoomController {
 
 		model.addObject("room_object", room_model);
 		model.addObject("room_shifts", room_model.getRoom_shiftList());
-		model.addObject("back", back);
+
 		model.addObject("action", "Update Room");
 		return model;
 	}
@@ -190,7 +185,6 @@ public class RoomController {
 		model.addAttribute("strand_list", strandService.findAll());
 
 		// state of the button
-		model.addAttribute("back", back);
 		model.addAttribute("action", "Update Shift");
 
 		System.out.println(shift.getStudentList());
@@ -243,9 +237,8 @@ public class RoomController {
 			// TODO: handle exception
 		}
 
-		
 		break_list.removeAll(room.getRoom_shift_breakTimeList());
-		
+
 		model.addAttribute("room_breaks", break_list);
 
 		model.addAttribute("shift_object", room);
@@ -264,7 +257,7 @@ public class RoomController {
 //		System.out.println("The name " + this.roomShift.getShiftName());
 		roomShift.getRoom_shift_breakTimeList().forEach(e -> System.out.println(e.getStart_time()));
 
-		return "redirect:/room/shift/update?roomShift_id="+this.roomShift.getId();
+		return "redirect:/room/shift/update?roomShift_id=" + this.roomShift.getId();
 	}
 
 	/********************************* Mapping for roomShift ******************/
@@ -272,7 +265,7 @@ public class RoomController {
 	// request mapping for room Shift ksut list
 	@GetMapping("/shift/list")
 	public ModelAndView RoomShift_List() {
-		back = -1;
+
 		ModelAndView model = new ModelAndView("room/room shift/room-shift");
 		if (delete_shift != null) {
 			roomShiftService.delete(this.delete_shift);
@@ -317,8 +310,6 @@ public class RoomController {
 		// state of the button if it is update or Save
 		model.addAttribute("action", "Save Shift");
 
-		// alert in java scipt
-		model.addAttribute("back", back);
 		this.roomShift = room_shift;
 		return "room/room shift/room-shift-form";
 	}
@@ -331,7 +322,6 @@ public class RoomController {
 		// chceck if the saving of shift has error
 		System.out.println("the room " + this.room);
 		if (binding.hasErrors()) {
-			back += -1;
 
 			if (this.room != null) {
 				model.addAttribute("room_list", this.room);
@@ -343,7 +333,6 @@ public class RoomController {
 			model.addAttribute("action", "Update Shift");
 			return "room/room shift/room-shift-form";
 		}
-		back += -2;
 		roomShiftService.save(rooms_shift);
 
 		return "redirect:/room/shift/form";
@@ -364,13 +353,11 @@ public class RoomController {
 		model.addAttribute("strand_list", strandService.findAll());
 
 		// state of the button
-		model.addAttribute("back", back);
 		model.addAttribute("action", "Update Shift");
 
-		//Room Shift Schedule
-		model.addAttribute("shift_schedule",room_shift.getRoom_ShiftSchedules());
-		
-		
+		// Room Shift Schedule
+		model.addAttribute("shift_schedule", room_shift.getRoom_ShiftSchedules());
+
 		System.out.println(room_shift.getStudentList());
 		model.addAttribute("student_list", room_shift.getStudentList());
 		this.roomShift = room_shift;
@@ -409,132 +396,18 @@ public class RoomController {
 	@GetMapping("/schedule/generate")
 	public String GenerateSchedule() {
 		
-		
-		
-		List<StrandAndCourse> strands = strandService.findAll();
-		List<Room_Shift> room_shift = roomShiftService.findAll();
-		
+		GenerateRoomShift_Schedule shift_schedule = new GenerateRoomShift_Schedule(strandService.findAll(), roomShiftService.findAll(), roomShiftService, shiftSchedule);
+		 shift_schedule.schedule();
 
-		room_shift.forEach(e ->{
-			e.setInitial_time(e.getStartTime());
-			roomShiftService.save(e);
-		});
-//		Collections.shuffle(strands);
-		Collections.shuffle(room_shift);
-		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 
-		Calendar shift_startTime = Calendar.getInstance();
-		Calendar shift_endTime = Calendar.getInstance();
-		
-		// iterating all the shift in the room
-		for(Room_Shift shift: room_shift) {
-			System.out.println("The room " + shift.getRoom().getRoomName() + " The Shift -> " + shift.getShiftName());
-			String day = "MWF";
-			try {
-				shift_startTime.setTime(dateFormat.parse(shift.getInitial_time()));
-				shift_endTime.setTime(dateFormat.parse(shift.getEndTime()));
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			StrandAndCourse strand_new = null;
-			// iterating all the strand in the school	
-			for(StrandAndCourse strand: strands) {
-			
-				strand_new = strand;
-				// getting the same strand in the room
-				if(shift.getStrandAndCourse() == strand) {
-					System.out.println("The Strand -> " + strand.getStrandName() );
-					
-					// iterating all the subjects
-					for(Subject sbj: strand.getSubjectList()) {
-						
-						if(!sbj.getSubjectName().contains("Physical Education and Health")) {
-							System.out.println(" The subject -> " + shift.getStrandAndCourse().getStrandName()+ " -> " + sbj.getSubjectName() + " the time -> " + dateFormat.format(shift_startTime.getTime()));
-							try {
-								boolean exist =false;
-								shift_startTime.add(Calendar.HOUR, sbj.getHourCost());
-								shift_startTime.add(Calendar.MINUTE, sbj.getMinuteCost());
-								
-								// checking if the room schedule has a already subject in that schedule
-								for(Room_ShiftSchedule schedule: shift.getRoom_ShiftSchedules()) {
-									if(schedule.getSubject() == sbj) exist =true;
-								}
-								
-								if(exist == false) {
-									if(shift_startTime.getTime().equals(shift_endTime.getTime())) {
-									} 
-									
-									if((shift_startTime.getTime().before(shift_endTime.getTime())) 
-											|| 
-											shift_startTime.getTime().equals(shift_endTime.getTime())) {
-										
-										
-										shiftSchedule.save(new Room_ShiftSchedule(shift, sbj, 
-												shift.getInitial_time() , dateFormat.format(shift_startTime.getTime()), day));
-										
-								
-										shift.setInitial_time(dateFormat.format(shift_startTime.getTime()));
-										
-									}else {
-										day = "TTH";
-										shift.setInitial_time(shift.getStartTime());
-										
-										shift_startTime.setTime(dateFormat.parse(shift.getInitial_time()));
-										
-										shift_startTime.add(Calendar.HOUR, sbj.getHourCost());
-										shift_startTime.add(Calendar.MINUTE, sbj.getMinuteCost());
-										
-										
-										shiftSchedule.save(new Room_ShiftSchedule(shift, sbj, 
-												shift.getInitial_time() , dateFormat.format(shift_startTime.getTime()), day));
-										
-										shift.setInitial_time(dateFormat.format(shift_startTime.getTime()));
-									
-									}	
-									
-								}
-								
-								
-							} catch (ParseException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-
-						}else {
-							shiftSchedule.save(new Room_ShiftSchedule(shift, sbj, 
-									"0:00", "0:00", day));
-						}
-					}
-					
-					System.out.println("-------------------------------------------------------------------------------");
-					
-					break;
-				}
-				
-			}
-			
-			Subject temp_subject = strand_new.getSubjectList().get(0);
-
-			strands.remove(strand_new);
-			
-			strand_new.getSubjectList().remove(temp_subject);
-			strand_new.getSubjectList().add(temp_subject);
-			
-			strands.add(strand_new);
-			
-		}
-		
-		
 		return"redirect:/room/schedule/list";
 	}
-	
+
 	@GetMapping("/schedule/list")
 	public String RoomSchedule_List(Model model) {
 
 		List<Room_ShiftSchedule> sched = shiftSchedule.findAll();
-		
-		
+
 		model.addAttribute("sched_list", sched);
 		return "room/room shift schedule/room-schedule";
 	}
@@ -542,7 +415,6 @@ public class RoomController {
 	@GetMapping("/schedule/form")
 	public String RoomSchedule_Form(Model model) {
 
-		
 		model.addAttribute("shift_schedule", new Room_ShiftSchedule());
 		model.addAttribute("room_list", roomService.findAll());
 		model.addAttribute("strand_list", strandService.findAll());
@@ -553,7 +425,7 @@ public class RoomController {
 	// request mapping for room add
 	@PostMapping("/schedule/add")
 	public String RoomSchedule_Add(@ModelAttribute("shift_schedule") Room_ShiftSchedule scheudle) {
-		
+
 		shiftSchedule.save(scheudle);
 
 		return "redirect:/room/schedule/form";
@@ -566,12 +438,13 @@ public class RoomController {
 		model.addAttribute("room_list", roomService.findAll());
 		model.addAttribute("strand_list", strandService.findAll());
 		model.addAttribute("action", "Update Schedule");
-		model.addAttribute("teacher_id", shift.getSubject().getTeacherList().get(0));
+		model.addAttribute("teacher_id", 0);
 		
+
 		return "room/room shift schedule/room-schedule-form";
 	}
 
-	@	GetMapping("/schedule/deleteMain")
+	@GetMapping("/schedule/deleteMain")
 	private String RoomSchedule_Delete(@RequestParam("schedule_id") int id) {
 		shiftSchedule.deleteById(id);
 		return "redirect:/room/schedule/list";
