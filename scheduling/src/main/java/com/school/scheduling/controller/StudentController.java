@@ -121,6 +121,8 @@ public class StudentController {
 		model.addAttribute("strand_list", strand_list);
 		model.addAttribute("roomshift_list", room_shift);
 		model.addAttribute("action", "Update Student");
+
+		model.addAttribute("schedule_list", student.getRoom_shift().getRoom_ShiftSchedules());
 		return "student/student list/student-form";
 	}
 
@@ -150,8 +152,13 @@ public class StudentController {
 	}
 
 	@GetMapping("/schedule/update")
-	public String StudentSchedule_Update() {
-		return "redirect:/student/schedule/form";
+	public String StudentSchedule_Update(@RequestParam("student_id") int id,Model model) {
+		Student student = studentservice.findbyId(id);
+		System.out.println("asdasdasd");
+		System.out.println(student.getRoom_shift().getRoom_ShiftSchedules());
+		
+		model.addAttribute("schedule_list", student.getRoom_shift().getRoom_ShiftSchedules());
+		return "student/student schedule/student-schedule-form";
 
 	}
 

@@ -6,6 +6,7 @@ padding-top:10px;
  float:right;
 }
 
+
 @media only screen and (max-width: 500px) {
  .dataTables_filter{
    float:left;
@@ -62,4 +63,8 @@ body { padding-right: 0 !important;}
 .buttons-print{
     padding-right: 20px;
     padding-left: 20px;
+}
+
+.btn{
+	color:white;
 }

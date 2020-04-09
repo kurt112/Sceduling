@@ -97,6 +97,55 @@
 >
 </head>
 <body>
+	<div
+		class="modal fade right"
+		id="modal"
+		tabindex="-1"
+		role="dialog"
+		aria-labelledby="myModalLabel"
+		aria-hidden="true"
+		data-backdrop="true"
+	>
+		<div
+			class="modal-dialog modal-side modal-bottom-right modal-notify modal-info"
+			role="document"
+		>
+
+			<div class="modal-content">
+				<!--Header-->
+
+				<!--Body-->
+				<div class="modal-body ">
+					<div class="col-12">
+						<i
+							class="fa fa-exclamation-circle"
+							style="margin-top: 20px; margin-bottom: 20px; font-size: 100px; color: #C32828;"
+						></i>
+						<h1>Are you sure?</h1>
+						<p>You won't be able to revert this</p>
+					</div>
+
+				</div>
+
+				<!--Footer-->
+				<div
+					class="modal-footer flex-right"
+					style="border-top: none;"
+				>
+					<a
+						id="message_button"
+						class="btn btn-success"
+						style="color: white; margin-right: 10px;"
+					> </a> <a
+						class="btn btn-info"
+						data-dismiss="modal"
+					>Cancel </a>
+
+				</div>
+			</div>
+			<!--/.Content Delete-->
+		</div>
+	</div>
 
 	<div class="container-fluid rounded">
 		<div
@@ -114,11 +163,12 @@
 									th:href=@{/teacher/schedule/generateSchedule}
 									class="btn btn-success"
 									style="margin-bottom: 10px;"
-								> Generate Teacher Schedule </a>
-								<a
-									th:href=@{/teacher/schedule/deleteSchedule}
+								> Generate Teacher Schedule </a> <a
+									onclick="DeleteTeacherSchedule()"
+									data-target="#modal"
+									data-toggle="modal"
 									class="btn btn-success"
-									style="margin-bottom: 10px;"
+									style="margin-bottom: 10px; color:white;"
 								> Delete Schedule </a>
 								<div class="card">
 									<div class="card-header">
@@ -140,13 +190,15 @@
 											</thead>
 											<tbody>
 												<span th:each="teacher: ${teachers}">
-												<tr th:each="teacher_schedule: ${teacher.teacher_schedule}">
-													<td th:text="${teacher.firstName} + ' , ' + ${teacher.lastName}"></td>
-													<td th:text="${teacher_schedule.subject.subjectName}"></td>
-													<td th:text="${teacher_schedule.start_time}"></td>
-													<td th:text="${teacher_schedule.end_time}"></td>
-													<td th:text="${teacher_schedule.lecture_day}"></td>
-												</tr>
+													<tr th:each="teacher_schedule: ${teacher.teacher_schedule}">
+														<td
+															th:text="${teacher.firstName} + ' , ' + ${teacher.lastName}"
+														></td>
+														<td th:text="${teacher_schedule.subject.subjectName}"></td>
+														<td th:text="${teacher_schedule.start_time}"></td>
+														<td th:text="${teacher_schedule.end_time}"></td>
+														<td th:text="${teacher_schedule.lecture_day}"></td>
+													</tr>
 												</span>
 											</tbody>
 										</table>

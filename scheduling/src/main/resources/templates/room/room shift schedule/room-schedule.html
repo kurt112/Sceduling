@@ -1,4 +1,4 @@
- 
+
 <!DOCTYPE html>
 <html
 	lang="en"
@@ -166,7 +166,14 @@
 									th:href="@{/room/schedule/generate}"
 									class="btn btn-success"
 									style="margin-bottom: 10px;"
-								>Generate Schedule</a>
+								>Generate Schedule</a> <a
+									onclick="DeleteRoomSchedule()"
+									data-target="#modal"
+									data-toggle="modal"
+									class="btn btn-success"
+									style="margin-bottom: 10px; color:white"
+								>Delete Schedule</a>
+
 								<div class="card">
 									<div class="card-header">
 										<strong class="card-title">Subject List</strong>
@@ -222,7 +229,6 @@
 														data-target="#modal"
 														data-toggle="modal"
 														class="btn btn-danger btn-sm aButton"
-														
 													><i
 															class="fa fa-trash"
 															aria-hidden="true"

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html
 	lang="en"
@@ -9,7 +8,6 @@
 <head>
 
 <title>Student List</title>
-
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta
@@ -93,6 +91,10 @@
 <!-- Our own Css -->
 <link
 	rel="stylesheet"
+	th:href="@{/assets/css/main.css}"
+>
+<link
+	rel="stylesheet"
 	th:href="@{/assets/css/contents.css}"
 >
 </head>
@@ -103,50 +105,163 @@
 			class="row container_info"
 			style=""
 		>
-			<div class="col-md-12">
+
+			<div class="col-md-5">
+				<h1>Student Information</h1>
+
+				<form
+					action="#"
+					th:action="@{/student/save}"
+					th:object="${student_object}"
+					method="POST"
+				>
+					<input
+						type="hidden"
+						class="form-control"
+						th:field="*{id}"
+						placeholder="Subject Id"
+					>
+
+
+					<div class="form-group col-md-12">
+						<label>Student Name </label>
+						<div class="input-group mb-3">
+							<input
+								type="text"
+								th:field="*{firstName}"
+								class="form-control"
+								placeholder="First Name"
+								style="margin-right: 10px;"
+							> <input
+								th:field="*{lastName}"
+								type="text"
+								class="form-control"
+								placeholder="Last Name"
+							>
+						</div>
+					</div>
+
+					<div class="form-group col-md-12">
+						<label>Strand And Room </label>
+						<div class="input-group mb-3">
+							<select
+								th:field="*{strandAndCourse}"
+								style="margin-right: 10px;"
+								class="form-control"
+							>
+								<!-- selected -->
+								<option
+									th:each="strand: ${strand_list}"
+									th:value="${strand.id}"
+									th:text="${strand.strandName}"
+								>Strand</option>
+							</select> <select
+								style="margin-right: 10px;"
+								class="form-control"
+								th:field="*{room_shift}"
+							>
+								<!-- selected -->
+								<option
+									th:each="roomShift: ${roomshift_list}"
+									th:value="${roomShift.Id}"
+									th:text="${roomShift.room.roomName} + ' (' +${roomShift.shiftName}+')'"
+								>Room Shift</option>
+
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group col-md-12">
+						<label>Student UserName</label>
+						<div class="input-group mb-3">
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Username"
+								th:field="*{users.username}"
+							>
+						</div>
+					</div>
+					<div class="form-group col-md-6">
+
+						<label>Sex </label>
+						<div class="input-group mb-3">
+
+							<div class="form-check-inline">
+								<label class="form-check-label"> <input
+									type="radio"
+									class="form-check-input"
+									value="Male"
+									name="optradio"
+									th:field="*{sex}"
+								/> Male
+								</label>
+							</div>
+							<div class="form-check-inline">
+								<label class="form-check-label"> <input
+									type="radio"
+									class="form-check-input"
+									value="Female"
+									name="optradio"
+									th:field="*{sex}"
+								/> Female
+								</label>
+							</div>
+
+						</div>
+					</div>
+
+					
+					
+
+				</form>
+			</div>
+
+			<div class="col-md-7">
+
 				<div class="content">
 					<div class="animated fadeIn">
 						<div class="row">
 
 							<div class="col-md-12">
-
-								<a
-									th:href="@{/student/schedule/form}"
-									class="btn btn-success"
-									style="margin-bottom: 10px;"
-								>Add Student Schedule</a>
 								<div class="card">
 									<div class="card-header">
-										<strong class="card-title">Subject List</strong>
+										<strong class="card-title">Schedule List</strong>
 									</div>
 									<div class="card-body">
 										<table
-											id="studentSchedule_table"
+											id="shiftSchedule_table"
 											class="table table-striped table-bordered"
 										>
 											<thead>
 												<tr>
-													<th>First Name</th>
-													<th>Last Name</th>
 													<th>Room</th>
 													<th>Shift</th>
 													<th>Subject</th>
+													<th>Strand</th>
+													<th>Teacher</th>
+													<th>Lecture Day</th>
 													<th>Start Time</th>
 													<th>End Time</th>
+
 												</tr>
 											</thead>
 											<tbody>
-												<span th:each="student: ${student_list}">
-													<tr th:each="schedule: ${student.room_shift.room_ShiftSchedules}">
-														<td th:text="${student.firstName}"></td>
-														<td th:text="${student.lastName}"></td>
+												<tr th:each="schedule: ${schedule_list}">
 														<td th:text="${schedule.room_shift.room.roomName}"></td>
-														<td th:text="${schedule.room_shift.shiftName}"></td>
-														<td th:text="${schedule.subject.subjectName}"></td>
-														<td th:text="${schedule.start_time}"></td>
-														<td th:text="${schedule.end_time}"></td>
+													<td th:text="${schedule.room_shift.shiftName}"></td>
+													<td th:text="${schedule.subject.subjectName}"></td>
+													<td th:text="${schedule.room_shift.strandAndCourse.strandName}"></td>
+													<td th:if="${schedule.teacher ==null}">N/A</td>
+													<td
+														th:if="${schedule.teacher !=null}"
+														th:text="${schedule.teacher.firstName} + ' , ' + ${schedule.teacher.lastName} "
+													></td>
+
+													<td th:text="${schedule.lecture_day}"></td>
+													<td th:text="${schedule.start_time}"></td>
+													<td th:text="${schedule.end_time}"></td>
 													</tr>
-												</span>
 											</tbody>
 										</table>
 									</div>
@@ -158,8 +273,7 @@
 					</div>
 					<!-- .animated -->
 				</div>
-				<!-- .content -->
-
+			
 			</div>
 		</div>
 	</div>
@@ -195,6 +309,18 @@
 	<script th:src="@{/assets/js/lib/data-table/buttons.print.min.js}"></script>
 	<script th:src="@{/assets/js/lib/data-table/buttons.colVis.min.js}"></script>
 	<script th:src="@{/assets/js/init/datatables-init.js}"></script>
+	<script th:src="@{/assets/js/Schedule.js}"></script>
 
+	<script type="text/javascript">
+		function button_delete() {
+			var subject_id = document.getElementById("subject_id").value;
+
+			window.location = "/subject/delete?subject_id=" + subject_id;
+		}
+
+		$(document).ready(function() {
+			$('#bootstrap-data-table-export').DataTable();
+		});
+	</script>
 </body>
 </html>

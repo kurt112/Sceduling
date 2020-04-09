@@ -115,93 +115,155 @@
 						id="pass_button"
 						onclick="change('/dashboard',this)"
 						class="active"
+						sec:authorize="hasAuthority('OIC')"
 					><a> <i class="menu-icon fa fa-laptop"></i>Dashboard
-					</a></li>
 
-					<li class="menu-title">Teachers</li>
+							<li class="menu-title" id="title">Teachers</li>
+					</a></li>
 					<!-- /.menu-title -->
 
 					<li
+						sec:authorize="hasAuthority('OIC')"
 						class="asdf"
 						onclick="change('/teacher/list',this)"
 					><a> <i class="menu-icon fas fa-chalkboard-teacher"></i>
 							Teacher Information
 					</a></li>
 
-					<li onclick="change('/teacher/schedule/list',this)"><a> <i
-							class="menu-icon fa fa-calendar"
-						></i>Teacher Schedule
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/teacher/schedule/list',this)"
+					><a> <i class="menu-icon fa fa-calendar"></i>Teacher
+							Schedule
 					</a></li>
 
-					<li onclick="change('/teacher/break/list',this)"><a> <i
-							class="menu-icon fas fa-clock"
-						></i>Teacher BreakTime
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/teacher/break/list',this)"
+					><a> <i class="menu-icon fas fa-clock"></i>Teacher
+							BreakTime
 					</a></li>
-					<li onclick="change('/teacher/subjects',this)"><a> <i
-							class="menu-icon fas fa-book-open"
-						></i>Teacher Subjects
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/teacher/subjects',this)"
+					><a> <i class="menu-icon fas fa-book-open"></i>Teacher
+							Subjects
 					</a></li>
-					<li onclick="change('/teacher/lecture/list',this)"><a> <i
-							class="menu-icon fas fa-book-open"
-						></i>Teacher Lectures
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/teacher/lecture/list',this)"
+					><a> <i class="menu-icon fas fa-book-open"></i>Teacher
+							Lectures
 					</a></li>
-					<li class="menu-title">Student</li>
+					<li style="width:100%; padding-right:34px;"
+						class="active"
+						id="teacher_profile"
+						sec:authorize="hasAuthority('TEACHER')"
+					><a> <i class="menu-icon fa fa-user-circle-o" aria-hidden="true"></i>Your Profile
+					</a></li>
+					
 
-					<li onclick="change('/student/list',this)"><a> <i
-							class="menu-icon fas fa-users"
-						></i>Student List
-					</a></li>
-					<li onclick="change('/student/schedule/list',this)"><a> <i
-							class="menu-icon fa  fa-calendar"
-						></i>Student Schedule
-					</a></li>
+					<li
+						class="menu-title"
+						sec:authorize="hasAuthority('OIC')"
+					>Student</li>
 
-					<li class="menu-title">Rooom Shift</li>
-					<li onclick="change('/room/list',this)"><a> <i
-							class="menu-icon fas fa-archway"
-						></i>Room List
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/student/list',this)"
+					><a> <i class="menu-icon fas fa-users"></i>Student
+							List
 					</a></li>
-
-					<li onclick="change('/room/shift/list',this)"><a> <i
-							class="menu-icon fas fa-arrow-circle-right"
-						></i>Room Shift
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/student/schedule/list',this)"
+					><a> <i class="menu-icon fa  fa-calendar"></i>Student
+							Schedule
 					</a></li>
-
-					<li onclick="change('/room/schedule/list',this)"><a> <i
-							class="menu-icon fas fa-calendar-plus"
-						></i>Shift Schedule
-					</a></li>
-					<li onclick="change('/room/break/list',this)"><a> <i
-							class="menu-icon fas fa-business-time"
-						></i>Room BreakTime
-					</a></li>
-
-					<li class="menu-title">Subjects</li>
-
-					<li onclick="change('/subject/list',this)"><a> <i
-							class="menu-icon fas fa-book-open"
-						></i>Subject List
-					</a></li>
-					<li onclick="change('/subject/schedule/list',this)"><a> <i
-							class="menu-icon fas fa-calendar-plus"
-						></i>Subject Schedule
+					
+					<li style="width:100%; padding-right:34px;"
+						class="active"
+						id="student_profile"
+						sec:authorize="hasAuthority('STUDENT')"
+					><a> <i class="menu-icon fa fa-user-circle-o" aria-hidden="true"></i>Your Profile
 					</a></li>
 
-					<li class="menu-title">Strand Course</li>
-
-					<li onclick="change('/strand/list',this)"><a> <i
-							class="menu-icon fas fa-scroll"
-						></i>Strand List
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						class="menu-title"
+					>Rooom Shift</li>
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/room/list',this)"
+					><a> <i class="menu-icon fas fa-archway"></i>Room
+							List
 					</a></li>
-					<li onclick="change('/strand/subjects',this)"><a> <i
-							class="menu-icon fas fa-folder-open"
-						></i>Strand Subject
+
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/room/shift/list',this)"
+					><a> <i class="menu-icon fas fa-arrow-circle-right"></i>Room
+							Shift
 					</a></li>
 
-					<li class="menu-title">BreakTime</li>
-					<li onclick="change('/breaktime/list',this)"><a> <i
-							class="menu-icon fas fa-folder-open"
-						></i>BreakTime List
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/room/schedule/list',this)"
+					><a> <i class="menu-icon fas fa-calendar-plus"></i>Shift
+							Schedule
+					</a></li>
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/room/break/list',this)"
+					><a> <i class="menu-icon fas fa-business-time"></i>Room
+							BreakTime
+					</a></li>
+
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						class="menu-title"
+					>Subjects</li>
+
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/subject/list',this)"
+					><a> <i class="menu-icon fas fa-book-open"></i>Subject
+							List
+					</a></li>
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/subject/schedule/list',this)"
+					><a> <i class="menu-icon fas fa-calendar-plus"></i>Subject
+							Schedule
+					</a></li>
+
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						class="menu-title"
+					>Strand Course</li>
+
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/strand/list',this)"
+					><a> <i class="menu-icon fas fa-scroll"></i>Strand
+							List
+					</a></li>
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/strand/subjects',this)"
+					><a> <i class="menu-icon fas fa-folder-open"></i>Strand
+							Subject
+					</a></li>
+
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						class="menu-title"
+					>BreakTime</li>
+					<li
+						sec:authorize="hasAuthority('OIC')"
+						onclick="change('/breaktime/list',this)"
+					><a> <i class="menu-icon fas fa-folder-open"></i>BreakTime
+							List
 					</a></li>
 
 				</ul>
@@ -233,8 +295,7 @@
 					><img
 						src="../../images/logo.png"
 						alt="Logo"
-					></a> <a class="navbar-brand hidden"><img alt="Logo"></a>
-					<a
+					></a> <a class="navbar-brand hidden"><img alt="Logo"></a> <a
 						id="menuToggle"
 						class="menutoggle"
 					><i class="fa fa-bars"></i></a>
@@ -243,166 +304,28 @@
 			<div class="top-right">
 				<div class="header-menu">
 					<div class="header-left">
-						<button class="search-trigger">
-							<i class="fa fa-search"></i>
-						</button>
-						<div class="form-inline">
-							<form class="search-form">
-								<input
-									class="form-control mr-sm-2"
-									type="text"
-									placeholder="Search ..."
-									aria-label="Search"
-								>
-								<button
-									class="search-close"
-									type="submit"
-								>
-									<i class="fa fa-close"></i>
-								</button>
-							</form>
-						</div>
-
-						<div class="dropdown for-notification">
-							<button
-								class="btn btn-secondary dropdown-toggle"
-								type="button"
-								id="notification"
-								data-toggle="dropdown"
-								aria-haspopup="true"
-								aria-expanded="false"
-							>
-								<i class="fa fa-bell"></i> <span class="count bg-danger">3</span>
-							</button>
-							<div
-								class="dropdown-menu"
-								aria-labelledby="notification"
-							>
-								<p class="red">You have 3 Notification</p>
-								<a
-									class="dropdown-item media"
-									href="#"
-								> <i class="fa fa-check"></i>
-									<p>Server #1 overloaded.</p>
-								</a> <a
-									class="dropdown-item media"
-									href="#"
-								> <i class="fa fa-info"></i>
-									<p>Server #2 overloaded.</p>
-								</a> <a
-									class="dropdown-item media"
-									href="#"
-								> <i class="fa fa-warning"></i>
-									<p>Server #3 overloaded.</p>
-								</a>
-							</div>
-						</div>
-
-						<div class="dropdown for-message">
-							<button
-								class="btn btn-secondary dropdown-toggle"
-								type="button"
-								id="message"
-								data-toggle="dropdown"
-								aria-haspopup="true"
-								aria-expanded="false"
-							>
-								<i class="fa fa-envelope"></i> <span class="count bg-primary">4</span>
-							</button>
-							<div
-								class="dropdown-menu"
-								aria-labelledby="message"
-							>
-								<p class="red">You have 4 Mails</p>
-								<a
-									class="dropdown-item media"
-									href="#"
-								> <span class="photo media-left"><img
-										alt="avatar"
-										src="../../images/avatar/1.jpg"
-									></span>
-									<div class="message media-body">
-										<span class="name float-left">Jonathan Smith</span> <span
-											class="time float-right"
-										>Just now</span>
-										<p>Hello, this is an example msg</p>
-									</div>
-								</a> <a
-									class="dropdown-item media"
-									href="#"
-								> <span class="photo media-left"><img
-										alt="avatar"
-										src="../../images/avatar/2.jpg"
-									></span>
-									<div class="message media-body">
-										<span class="name float-left">Jack Sanders</span> <span
-											class="time float-right"
-										>5 minutes ago</span>
-										<p>Lorem ipsum dolor sit amet, consectetur</p>
-									</div>
-								</a> <a
-									class="dropdown-item media"
-									href="#"
-								> <span class="photo media-left"><img
-										alt="avatar"
-										src="../../images/avatar/3.jpg"
-									></span>
-									<div class="message media-body">
-										<span class="name float-left">Cheryl Wheeler</span> <span
-											class="time float-right"
-										>10 minutes ago</span>
-										<p>Hello, this is an example msg</p>
-									</div>
-								</a> <a
-									class="dropdown-item media"
-									href="#"
-								> <span class="photo media-left"><img
-										alt="avatar"
-										src="../../images/avatar/4.jpg"
-									></span>
-									<div class="message media-body">
-										<span class="name float-left">Rachel Santos</span> <span
-											class="time float-right"
-										>15 minutes ago</span>
-										<p>Lorem ipsum dolor sit amet, consectetur</p>
-									</div>
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<div class="user-area dropdown float-right">
-						<a
-							href="#"
-							class="dropdown-toggle active"
-							data-toggle="dropdown"
-							aria-haspopup="true"
-							aria-expanded="false"
-						> <img
-							class="user-avatar rounded-circle"
-							src="../../images/favicon.png"
-							alt="User Avatar"
+						<div
+							class="dropdown for-notification"
+							style="cursor: default;"
 						>
-						</a>
+							<p style="color: black;">
+								<b>Username: </b><span
+									id="username"
+									sec:authentication="name"
+								></span>
+							</p>
 
-						<div class="user-menu dropdown-menu">
-							<a
-								class="nav-link"
-								href="#"
-							><i class="fa fa-user"></i>My Profile</a> <a
-								class="nav-link"
-								href="#"
-							><i class="fa fa-bell-o"></i>Notifications <span class="count">13</span></a>
+						</div>
 
-							<a
-								class="nav-link"
-								href="#"
-							><i class="fa fa-cog"></i>Settings</a> <a
-								class="nav-link"
+						<div class="dropdown">
+							<span>|</span><a
 								th:href="@{/}"
-							><i class="fa fa-power-off"></i>Logout</a>
+								style="color: red;"
+							> Logout</a>
 						</div>
 					</div>
+
+
 				</div>
 			</div>
 		</header>
@@ -412,7 +335,6 @@
 		<div class="col-md-12">
 			<iframe
 				id="iFrame"
-				src="/subject/list"
 				width="100%"
 				height="790px;"
 				frameBorder="0"
@@ -437,7 +359,11 @@
 	</div>
 	<!-- /#right-panel -->
 
-
+	<span
+		id="role"
+		sec:authentication="principal.authorities"
+		style="display: none;"
+	></span>
 
 	<!-- Scripts -->
 	<script
@@ -454,5 +380,38 @@
 	></script>
 	<script th:src="@{/assets/js/main.js}"></script>
 	<script th:src="@{/assets/js/Schedule.js}"></script>
+	<script>
+		
+		var frame = document.getElementById('iFrame');
+		var role = document.getElementById("role").innerHTML;
+		var username = document.getElementById("username").innerHTML;
+		
+		
+		if (role.includes("TEACHER")) {
+			var teacher = document.getElementById("teacher_profile");
+			teacher.classList.add("active");
+			frame.src ='/profile/teacher?teacher_username='+username
+		} else if (role.includes("STUDENT")) {
+			
+			var student = document.getElementById("student_profile");
+			student.classList.add("active");
+			frame.src ='/profile/student?student_username='+username
+					
+		} else if (role.includes("OIC")) {
+			frame.src ='/dashboard';
+			function change(url, j) {
+				var past_button = document.getElementById("pass_button");
+
+				if (past_button != null) {
+					pass_button.classList.remove("active");
+				} else {
+					j.id = "pass_button";
+				}
+				j.classList.add("active");
+				frame.src = url;
+				pass_button = j;
+			}
+		}
+	</script>
 </body>
 </html>

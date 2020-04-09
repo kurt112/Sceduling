@@ -2,7 +2,9 @@
 	margin: 0 5px;
 	border-radius: 0;
 }
-
+.btn btn-info{
+	color:white;
+}
 table button {
 	width: 40%;
 }

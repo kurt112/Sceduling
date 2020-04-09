@@ -93,10 +93,10 @@
 	rel="stylesheet"
 	th:href="@{/assets/css/main.css}"
 >
-	<link
-			rel="stylesheet"
-			th:href="@{/assets/css/contents.css}"
-	>
+<link
+	rel="stylesheet"
+	th:href="@{/assets/css/contents.css}"
+>
 </head>
 <body>
 
@@ -254,7 +254,7 @@
 			</div>
 
 			<div class="col-md-7">
-			
+
 				<div class="content">
 					<div class="animated fadeIn">
 						<div class="row">
@@ -262,34 +262,42 @@
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<strong class="card-title">Subject List</strong>
+										<strong class="card-title">Schedule List</strong>
 									</div>
 									<div class="card-body">
 										<table
-											id="subject_table"
+											id="shiftSchedule_table"
 											class="table table-striped table-bordered"
 										>
 											<thead>
 												<tr>
-													<th>Name</th>
-													<th>Code</th>
-													<th>Hour</th>
-													<th>Minute</th>
-													<th>Units</th>
-													<th>Category</th>
-													<th>Status</th>
+													<th>Room</th>
+													<th>Shift</th>
+													<th>Subject</th>
+													<th>Strand</th>
+													<th>Teacher</th>
+													<th>Lecture Day</th>
+													<th>Start Time</th>
+													<th>End Time</th>
 
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="subject: ${subjects}">
-													<td th:text="${subject.subjectName}"></td>
-													<td th:text="${subject.subjectCode}"></td>
-													<td th:text="${subject.hourCost}"></td>
-													<td th:text="${subject.minuteCost}"></td>
-													<td th:text="${subject.subjectUnit}"></td>
-													<td th:text="${subject.is_Major}"></td>
-												</tr>
+												<tr th:each="schedule: ${schedule_list}">
+														<td th:text="${schedule.room_shift.room.roomName}"></td>
+													<td th:text="${schedule.room_shift.shiftName}"></td>
+													<td th:text="${schedule.subject.subjectName}"></td>
+													<td th:text="${schedule.room_shift.strandAndCourse.strandName}"></td>
+													<td th:if="${schedule.teacher ==null}">N/A</td>
+													<td
+														th:if="${schedule.teacher !=null}"
+														th:text="${schedule.teacher.firstName} + ' , ' + ${schedule.teacher.lastName} "
+													></td>
+
+													<td th:text="${schedule.lecture_day}"></td>
+													<td th:text="${schedule.start_time}"></td>
+													<td th:text="${schedule.end_time}"></td>
+													</tr>
 											</tbody>
 										</table>
 									</div>

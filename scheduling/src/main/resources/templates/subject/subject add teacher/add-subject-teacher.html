@@ -123,6 +123,7 @@
 									/>
 									
 									<a
+										th:href="@{/teacher/update(teacher_id=${teacher_object.id})}"
 										class="btn btn-primary"
 										style="margin-bottom: 10px; color:white;"
 										>
@@ -218,17 +219,5 @@
 	<script th:src="@{/assets/js/lib/data-table/buttons.colVis.min.js}"></script>
 	<script th:src="@{/assets/js/init/datatables-init.js}"></script>
 	<script th:src="@{/assets/js/Schedule.js}"></script>
-
-	<script type="text/javascript">
-		//    function button_delete(){
-		// 	   var subject_id = document.getElementById("subject_id").value;
-		//
-		// 	  window.location="/subject/delete?subject_id=" + subject_id;
-		// }
-
-		$(document).ready(function() {
-			$('#bootstrap-data-table-export').DataTable();
-		});
-	</script>
 </body>
 </html>

@@ -30,6 +30,7 @@ import com.school.scheduling.entity.Room_Shift;
 import com.school.scheduling.entity.Room_ShiftSchedule;
 import com.school.scheduling.entity.StrandAndCourse;
 import com.school.scheduling.entity.Student;
+import com.school.scheduling.entity.Teacher;
 import com.school.scheduling.service.Services;
 
 @Controller()
@@ -43,7 +44,7 @@ public class RoomController {
 
 	/********************** For Room list ******************************/
 	private Services<BreakTime> breakService;
-
+	private Services<Teacher> teacherService;
 	private Services<Room> roomService;
 	private Services<Room_Shift> roomShiftService;
 	private Services<StrandAndCourse> strandService;
@@ -55,12 +56,13 @@ public class RoomController {
 	@Autowired
 	public RoomController(Services<Room> roomService, Services<Room_Shift> roomShiftService,
 			Services<StrandAndCourse> strandService, Services<BreakTime> breakService,
-			Services<Room_ShiftSchedule> shiftSchedule) {
+			Services<Room_ShiftSchedule> shiftSchedule,Services<Teacher> teacherService) {
 		this.roomService = roomService;
 		this.roomShiftService = roomShiftService;
 		this.strandService = strandService;
 		this.breakService = breakService;
 		this.shiftSchedule = shiftSchedule;
+		this.teacherService = teacherService;
 	}
 
 	/********************************* Mapping for Room ******************/
@@ -432,7 +434,7 @@ public class RoomController {
 	}
 
 	@GetMapping("/schedule/update")
-	private String RoomSchedule_Update(@RequestParam("schedule_id") int id, Model model) {
+	public String RoomSchedule_Update(@RequestParam("schedule_id") int id, Model model) {
 		Room_ShiftSchedule shift = shiftSchedule.findbyId(id);
 		model.addAttribute("shift_schedule", shift);
 		model.addAttribute("room_list", roomService.findAll());
@@ -442,6 +444,22 @@ public class RoomController {
 		
 
 		return "room/room shift schedule/room-schedule-form";
+	}
+	
+	@GetMapping("/schedule/deleteAll")
+	public String RoomSchedule_DeleteAll() {
+		List<Room_ShiftSchedule> sched = shiftSchedule.findAll();
+		sched.forEach(e ->{
+			shiftSchedule.deleteById(e.getId());
+		});
+		
+		teacherService.findAll().forEach(e-> {
+			e.setSubject_load(0);
+			teacherService.save(e);
+		});
+	
+		
+		return "redirect:/room/schedule/list";
 	}
 
 	@GetMapping("/schedule/deleteMain")

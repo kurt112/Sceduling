@@ -124,6 +124,15 @@ public class Room_ShiftSchedule implements Comparable<Room_ShiftSchedule>{
 	public void setLecture_day(String lecture_day) {
 		this.lecture_day = lecture_day;
 	}
+	
+	  @Override
+		public boolean equals(Object object) {
+
+			if (!(object instanceof Room_ShiftSchedule)) return false;
+			
+			Room_ShiftSchedule schedule = (Room_ShiftSchedule) object;
+			return schedule.getId() == id;
+		}
 
 	@Override
 	public int compareTo(Room_ShiftSchedule o) {

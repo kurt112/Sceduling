@@ -6,14 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +26,8 @@ import com.school.scheduling.entity.Room_ShiftSchedule;
 import com.school.scheduling.entity.Subject;
 import com.school.scheduling.entity.Teacher;
 import com.school.scheduling.entity.Teacher_Lecture;
-import com.school.scheduling.repository.RoomShiftSchedule_Repository;
 import com.school.scheduling.service.Services;
 
-import javax.naming.Binding;
 import javax.validation.Valid;
 
 @Controller
@@ -80,15 +75,22 @@ public class TeacherController {
 		if (binding.hasErrors()) {
 			return "teacher/teacher information/teacher-information-form";
 		}
+		BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
+
 		if (teacher.getId() == 0) {
 
-			BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
 			teacher.getUsers().add_Role(new Authorities(teacher.getUsers().getUsername(), "TEACHER"));
 			teacher.getUsers().setEnabled(1);
 			teacher.getUsers().setPassword(encrypt.encode(teacher.getUsers().getPassword()));
-		} else {
-			System.out.println(teacher.getSubjectList());
+		}else {
+			if(teacher.getUsers().getPassword()!=null) {
+				teacher.getUsers().setPassword(encrypt.encode(teacher.getUsers().getPassword()));
+				teacher.getUsers().setEnabled(1);
+			}
 		}
+		
+		
+		
 		teacherService.save(teacher);
 		this.teacher = null;
 		return "redirect:/teacher/form";
@@ -104,7 +106,6 @@ public class TeacherController {
 		model.addAttribute("teacher_object", teacher);
 		model.addAttribute("teacher_schedule", teacher.getTeacher_schedule());
 		
-		teacherService.save(teacher);
 		this.teacher = teacher;
 		return "teacher/teacher information/teacher-information-form";
 	}
@@ -221,6 +222,19 @@ public class TeacherController {
 		teacherService.save(teacher);
 		return "redirect:/teacher/break/list";
 	}
+	
+	@GetMapping("/break/deleteForm")
+	public String TeacherBreak_DeleteForm(@RequestParam("break_id") int break_id,
+			@RequestParam("teacher_id") int teacher_id) {
+		Teacher teacher = teacherService.findbyId(teacher_id);
+		teacher.getTeacher_lecture().removeIf(e -> e.getBreaktime_teacherList().removeIf(f -> f.getId() == break_id));
+
+		teacherService.save(teacher);
+		return "redirect:/teacher/update?teacher_id="+teacher.getId();
+	}
+	
+	
+	
 	@GetMapping("/schedule/deleteSchedule")
 	public String DeleteSchedule() {
 		teacherService.findAll().forEach(e-> e.setSubject_load(0));
@@ -343,6 +357,7 @@ public class TeacherController {
 		model.addAttribute("teacher_list", teacherService.findAll());
 		return "teacher/teacher lecture/teacher-lecture-form";
 	}
+	
 
 	@PostMapping("/lecture/save")
 	public String Teacher_Lecture_Save(@ModelAttribute("teacher_lecture") Teacher_Lecture teacher_lecture) {
@@ -365,7 +380,16 @@ public class TeacherController {
 
 		lectureServices.deleteById(id);
 
-		return "teacher/teacher lecture/teacher-lecture-list";
+		return "redirect:/teacher/lecture/list";
+
+	}
+	
+	@GetMapping("/lecture/deleteForm")
+	public String TeacherLecture_Form(@RequestParam("lecture_id") int id, Model model) {
+		Teacher_Lecture lecture = lectureServices.findbyId(id);
+		lectureServices.deleteById(id);
+
+		return "redirect:/teacher/update?teacher_id="+lecture.getTeacher().getId();
 
 	}
 

@@ -226,46 +226,6 @@
 							>
 						</div>
 					</div>
-
-
-					<div class="form-group col-md-12">
-						<label>Password </label>
-						<div class="input-group mb-3">
-							<input
-								type="password"
-								class="form-control"
-								placeholder="Password"
-								style="margin-right: 10px;"
-								th:field="*{users.password}"
-							> <input
-								type="password"
-								class="form-control"
-								placeholder="Confirm Password"
-							>
-						</div>
-					</div>
-
-					<div class="form-group col-md-12">
-						<div class="input-group mb-3">
-							<input
-								type="submit"
-								class="btn btn-success form-control"
-								th:value="${action}"
-							>
-						</div>
-					</div>
-					<div class="form-group col-md-12">
-						<div class="input-group mb-3">
-							<a
-								th:if="${action.equals('Update Teacher')}"
-								onclick="button_delete()"
-								style="color: white;"
-								class="btn btn-danger form-control"
-							> Delete </a>
-						</div>
-					</div>
-
-
 				</form>
 			</div>
 
@@ -321,7 +281,6 @@
 													<th>BreakTime</th>
 													<th>Start Time</th>
 													<th>End Time</th>
-													<th class="th_end">Delete</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -333,17 +292,6 @@
 														></td>
 														<td th:text="${lecture.startTime}"></td>
 														<td th:text="${lecture.endTime}"></td>
-														<td><a
-															class="btn btn-danger btn-sm"
-															style="width: 100%; color: white;"
-															th:onclick="'TeacherBreak_DeleteForm('+${break.id}+','+${lecture.teacher.id}+')'"
-															data-target="#modal"
-															data-toggle="modal"
-														> <i
-																class="fa fa-trash"
-																aria-hidden="true"
-															></i>
-														</a></td>
 													</tr>
 												</span>
 											</tbody>
@@ -372,11 +320,7 @@
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<strong class="card-title">Lectures List</strong> <a
-											th:href="@{/teacher/lecture/form}"
-											class="btn btn-success"
-											style="float: right;"
-										> Add Lecture</a>
+										<strong class="card-title">Lectures List</strong>
 									</div>
 									<div class="card-body">
 										<table
@@ -389,8 +333,6 @@
 													<th>Start Time</th>
 													<th>End Time</th>
 													<th>Lecture Day</th>
-													<!-- <th class="th_end">Update</th> -->
-													<th class="th_end">Delete</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -398,23 +340,18 @@
 													<td th:text="${lecture.startTime}"></td>
 													<td th:text="${lecture.endTime}"></td>
 													<td th:text="${lecture.lectureDay}"></td>
-													<!-- <td><a
+													<td><a
+														th:href="@{/teacher/lecture/update(lecture_id=${lecture.id})}"
 														class="btn btn-info btn-sm"
-														th:onclick="'UpdateLecture('+${lecture.id}+')'"
-														data-target="#modal"
-														data-toggle="modal"
 														style="width: 100%; color: white;"
 													> <i
 															class="fa fa-pencil"
 															aria-hidden="true"
 														></i>
-													</a></td> -->
+													</a></td>
 													<td><a
 														class="btn btn-danger btn-sm"
 														style="width: 100%; color: white;"
-														th:onclick="'DeleteLecture_Form('+${lecture.id}+')'"
-														data-target="#modal"
-														data-toggle="modal"
 													> <i
 															class="fa fa-trash"
 															aria-hidden="true"
@@ -448,11 +385,6 @@
 								<div class="card">
 									<div class="card-header">
 										<strong class="card-title">Student List</strong>
-											<!--  <a
-											class="btn btn-success"
-											style="float: right; color: white;"
-											th:if="${action.equals('Update Teacher')}"
-										> Add Student</a> -->
 									</div>
 									<div class="card-body">
 										<table
@@ -519,11 +451,7 @@
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<strong class="card-title">Schedule List</strong> 
-										<!-- <a	th:href="@{/room/break/list/add}"
-											class="btn btn-success"
-											style="float: right;"
-										> Add Schedule</a> -->
+										<strong class="card-title">Schedule List</strong>
 									</div>
 									<div class="card-body">
 										<table
@@ -573,11 +501,7 @@
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<strong class="card-title">Subject List</strong> <a
-											th:href="@{/teacher/subject/list}"
-											class="btn btn-success"
-											style="float: right;"
-										>Add Subject</a>
+										<strong class="card-title">Subject List</strong>
 									</div>
 									<div class="card-body">
 										<table
@@ -593,7 +517,6 @@
 													<th>Minute</th>
 													<th>Units</th>
 													<th>Category</th>
-													<th class="th_end">Delete</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -604,16 +527,6 @@
 													<td th:text="${subject.subjectUnit}"></td>
 													<td th:text="${subject.minuteCost}"></td>
 													<td th:text="${subject.is_Major}"></td>
-													<td><a
-														class="btn btn-danger btn-sm aButton"
-														th:onclick="'DeleteSubjectTeacher_id('+${subject.Id}+')'"
-														data-target="#modal"
-														data-toggle="modal"
-													> <i
-															class="fa fa-trash"
-															aria-hidden="true"
-														></i>
-													</a></td>
 												</tr>
 											</tbody>
 										</table>
@@ -629,13 +542,6 @@
 					</div>
 					<!-- .animated -->
 				</div>
-
-				<a
-					th:href="@{/subject/list}"
-					class="btn btn-info btn-block"
-					title="View"
-					style="margin-top: 10px; margin-bottom: 10px;"
-				> Back </a>
 			</div>
 		</div>
 	</div>
@@ -673,16 +579,5 @@
 	<script th:src="@{/assets/js/init/datatables-init.js}"></script>
 	<script th:src="@{/assets/js/Schedule.js}"></script>
 
-	<script type="text/javascript">
-		function button_delete() {
-			var subject_id = document.getElementById("subject_id").value;
-
-			window.location = "/subject/delete?subject_id=" + subject_id;
-		}
-
-		$(document).ready(function() {
-			$('#bootstrap-data-table-export').DataTable();
-		});
-	</script>
 </body>
 </html>

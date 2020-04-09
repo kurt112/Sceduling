@@ -1,67 +1,93 @@
 <!DOCTYPE html>
-<html lang="en"
-xmlns="http://www.w3.org/1999/xhtml"
-xmlns:th="http://www.thymeleaf.org"
+<html
+	lang="en"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
-	<title>Login V17</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-<!--===============================================================================================-->
+<title>Scheduling Login</title>
+<meta charset="UTF-8">
+<link
+	rel="stylesheet"
+	th:href="@{/assets/css/utils.css}"
+>
+<link
+	rel="stylesheet"
+	th:href="@{/assets/css/login.css}"
+>
+
+
+
 </head>
 <body>
-	
+
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
-					<span class="login100-form-title p-b-34">
-						Account Login
-					</span>
-					
-					<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type user name">
-						<input id="first-name" class="input100" type="text" name="username" placeholder="User name">
-						<span class="focus-input100"></span>
+				<form
+					th:action="@{/login}"
+					method="POST"
+					class="login100-form validate-form"
+				>
+					<span
+						class="login100-form-title p-b-34"
+						style="color: black"
+					> Account Login </span>
+
+					<div
+						class="wrap-input100 rs1-wrap-input100 validate-input m-b-20"
+						data-validate="Type user name"
+					>
+						<input
+							id="first-name"
+							class="input100"
+							type="text"
+							name="username"
+							placeholder="User name"
+						> <span class="focus-input100"></span>
 					</div>
-					<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
-						<span class="focus-input100"></span>
+					<div
+						class="wrap-input100 rs2-wrap-input100 validate-input m-b-20"
+						data-validate="Type password"
+					>
+						<input
+							class="input100"
+							type="password"
+							name="password"
+							placeholder="Password"
+						> <span class="focus-input100"></span>
 					</div>
-					
+
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Sign in
-						</button>
+						<input
+							type="submit"
+							class="login100-form-btn"
+							value="SIGN IN"
+						/>
+					</div>
+					<div
+						th:if="${param.error}"
+						style="width: 100%; text-align: center;"
+					>
+						<p style="color: red; font-size: 15px;">Invalid username or
+							password</p>
 					</div>
 
-					<div class="w-full text-center p-t-27 p-b-239">
-						<span class="txt1">
-							Forgot
-						</span>
-
-						<a href="#" class="txt2">
-							User name / password?
-						</a>
-					</div>
-
-					<div class="w-full text-center">
-						<a href="#" class="txt3">
-							Sign Up
-						</a>
+					<div class="padding_bottom">
+						
 					</div>
 				</form>
 
-				<div class="login100-more" style="background-image: url('images/bg-01.jpg');"></div>
+				<div class="login100-more gardner"></div>
+
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 
 	<div id="dropDownSelect1"></div>
-	
+
 </body>
 </html>

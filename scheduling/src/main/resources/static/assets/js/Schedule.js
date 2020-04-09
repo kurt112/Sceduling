@@ -181,6 +181,12 @@ function DeleteBreakTeacher_id(break_id, teacher_id){
 		+ "&teacher_id=" + teacher_id);
 }
 
+function TeacherBreak_DeleteForm(break_id, teacher_id){
+	ModalAction(delete_,"/teacher/break/deleteForm?break_id=" + break_id
+		+ "&teacher_id=" + teacher_id);
+}
+
+
 //-------------------------------------------------------------- Teacher Lecture
 
 function UpdateLecture(id){
@@ -189,6 +195,12 @@ function UpdateLecture(id){
 
 function DeleteLecture(id){
 	ModalAction(delete_,"/teacher/lecture/DeleteMain?lecture_id=" + id);
+}
+
+
+
+function DeleteLecture_Form(id){
+	ModalAction(delete_,"/teacher/lecture/deleteForm?lecture_id=" + id);
 }
 
 
@@ -220,18 +232,18 @@ function DeleteStudent(id) {
 
 }
 
+// *********************************************************** Delete All Schedule
+function DeleteRoomSchedule(){
+	ModalAction(delete_,"/room/schedule/deleteAll");
+}
+
+function DeleteTeacherSchedule(){
+	ModalAction(delete_,"/teacher/schedule/deleteSchedule");
+}
+
 
 //************************************************************ IFrame
-var frame =  document.getElementById('iFrame');
-function change(url, j) {
-	var past_button = document.getElementById("pass_button");
 
-	pass_button.classList.remove("active");
-	j.classList.add("active");
-
-	frame.src = url;
-	pass_button = j;
-}
 
 function button_back(){
 	window.history.back(); 
