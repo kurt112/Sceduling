@@ -15,6 +15,7 @@
 	var column7 =[0,1,2,3,4,5,6];
 	var column8 =[0,1,2,3,4,5,6,7];
 	var column9 =[0,1,2,3,4,5,6,7,8];
+	var column10 =[0,1,2,3,4,5,6,7,8,9];
 
 
 
@@ -57,10 +58,28 @@
 	creatable("#teacher_Schedule_Table",column2,"List of Schedule for Teacher");
 	creatable("#teacher_Subject_Table", column6,"List of Subjects for Teacher");
 	creatable("#teacher_Lecture_Table",column4,"List of Lecture for Teacher");
+	
+	
+	
+	// for the profile
+	
+	// ------------ teacher
+	creatable("#teacherProfile_Breaktime_Table",column4,"List of Breaktime");
+	creatable("#teacherProfile_Lecture_Table",column3,"List of Lecture");
+	creatable("#teacherProfile_Students",column10,"List of Students");
+	creatable("#teacherProfile_Schedule_Table",column4,"List of Schedule");
+	creatable("#teacherProfile_subjectTable",column6,"List of Subject");
+	
+	//---- student
+	creatable("#studentProfile_Table",column8,"List of Schedule");
+
+
+	
 
 	
 	
 
+	// function for the datable
 	$(document).ready(function() {
 		$("#bootstrap-data-table").DataTable({
 

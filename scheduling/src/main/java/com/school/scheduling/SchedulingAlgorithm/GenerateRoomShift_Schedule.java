@@ -122,8 +122,19 @@ public class GenerateRoomShift_Schedule {
 							}
 
 						}else {
-							schedule_service.save(new Room_ShiftSchedule(shift, sbj, 
-									"0:00", "0:00", day));
+							// checking if the room schedule has a already subject in that schedule
+							boolean exist = false;
+							for(Room_ShiftSchedule schedule: shift.getRoom_ShiftSchedules()) {
+								if(schedule.getSubject() == sbj) {
+									exist =true;
+									break;
+								}
+								
+							}
+							if(exist == false) {
+								schedule_service.save(new Room_ShiftSchedule(shift, sbj, 
+										"0:00", "0:00", day));
+							}
 						}
 					}
 					
